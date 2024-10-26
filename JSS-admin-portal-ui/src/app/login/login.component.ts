@@ -59,7 +59,7 @@ constructor(private http: HttpClient, private router: Router) {}
 
 onLoginSubmit() {
   console.log('Logging in with:', this.loginData);
-  this.http.post('http://localhost:8080/api/auth/login', this.loginData).subscribe(
+  this.http.post('http://localhost:8080/users/login', this.loginData).subscribe(
       (response: any) => {
           console.log('Login successful:', response);
           localStorage.setItem('isAuthenticated', 'true');

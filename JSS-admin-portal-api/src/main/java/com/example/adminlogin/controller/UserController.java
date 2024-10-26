@@ -1,15 +1,16 @@
-package com.Event.ticketing.app.api.Controller;
+package com.example.adminlogin.controller;
 
-import com.Event.ticketing.app.api.Model.User;
-import com.Event.ticketing.app.api.Repo.UserRepo;
+import com.example.adminlogin.model.User;
+import com.example.adminlogin.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -59,13 +60,13 @@ public class UserController {
 
 
     // Forgot Password Endpoint
-    @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email, @RequestParam String newPassword) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            User existingUser = user.get();
+    @PutMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody User user) {
+        Optional<User> dbUser = userRepository.findByEmail(user.getEmail());
+        if (dbUser.isPresent()) {
+            User existingUser = dbUser.get();
             // Encode new password before saving
-            String encodedPassword = Base64.getEncoder().encodeToString(newPassword.getBytes(StandardCharsets.UTF_8));
+            String encodedPassword = Base64.getEncoder().encodeToString(user.getPassword().getBytes(StandardCharsets.UTF_8));
             existingUser.setPassword(encodedPassword);
             userRepository.save(existingUser); // Save the updated user
             return ResponseEntity.ok("Password updated successfully.");

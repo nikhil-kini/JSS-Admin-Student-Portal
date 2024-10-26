@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>adminlogin</artifactId>
+	<artifactId>jss-admin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>adminlogin</name>
-	<description>Admin login with Spring Boot</description>
+	<name>jss-admin</name>
+	<description>JSS Admin login with Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>

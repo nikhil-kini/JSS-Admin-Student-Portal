@@ -22,7 +22,7 @@ export class ChangedPasswordComponent {
   }
   onChangePasswordSubmit() {
     console.log('Changing password for:', this.changePasswordData);
-    this.http.put('http://localhost:8080/api/auth/change-password', this.changePasswordData).subscribe(
+    this.http.put('http://localhost:8080/users/forgot-password', this.changePasswordData, { responseType: 'text' }).subscribe(
       (response: any) => {
         console.log('Password change successful:', response);
         alert('Password updated successfully');

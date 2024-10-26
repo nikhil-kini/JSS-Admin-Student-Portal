@@ -1,1 +1,23 @@
-<p>ecdepartment works!</p>
+<h2>EC Department Timetable</h2>
+
+<!-- Dropdown for selecting the semester -->
+<label for="semesters">Select Semester:</label>
+<select id="semesters" (change)="onSemesterChange($event)">
+  <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+</select>
+
+<!-- Displaying the timetable for the selected semester -->
+<table *ngIf="timetable.length > 0">
+  <tr>
+    <th>Day</th>
+    <th>Subjects</th>
+  </tr>
+  <tr *ngFor="let entry of timetable">
+    <td>{{ entry.day }}</td>
+    <td>{{ entry.subjects.join(', ') }}</td>
+  </tr>
+</table>
+
+<!-- Message if there are no subjects for the selected semester -->
+<p *ngIf="timetable.length === 0">No timetable available for the selected semester.</p>
+

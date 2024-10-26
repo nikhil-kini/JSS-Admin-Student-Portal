@@ -1,6 +1,7 @@
-package com.Event.ticketing.app.api.Repo;
+package com.example.adminlogin.repository;
 
-import com.Event.ticketing.app.api.Model.User;
+
+import com.example.adminlogin.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

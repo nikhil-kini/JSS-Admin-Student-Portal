@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ECdepartmentComponent } from './ecdepartment/ecdepartment.component';
+import { EEdepartmentComponent } from './eedepartment/eedepartment.component';
+import { MechanicaldepartmentComponent } from './mechanicaldepartment/mechanicaldepartment.component';
+import { MechatronicsdepartmentComponent } from './mechatronicsdepartment/mechatronicsdepartment.component';
+import { CivildepartmentComponent } from './civildepartment/civildepartment.component';
+import { CSdepartmentComponent } from './csdepartment/csdepartment.component';
 
 @Component({
   selector: 'app-timetable',
   standalone: true,
-  imports: [],
+  imports: [ECdepartmentComponent,EEdepartmentComponent,MechanicaldepartmentComponent,MechatronicsdepartmentComponent,CivildepartmentComponent,CSdepartmentComponent],
   templateUrl: './timetable.component.html',
   styleUrl: './timetable.component.css'
 })
@@ -46,4 +52,8 @@ export class TimetableComponent {
     personaldocuments(){
       this.router.navigate(['/personal-documents'])
     }
+ecdepartment(){
+  this.router.navigate(['/ecdepartment'])
+}
+
 }

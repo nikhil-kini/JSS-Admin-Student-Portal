@@ -1,4 +1,4 @@
-package com.Event.ticketing.app.api.Model;
+package com.example.adminlogin.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,9 +7,7 @@ import lombok.*;
 @Table(name = "Users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
-@ToString
+@Data
 public class User {
 
     @Id

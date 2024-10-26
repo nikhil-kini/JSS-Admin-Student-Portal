@@ -21,6 +21,7 @@ import { CivildepartmentComponent } from './timetable/civildepartment/civildepar
 import { EEdepartmentComponent } from './timetable/eedepartment/eedepartment.component';
 import { MechanicaldepartmentComponent } from './timetable/mechanicaldepartment/mechanicaldepartment.component';
 import { MechatronicsdepartmentComponent } from './timetable/mechatronicsdepartment/mechatronicsdepartment.component';
+import { CSdepartmentComponent } from './timetable/csdepartment/csdepartment.component';
 
 
 
@@ -49,19 +50,21 @@ export const routes: Routes = [
   {
     path:"time-table",
     component:TimetableComponent,
-    // canActivate: [authGuard]
+    // canActivate: [authGuard],
+    children: [
+      { path: 'ecdepartment', component: ECdepartmentComponent },
+      { path: 'civildepartment', component: CivildepartmentComponent },
+      { path: 'eedepartment', component: EEdepartmentComponent },
+      { path: 'mechanicaldepartment', component: MechanicaldepartmentComponent },
+      { path: 'mechatronicsdepartment', component: MechatronicsdepartmentComponent },
+      { path: 'csdepartment', component: CSdepartmentComponent },
+    ]
   },
   {
     path:"students-management",
     component:StudentManagementComponent,
     // canActivate: [authGuard],
-    children: [
-      { path: 'ecdepartment', component: ECdepartmentComponent },
-      { path: 'ecdepartment', component: CivildepartmentComponent },
-      { path: 'ecdepartment', component: EEdepartmentComponent },
-      { path: 'ecdepartment', component: MechanicaldepartmentComponent },
-      { path: 'ecdepartment', component: MechatronicsdepartmentComponent }
-    ]
+    
   },
   {
     path:"attendance-management",
