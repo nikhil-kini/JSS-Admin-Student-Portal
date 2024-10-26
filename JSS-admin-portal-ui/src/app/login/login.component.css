@@ -1,0 +1,410 @@
+/* .login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #f06, #f8a) no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.login-banner {
+  padding: 30px;
+  background: #f8f9fa;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.login-banner h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.login-banner p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.login-banner img {
+  width: 100%;
+  max-width: 250px;
+  margin-top: 20px;
+}
+
+.login-container {
+  padding: 30px;
+  width: 50%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+.register-link {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.register-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+} */
+
+
+/* body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.login-page {
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.login-banner {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-banner h2 {
+  color: #333;
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.login-banner h5 {
+  color: #777;
+  font-size: 18px;
+}
+
+.login-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+
+.login-container h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+
+.form-group label {
+  display: block;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+
+.error {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not([disabled]) {
+  background-color: #2980b9;
+}
+
+
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-link p {
+  font-size: 14px;
+  color: #333;
+}
+
+.register-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+
+.btn-google, .btn-facebook {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #db4437;
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-google {
+  background-color: #db4437;
+}
+
+.btn-facebook {
+  background-color: #3b5998;
+}
+
+.btn-google:hover {
+  background-color: #c33b2d;
+}
+
+.btn-facebook:hover {
+  background-color: #2d4373;
+}
+
+
+@media (max-width: 768px) {
+  .login-page {
+      padding: 15px;
+  }
+
+  .login-container {
+      margin-bottom: 20px;
+  }
+
+  .login-banner h2 {
+      font-size: 20px;
+  }
+  
+  button {
+      padding: 8px 15px;
+      font-size: 14px;
+  }
+} */
+
+
+/* 2
+.border-md {
+  border-width: 2px;
+}
+.btn-google {
+  background: #dd4b39;
+  border: none;
+}
+
+.btn-google:hover, .btn-google:focus {
+  background: #de3b3b;
+}
+
+.btn-facebook {
+  background: #405D9D;
+  border: none;
+}
+
+.btn-facebook:hover, .btn-facebook:focus {
+  background: #314879;
+}
+
+
+
+body {
+  min-height: 100vh;
+}
+
+.form-control:not(select) {
+  padding: 1.5rem 0.5rem;
+}
+
+select.form-control {
+  height: 52px;
+  padding-left: 0.5rem;
+}
+
+.form-control::placeholder {
+  color: #ccc;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.form-control:focus {
+  box-shadow: none;
+} */
+
+
+
+
+
+/* body {
+  background-color: #227bc9; 
+  min-height: 100vh; 
+  margin: 0; 
+  padding: 0; 
+} */
+
+html, body {
+  height: 100%; /* Set height to 100% for html and body */
+  margin: 0; /* Remove default margin */
+  overflow: hidden; /* Prevent scrolling */
+}
+/* .container {
+  height: 100vh; 
+  width: 100%; 
+  max-width: 1200px;
+  margin: 0 auto; 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  padding: 20px; 
+} */
+
+input[type="email"],
+input[type="password"] {
+    height: 50px; /* Set height */
+    font-size: 16px; /* Set font size */
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 5px; /* Optional: round corners */
+    border: 2px solid #ccc; /* Add border with color */
+    box-shadow: none; /* Remove default box shadow */
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: add a shadow effect */
+}
+.login-container {
+  padding: 30px;
+  background-color: #44a892; /* White background for the login container */
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width */
+}
+
+/* .btn {
+  width: 100%;
+  border-radius: 5px; 
+} */
+
+button {
+  height: 50px; /* Keep the height consistent with input fields */
+  font-size: 16px; /* Set font size */
+  border-radius: 5px; /* Optional: round corners */
+  width: 90%; /* Set button width to 70% of the container width */
+  max-width: 400px; /* Optional: set a maximum width */
+  margin: 10px auto; /* Center the button horizontally with margin */
+  display: block; /* Ensure the button is a block element for centering */
+}
+.error {
+  color: red;
+  font-size: 12px;
+}
+.image-outline {
+  width: 100%; /* Adjust as needed */
+  max-width: 500px; /* Change to your desired maximum width */
+  height: auto; /* Maintain aspect ratio */
+  border: 5px solid #0f0c0c; /* Optional: add a border */
+  border-radius: 8px; /* Optional: rounded corners */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Optional: add shadow */
+}
+
+.change-password-link {
+  color: #da2a2a; /* Change to your desired color */
+  text-decoration: underline; /* Optional: underline */
+  font-weight: bold; /* Optional: make it bold */
+  transition: color 0.3s; /* Smooth transition for color change */
+  margin-top: 10px; /* Adjust the space between button and link */
+}
+
+.change-password-link:hover {
+  color: #0056b3; /* Change color on hover */
+}

@@ -1,0 +1,89 @@
+<div class="container">
+  <h2>Library Registration</h2>
+  <form #registrationForm="ngForm" (ngSubmit)="onRegister(registrationForm)">
+    <div class="form-group-row">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" ngModel required #firstName="ngModel">
+        <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error">
+          First name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" ngModel required #lastName="ngModel">
+        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error">
+          Last name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" ngModel required #email="ngModel">
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+        Valid email is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" ngModel required #password="ngModel">
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+        Password is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" ngModel required #dob="ngModel">
+      <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="error">
+        Date of Birth is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" ngModel required #gender="ngModel">
+        <option value="" disabled selected>Select your gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="error">
+        Gender is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" ngModel required #address="ngModel"></textarea>
+      <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
+        Address is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phonenum">Phone Number:</label>
+      <input type="text" id="phonenum" name="phonenum" ngModel required #phonenum="ngModel">
+      <div *ngIf="phonenum.invalid && (phonenum.dirty || phonenum.touched)" class="error">
+        Phone number is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="studentid">Student ID:</label>
+      <input type="text" id="studentid" name="studentid" ngModel required #studentid="ngModel">
+      <div *ngIf="studentid.invalid && (studentid.dirty || studentid.touched)" class="error">
+        Student ID is required.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registrationForm.invalid">Register</button>
+
+    <div class="register-link">
+      <p>Already have an account? <a routerLink="/login">Login</a></p>
+    </div>
+  </form>
+</div>
