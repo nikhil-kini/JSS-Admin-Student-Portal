@@ -16,12 +16,7 @@ import { Sidemenu1Component } from './sidemenu1/sidemenu1.component';
 import { StudentregComponent } from './studentreg/studentreg.component';
 import { PersonalDocumentsComponent } from './personal-documents/personal-documents.component';
 import { ChangedPasswordComponent } from './changed-password/changed-password.component';
-import { ECdepartmentComponent } from './timetable/ecdepartment/ecdepartment.component';
-import { CivildepartmentComponent } from './timetable/civildepartment/civildepartment.component';
-import { EEdepartmentComponent } from './timetable/eedepartment/eedepartment.component';
-import { MechanicaldepartmentComponent } from './timetable/mechanicaldepartment/mechanicaldepartment.component';
-import { MechatronicsdepartmentComponent } from './timetable/mechatronicsdepartment/mechatronicsdepartment.component';
-import { CSdepartmentComponent } from './timetable/csdepartment/csdepartment.component';
+
 
 
 
@@ -51,14 +46,7 @@ export const routes: Routes = [
     path:"time-table",
     component:TimetableComponent,
     // canActivate: [authGuard],
-    children: [
-      { path: 'ecdepartment', component: ECdepartmentComponent },
-      { path: 'civildepartment', component: CivildepartmentComponent },
-      { path: 'eedepartment', component: EEdepartmentComponent },
-      { path: 'mechanicaldepartment', component: MechanicaldepartmentComponent },
-      { path: 'mechatronicsdepartment', component: MechatronicsdepartmentComponent },
-      { path: 'csdepartment', component: CSdepartmentComponent },
-    ]
+    
   },
   {
     path:"students-management",

@@ -57,57 +57,12 @@
               </a>
             </li>
       </ul>
-  </div>
-  <div class="content">
-    <h2><b>Personal Documents</b></h2>
-    <br>
-    <form [formGroup]="documentUploadForm" (ngSubmit)="submitForm()" enctype="multipart/form-data">
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-             
-              <h3 class="card-title"><b>Select Document Type</b></h3>
-          
-              <select formControlName="documentType" class="form-control mb-3" required>
-                <option value="">Choose a document...</option>
-                <option value="examquestionpaper">Exam Question Papers</option>
-                <option value="iaquestionpaper">IA Question Papers</option>
-                <option value="projectmanagement">Project Management Documents</option>
-                <option value="deptreports">Departmental Reports/Records</option>
-              </select>
-              <div class="custom-file mb-3">
-                <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="documentFile" accept="image/*,application/pdf" required>
-                <!-- <label class="custom-file-label" for="documentFile">Choose file</label> -->
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">Upload Document</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
   
-    <!-- Uploaded Documents Section -->
-    <div id="uploadedDocuments" class="mt-5">
-      <h4><b>Uploaded Documents:</b></h4>
-      <div id="documentsList" class="row mt-3">
-        <div *ngFor="let document of uploadedDocuments" class="col-md-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ document.fileName }}</h5>
-              <p class="card-text">{{ document.documentType }}</p>
-              <button (click)="viewDocument(document.fileData, document.documentType)" class="btn btn-secondary">View Document</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  </div>
-
-
-
-    
+</div>
+<div class="content">
+    <h1>WELCOME TO Personal Documents</h1>
+    <p>
+     
+    </p>
+</div>
+</div>

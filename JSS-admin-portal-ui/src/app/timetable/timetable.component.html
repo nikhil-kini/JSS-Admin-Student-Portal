@@ -60,26 +60,91 @@
         </ul>
     </div>
     <div class="content">
-      <h1>WELCOME TO Timetable</h1>
-  
-      <div>
-        <!-- <li>
-          <a routerLink="ecdepartment" (click)="ecdepartment()">
-            Ec Department
-          </a>
-        </li> -->
-        <ul>
-          <button routerLink="/ecdepartment">EC Department</button>
-          <button routerLink="/csdepartment">CS Department</button>
-          <button routerLink="/eedepartment">EE Department</button>
-          <button routerLink="/mechanicaldepartment">Mechanical Department</button>
-          <button routerLink="/mechatronicsdepartment">Mechatronics Department</button>
-          <button routerLink="/civildepartment">Civil Department</button>
-        </ul>
+      
+      
+      <div class="main-content">
+        <h2>Timetable</h2>
+    
+        <div>
+          <label for="semesterSelect">Select Semester:</label>
+          <select id="semesterSelect" (change)="onSemesterChange($event)">
+            <option *ngFor="let semester of availableSemesters" [value]="semester">{{ semester }}</option>
+          </select>
+        </div>
+      
+        <button (click)="showMasterTimetable()">Show Master Timetable</button>
+        <button (click)="showTheoryTimetable()">Show Theory Timetable</button>
+        <button (click)="showLabTimetable()">Show Lab Timetable</button>
+      
+        <div *ngIf="isMasterTimetableVisible">
+          <h3>Master Timetable - {{ selectedSemester }}</h3>
+          
+          <h4>Theory Classes</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Class</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let class of theoryTimetable">
+              <td>{{ class.time }}</td>
+              <td>{{ class.subject }}</td>
+            </tr>
+          </tbody>
+          </table>
+      
+          <h4>Lab Classes</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Class</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let lab of labTimetable">
+              <td>{{ lab.time }}</td>
+              <td>{{ lab.subject }}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      
+        <div *ngIf="isTheoryTimetableVisible">
+          <h2>Theory Timetable - {{ selectedSemester }}</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Class</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let class of theoryTimetable">
+              <td>{{ class.time }}</td>
+              <td>{{ class.subject }}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      
+        <div *ngIf="isLabTimetableVisible">
+          <h2>Lab Timetable - {{ selectedSemester }}</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Class</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let lab of labTimetable">
+              <td>{{ lab.time }}</td>
+              <td>{{ lab.subject }}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
       </div>
-  
-      
-          <!-- <router-outlet></router-outlet> This will display the routed component -->
-      
-  </div>
-  
