@@ -60,9 +60,14 @@
   
 </div>
 <div class="content">
-    <h1>WELCOME TO Personal Documents</h1>
-    <p>
-     
-    </p>
+  <div>
+    <h2>Upload and Download Files</h2>
+    
+    <input type="file" (change)="onFileChange($event)" />
+    
+    
+    
+    <button (click)="downloadFile()">Download File</button>
+  </div>
 </div>
 </div>

@@ -14,6 +14,7 @@ interface Timetable {
   [semester: string]: DaySchedule[]; 
 }
 
+
 @Component({
   selector: 'app-timetable',
   standalone: true,
@@ -22,7 +23,9 @@ interface Timetable {
   styleUrl: './timetable.component.css'
 })
 export class TimetableComponent {
+ 
   constructor(private router: Router) {}
+   
 
   home(){
     this.router.navigate(['/home']);

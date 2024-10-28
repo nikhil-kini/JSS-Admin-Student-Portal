@@ -7,6 +7,8 @@
                   <i class="fas fa-home" style="padding-right: 10px;"> </i> Home
                 </a>
               </li>
+
+             
               <li>
                 <a routerLink="time-table" (click)="timetable()">
                   <i class="fas fa-calendar-alt" style="padding-right: 10px;"></i> Time Table
@@ -62,89 +64,91 @@
     <div class="content">
       
       
-      <div class="main-content">
-        <h2>Timetable</h2>
-    
-        <div>
-          <label for="semesterSelect">Select Semester:</label>
-          <select id="semesterSelect" (change)="onSemesterChange($event)">
-            <option *ngFor="let semester of availableSemesters" [value]="semester">{{ semester }}</option>
-          </select>
-        </div>
+     
       
-        <button (click)="showMasterTimetable()">Show Master Timetable</button>
-        <button (click)="showTheoryTimetable()">Show Theory Timetable</button>
-        <button (click)="showLabTimetable()">Show Lab Timetable</button>
+        <div class="main-content">
+          <h2>Timetable</h2>
       
-        <div *ngIf="isMasterTimetableVisible">
-          <h3>Master Timetable - {{ selectedSemester }}</h3>
-          
-          <h4>Theory Classes</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Class</th>
+          <div>
+            <label for="semesterSelect">Select Semester:</label>
+            <select id="semesterSelect" (change)="onSemesterChange($event)">
+              <option *ngFor="let semester of availableSemesters" [value]="semester">{{ semester }}</option>
+            </select>
+          </div>
+        
+          <button (click)="showMasterTimetable()">Show Master Timetable</button>
+          <button (click)="showTheoryTimetable()">Show Theory Timetable</button>
+          <button (click)="showLabTimetable()">Show Lab Timetable</button>
+        
+          <div *ngIf="isMasterTimetableVisible">
+            <h3>Master Timetable - {{ selectedSemester }}</h3>
+            
+            <h4>Theory Classes</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let class of theoryTimetable">
+                <td>{{ class.time }}</td>
+                <td>{{ class.subject }}</td>
               </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let class of theoryTimetable">
-              <td>{{ class.time }}</td>
-              <td>{{ class.subject }}</td>
-            </tr>
-          </tbody>
-          </table>
-      
-          <h4>Lab Classes</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Class</th>
+            </tbody>
+            </table>
+        
+            <h4>Lab Classes</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let lab of labTimetable">
+                <td>{{ lab.time }}</td>
+                <td>{{ lab.subject }}</td>
               </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let lab of labTimetable">
-              <td>{{ lab.time }}</td>
-              <td>{{ lab.subject }}</td>
-            </tr>
-          </tbody>
-          </table>
-        </div>
-      
-        <div *ngIf="isTheoryTimetableVisible">
-          <h2>Theory Timetable - {{ selectedSemester }}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Class</th>
+            </tbody>
+            </table>
+          </div>
+        
+          <div *ngIf="isTheoryTimetableVisible">
+            <h2>Theory Timetable - {{ selectedSemester }}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let class of theoryTimetable">
+                <td>{{ class.time }}</td>
+                <td>{{ class.subject }}</td>
               </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let class of theoryTimetable">
-              <td>{{ class.time }}</td>
-              <td>{{ class.subject }}</td>
-            </tr>
-          </tbody>
-          </table>
-        </div>
-      
-        <div *ngIf="isLabTimetableVisible">
-          <h2>Lab Timetable - {{ selectedSemester }}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Class</th>
+            </tbody>
+            </table>
+          </div>
+        
+          <div *ngIf="isLabTimetableVisible">
+            <h2>Lab Timetable - {{ selectedSemester }}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let lab of labTimetable">
+                <td>{{ lab.time }}</td>
+                <td>{{ lab.subject }}</td>
               </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let lab of labTimetable">
-              <td>{{ lab.time }}</td>
-              <td>{{ lab.subject }}</td>
-            </tr>
-          </tbody>
-          </table>
+            </tbody>
+            </table>
+          </div>
         </div>
-      </div>

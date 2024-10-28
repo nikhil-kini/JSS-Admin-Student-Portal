@@ -75,7 +75,9 @@ a:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
+ 
 }
+
 
 .content h1 {
   font-size: 2rem;
@@ -136,48 +138,37 @@ h1 {
 
 .main-content {
   flex: 1;
-  padding: 15px;
+  padding: 20px; 
+  padding-right: 400px; 
+  overflow-y: auto; 
+  height: calc(100vh - 80px); 
+  box-sizing: content-box; 
 }
 
-/* table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-} */
-
-/* button {
-  margin: 10px 0;
-  padding: 10px;
-} */
 
 .button-group {
-  margin: 15px 0; /* Adds space above and below the button group */
+  margin: 15px 0; 
 }
 
 .button-group button {
-  margin-right: 10px; /* Adds space between each button */
+  margin-right: 10px; 
 }
 
 .button-group button:last-child {
-  margin-right: 0; /* Remove right margin from the last button */
+  margin-right: 0;
 }
 table {
-  width: 100%; /* Full width of the container */
-  border-collapse: collapse; /* Merge borders */
+  width: 100%; 
+  border-collapse: collapse;
 }
 
 th, td {
-  padding: 10px; /* Padding for both header and data cells */
-  text-align: center; /* Align text to the left */
-  border: 1px solid #ccc; /* Light gray border for cells */
+  padding: 10px; 
+  text-align: center; 
+  border: 1px solid #ccc; 
 }
 
 th {
-  background-color: #f2f2f2; /* Light gray background for headers */
-  font-weight: bold; /* Bold text for headers */
+  background-color: #f2f2f2; 
+  font-weight: bold; 
 }
