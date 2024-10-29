@@ -3,6 +3,7 @@ package com.example.adminlogin.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -30,4 +31,17 @@ public class Document {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long docId;
+//
+//    private String documentType;
+//    private byte[] fileData; // if you're saving the file data as a blob
+//    private String fileName;
+//    private String fileType;
+//    private LocalDateTime uploadDate;
+//
+//    @Column(nullable = false)
+//    private Long Id;
 }

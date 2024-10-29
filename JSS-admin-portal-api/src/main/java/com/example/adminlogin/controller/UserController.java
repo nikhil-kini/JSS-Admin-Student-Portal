@@ -95,12 +95,7 @@ public class UserController {
         User existingUser = existingUserOpt.get();
 
         // Update only the fields that are provided in the request body
-        if (updatedUser.getFirstname() != null) {
-            existingUser.setFirstname(updatedUser.getFirstname());
-        }
-        if (updatedUser.getLastname() != null) {
-            existingUser.setLastname(updatedUser.getLastname());
-        }
+        
         if (updatedUser.getEmail() != null) {
             existingUser.setEmail(updatedUser.getEmail());
         }

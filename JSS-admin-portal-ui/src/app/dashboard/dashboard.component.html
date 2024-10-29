@@ -1,42 +1,36 @@
-<!-- <div class="timetable">
-  <h2>Weekly Timetable</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let timing of timings">
-        <td>{{ timing }}</td>
-        <td>{{ timetable['Monday'][timings.indexOf(timing)] || 'Free' }}</td>
-        <td>{{ timetable['Tuesday'][timings.indexOf(timing)] || 'Free' }}</td>
-        <td>{{ timetable['Wednesday'][timings.indexOf(timing)] || 'Free' }}</td>
-        <td>{{ timetable['Thursday'][timings.indexOf(timing)] || 'Free' }}</td>
-        <td>{{ timetable['Friday'][timings.indexOf(timing)] || 'Free' }}</td>
-        <td>{{ timetable['Saturday'][timings.indexOf(timing)] || 'Free' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
 
-<div class="content">
-  <h2>Upload and Download Files</h2>
+  <div class="content">
+    <h2>UPLOAD TEACHING-AIDS</h2>
+    
+    <select [(ngModel)]="selectedDocumentType">
+      <option value="" disabled>Choose a Document...</option>
+      <option value="pdf">PDF</option>
+      <option value="excel">Excel</option>
+      <option value="word">Word</option>
+      <option value="image">Image</option>
+      <option value="ppt">PowerPoint</option>
+    </select>
 
-  <input type="file" (change)="onFileChange($event)" />
-  
+    <input type="file" (change)="onFileChange($event)" />
 
-  <select [(ngModel)]="selectedFileName" (change)="onFileSelect()">
-      <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
-     
-  </select>
-  <button (click)="downloadSelectedFile()">Download Selected File</button>
-</div>
+<select [(ngModel)]="selectedFileName" (change)="onFileSelect()">
+<option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
+</select>
 
-
+    <button (click)="downloadSelectedFile()">Download Selected File</button>
+    
+    <div class="upload">
+      <h4>Uploaded Files:</h4>
+      <table>
+        
+       
+          <tr *ngFor="let file of fileList">
+            <td>{{ file }}</td>
+            
+        </tr>
+        <div *ngIf="fileList.length === 0" class="no-docs-message">
+          No documents found.
+        </div>
+      </table>
+    </div>
+  </div>

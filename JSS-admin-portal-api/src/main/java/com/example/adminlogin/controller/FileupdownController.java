@@ -1,5 +1,9 @@
 //package com.example.adminlogin.controller;
 //
+//import com.example.adminlogin.model.Document;
+//import com.example.adminlogin.repository.DocumentRepo;
+//import com.example.adminlogin.repository.UserRepo;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Value; // Import the correct Value annotation
 //import org.springframework.core.io.Resource; // This is needed
 //import org.springframework.core.io.UrlResource;
@@ -15,15 +19,20 @@
 //import java.nio.file.Files;
 //import java.nio.file.Path; // Use the correct Path import
 //import java.nio.file.Paths;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
+//import java.util.*;
+//import java.util.stream.Collectors;
 //
 //@CrossOrigin(origins = "http://localhost:4200")
 //@RestController
 //@RequestMapping("/api/files")
 //public class FileupdownController {
+//
+//    @Autowired
+//    private DocumentRepo documentRepo;
+//
+//    @Autowired
+//    private UserRepo userRepo;
+//
 //    private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/upload/1st year/sem1/";
 //
 //    @PostMapping("/upload")
@@ -59,19 +68,45 @@
 //        }
 //    }
 //
-//    @GetMapping("/list")
-//    public ResponseEntity<List<String>> listFiles() {
-//        List<String> fileNames = new ArrayList<>();
-//        try {
-//            Files.list(Paths.get(uploadDir))
-//                    .forEach(path -> fileNames.add(path.getFileName().toString()));
-//            return ResponseEntity.ok(fileNames);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(fileNames);
-//        }
+//    // Get all documents by user ID
+//    @GetMapping("/user/{id}")
+//    public ResponseEntity<List<Document>> getDocumentsByUserId(@PathVariable Long id) {
+//        List<Document> documents = documentRepo.findByUserId(id);
+//        return ResponseEntity.ok(documents);
 //    }
 //
+//    // Get Document by ID
+//    @GetMapping("/{documentId}")
+//    public ResponseEntity<Document> getDocumentById(@PathVariable Long documentId) {
+//        Optional<Document> documentOptional = documentRepo.findById(documentId);
+//        return documentOptional.map(ResponseEntity::ok)
+//                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+//    }
+//
+//    // Delete Document
+//    @DeleteMapping("/{documentId}")
+//    public ResponseEntity<String> deleteDocument(@PathVariable Long documentId) {
+//        if (!documentRepo.existsById(documentId)) {
+//            return ResponseEntity.status(404).body("Document not found.");
+//        }
+//        documentRepo.deleteById(documentId);
+//        return ResponseEntity.ok("Document deleted successfully.");
+//    }
+//
+//    @GetMapping("/list")
+//    public ResponseEntity<List<String>> listUploadedFiles() {
+//        File folder = new File(uploadDir);
+//        File[] files = folder.listFiles();
+//
+//        if (files != null) {
+//            List<String> fileNames = Arrays.stream(files)
+//                    .map(File::getName)
+//                    .collect(Collectors.toList());
+//            return ResponseEntity.ok(fileNames);
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//    }
 //
 //    @GetMapping("/download/{filename:.+}")
 //    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
