@@ -60,14 +60,14 @@
   
 </div>
 <div class="content">
-  <div>
-    <h2>Upload and Download Files</h2>
-    
-    <input type="file" (change)="onFileChange($event)" />
-    
-    
-    
-    <button (click)="downloadFile()">Download File</button>
-  </div>
-</div>
+  <h2>Upload and Download Files</h2>
+
+  <input type="file" (change)="onFileChange($event)" />
+  
+
+  <select [(ngModel)]="selectedFileName" (change)="onFileSelect()">
+      <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
+     
+  </select>
+  <button (click)="downloadSelectedFile()">Download Selected File</button>
 </div>

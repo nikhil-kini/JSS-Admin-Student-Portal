@@ -1,4 +1,4 @@
-<div class="timetable">
+<!-- <div class="timetable">
   <h2>Weekly Timetable</h2>
   <table>
     <thead>
@@ -24,12 +24,19 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
-<div>
+<div class="content">
   <h2>Upload and Download Files</h2>
-  
+
   <input type="file" (change)="onFileChange($event)" />
   
-  <button (click)="downloadFile('yourFileName.ext')">Download File</button> <!-- Replace with the actual file name -->
+
+  <select [(ngModel)]="selectedFileName" (change)="onFileSelect()">
+      <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
+     
+  </select>
+  <button (click)="downloadSelectedFile()">Download Selected File</button>
 </div>
+
+

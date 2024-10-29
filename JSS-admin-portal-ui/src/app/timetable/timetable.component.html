@@ -62,11 +62,15 @@
         </ul>
     </div>
     <div class="content">
-      
+      <form (submit)="onSubmit()" enctype="multipart/form-data">
+        <input type="file" (change)="onFileChange($event)" accept=".xlsx" required />
+        <button type="submit">Upload Timetable</button>
+      </form>
+    </div>
       
      
       
-        <div class="main-content">
+        <!-- <div class="main-content">
           <h2>Timetable</h2>
       
           <div>
@@ -151,4 +155,4 @@
             </tbody>
             </table>
           </div>
-        </div>
+        </div> -->

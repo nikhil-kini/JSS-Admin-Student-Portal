@@ -1,4 +1,7 @@
 package com.example.adminlogin.repository;
 
-public interface TimetableRepo {
+import com.example.adminlogin.model.Timetable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TimetableRepo extends JpaRepository<Timetable, Long> {
 }

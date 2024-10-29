@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -13,9 +13,10 @@ import { Observable } from 'rxjs';
   templateUrl: './personal-documents.component.html',
   styleUrl: './personal-documents.component.css'
 })
-export class PersonalDocumentsComponent {
+export class PersonalDocumentsComponent implements OnInit{
 
-  constructor(private router: Router,private http: HttpClient) {}
+  constructor(private router: Router,private http: HttpClient,private fb: FormBuilder) {}
+ 
   
 
   home(){
@@ -54,52 +55,82 @@ export class PersonalDocumentsComponent {
       this.router.navigate(['/login']);
     }
   
-
-    private baseUrl = 'http://localhost:8080/api/files';
-    uploadedFileName: string = '';
-
-    
-    uploadFile(file: File): Observable<any> {
-      const formData = new FormData();
-      formData.append('file', file); // Append the file to FormData
+    baseUrl = 'http://localhost:8080/api/files';
+    uploadedFileName = '';
+    fileList: string[] = [];
+    selectedFileName = '';
   
-      return this.http.post(`${this.baseUrl}/upload`, formData); // Make the POST request
+    // constructor(private http: HttpClient) {}
+  
+    ngOnInit() {
+        this.getFileList();
     }
-    
-
+  
     onFileChange(event: any) {
-      const file = event.target.files[0];
-      if (file) {
-          this.uploadFile(file).subscribe(
-              response => {
-                alert('File uploaded successfully')
-                  console.log('File uploaded successfully:', response);
-                  this.uploadedFileName = response.downloadUrl; // Store the download URL
-              },
-              error => {
-                  console.error('Error uploading file:', error);
+        const file = event.target.files[0];
+        if (file) {
+            this.uploadFile(file).subscribe(
+                response => {
+                    alert('File uploaded successfully');
+                    this.uploadedFileName = response.downloadUrl;
+                    this.getFileList(); // Refresh file list after upload
+                },
+                error => {
+                    if (error.status === 409) { // Conflict
+                        alert('File already exists with the same name');
+                    } else {
+                        console.error('Error uploading file:', error);
+                    }
+                }
+            );
+        }
+    }
+  
+    uploadFile(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${this.baseUrl}/upload`, formData);
+    }
+  
+   
+  
+    onFileSelect() {
+        this.uploadedFileName = `${this.baseUrl}/download/${this.selectedFileName}`;
+    }
+  
+    getFileList() {
+      this.http.get<string[]>(`${this.baseUrl}/list`).subscribe(
+          fileList => {
+              this.fileList = fileList;
+          },
+          error => {
+              console.error('Error fetching file list:', error);
+              if (error.status === 0) {
+                  alert('Network error or server not reachable');
+              } else {
+                  alert('Error fetching file list: ' + error.message);
               }
-          );
-      }
+          }
+      );
   }
   
-  downloadFile() {
-    if (this.uploadedFileName) {
-        // Assuming uploadedFileName contains the full URL path
-        this.http.get(this.uploadedFileName, { responseType: 'blob' })
-            .subscribe(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = this.uploadedFileName.split('/').pop()!; // Use the filename
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            }, error => {
-                console.error('Error downloading file:', error);
-            });
-    } else {
-        console.error('No file uploaded to download');
-    }
-}
-}
+    downloadSelectedFile() {
+      if (this.selectedFileName) {
+          const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
+          this.http.get(downloadUrl, { responseType: 'blob' })
+              .subscribe(blob => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = this.selectedFileName;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+              }, error => {
+                  console.error('Error downloading file:', error);
+              });
+      } else {
+          alert('Please select a file to download');
+      }
+  }
+  }

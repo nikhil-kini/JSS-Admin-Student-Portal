@@ -67,145 +67,98 @@ a:hover {
   padding-left: 0.5rem;
 }
 
-.content {
+ /* Content container */
+ .content {
   flex-grow: 1;
-  padding: 40px;
-  background-color: #136e85;
-  border-radius: 0 1rem 1rem 0;
+  padding: 20px; /* Reduced padding */
+  background-color: #209467;
+  border-radius: 1rem; /* Make all corners rounded */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 700px; 
+  height: 400px;
+  margin: auto; /* Center the content */
+  border: 1px solid #ccc; /* Optional: Add a border if desired */
 }
 
-.content h1 {
-  font-size: 2rem;
+/* Header styling */
+.content h2 {
+  font-size: 1.5rem; /* Reduced font size */
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* Reduced margin */
 }
 
-.content p {
-  font-size: 1.1rem;
-  color: #555;
-  line-height: 1.6;
+input[type="file"] {
+  display: flex; /* Use flexbox to center content */
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  margin: 10px auto; /* Reduced margin */
+  padding: 5px; /* Further reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 400px; /* Set a fixed width */
+  height: 35px; /* Set a fixed height */
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+  text-align: center; /* Center text horizontally */
+  line-height: 35px;
 }
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    width: 90%;
-  }
-
-  .sidebar {
-    width: 50px;
-  }
-
-  .sidebar:hover {
-    width: 150px;
-  }
-
-  .content {
-    padding: 20px;
-  }
+input[type="file"]:hover {
+  border-color: #007bff; 
+  
 }
 
-.card {
-  border: 1px solid #dee2e6; 
-  border-radius: 8px; 
-  overflow: hidden; 
-  transition: transform 0.2s; 
-}
-
-.card-body {
-  padding: 20px; /* Increase padding for a larger appearance */
-  min-height: 200px; /* Set a minimum height to make the card body bigger */
-  outline: 2px solid #020c15; /* Add an outline with your desired color */
-  outline-offset: -4px; /* Adjust offset to move the outline closer to the border */
-  border-radius: 8px; /* Optional: keep the rounded corners */
-}
-
-
-.card:hover {
-  transform: scale(1.02);
-}
-
-
-.custom-file-input {
-  height: 40px; 
-}
-
-.custom-file-label {
-  height: 40px; 
-  line-height: 40px; 
-}
-
-.btn-primary {
-  background-color: #9da4ad; 
-  border-color: #becad8; 
-}
-
-.btn-primary:hover {
-  background-color: #0056b3; 
-  border-color: #0056b3; 
-}
-
-.btn-secondary {
-  background-color: #6c757d; 
-  border-color: #6c757d; 
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268; 
-  border-color: #545b62; 
-}
-
-
-#uploadedDocuments {
-  margin-top: 30px; 
-}
-
-.card-title {
-  font-size: 1.2em;
-}
-
-.card-text {
-  font-size: 0.9em; 
-}
-
-
-@media (max-width: 768px) {
-  .col-md-4 {
-    flex: 0 0 100%;
-    max-width: 100%; 
-  }
-}
-
-.card-title {
-  font-size: 1.1rem;
-  margin-bottom: 10px; /* Add space below the title */
-  color: #060a0f;
-}
-
-select.form-control {
-  height: 40px;
-  font-size: 1rem;
-  padding: 0.5rem;
+/* Button styling */
+button {
+  width: 100%;
+  padding: 10px; /* Reduced padding */
+  border: none;
   border-radius: 5px;
-  margin-bottom: 15px; /* Add space below the dropdown */
+  background-color: #073712;
+  color: white;
+  font-size: 14px; /* Reduced font size */
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  width: 200px; /* Set a fixed width */
+  height: 35px; /* Set a fixed height */
 }
 
-.custom-file {
-  display: flex;
-  justify-content: center; /* Centers the input horizontally */
-  margin-top: 15px;
-   width: 500px;
+button:hover {
+  background-color: #218838;
 }
 
+/* Select dropdown styling */
+select {
+  display: block;
+  margin: 10px auto; /* Reduced margin */
+  padding: 8px; /* Reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
+  background-color: #f9f9f9;
+  font-size: 14px; /* Reduced font size */
+  transition: border-color 0.3s;
+  width: 500px; /* Set a fixed width */
+  height: 35px; /* Set a fixed height */
+}
 
+select:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
 
-.custom-file-input {
-  width: 50%; /* Adjust width of the file input */
-  margin: 0 auto; /* Center the input within its container */
-  display: block; /* Ensure the input is treated as a block element */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content {
+      padding: 15px; /* Reduced padding for smaller screens */
+  }
+
+  button, input[type="file"], select {
+      font-size: 12px; /* Reduced font size for smaller screens */
+  }
 }

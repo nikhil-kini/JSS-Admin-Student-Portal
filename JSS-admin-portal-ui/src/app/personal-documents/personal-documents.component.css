@@ -67,7 +67,7 @@
     padding-left: 0.5rem;
   }
   
-  .content {
+  /* .content {
     flex-grow: 1;
     padding: 40px;
     background-color: #dde7ea;
@@ -118,11 +118,11 @@
   }
 
   .card-body {
-    padding: 20px; /* Increase padding for a larger appearance */
-    min-height: 200px; /* Set a minimum height to make the card body bigger */
-    outline: 2px solid #020c15; /* Add an outline with your desired color */
-    outline-offset: -4px; /* Adjust offset to move the outline closer to the border */
-    border-radius: 8px; /* Optional: keep the rounded corners */
+    padding: 20px; 
+    min-height: 200px; 
+    outline: 2px solid #020c15; 
+    outline-offset: -4px; 
+    border-radius: 8px; 
   }
   
   
@@ -183,7 +183,7 @@
 
   .card-title {
     font-size: 1.1rem;
-    margin-bottom: 10px; /* Add space below the title */
+    margin-bottom: 10px; 
     color: #060a0f;
   }
   
@@ -192,12 +192,12 @@
     font-size: 1rem;
     padding: 0.5rem;
     border-radius: 5px;
-    margin-bottom: 15px; /* Add space below the dropdown */
+    margin-bottom: 15px; 
   }
   
   .custom-file {
     display: flex;
-    justify-content: center; /* Centers the input horizontally */
+    justify-content: center; 
     margin-top: 15px;
      width: 500px;
   }
@@ -205,7 +205,103 @@
   
   
   .custom-file-input {
-    width: 50%; /* Adjust width of the file input */
-    margin: 0 auto; /* Center the input within its container */
-    display: block; /* Ensure the input is treated as a block element */
+    width: 50%; 
+    margin: 0 auto; 
+    display: block; 
+  } */
+
+  /* Content container */
+  .content {
+    flex-grow: 1;
+    padding: 20px; /* Reduced padding */
+    background-color: #197692;
+    border-radius: 1rem; /* Make all corners rounded */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 700px; 
+    height: 400px;
+    margin: auto; /* Center the content */
+    border: 1px solid #ccc; /* Optional: Add a border if desired */
   }
+
+/* Header styling */
+.content h2 {
+  font-size: 1.5rem; /* Reduced font size */
+  color: #333;
+  margin-bottom: 15px; /* Reduced margin */
+}
+
+input[type="file"] {
+  display: flex; /* Use flexbox to center content */
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  margin: 10px auto; /* Reduced margin */
+  padding: 5px; /* Further reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 400px; /* Set a fixed width */
+  height: 35px; /* Set a fixed height */
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+  text-align: center; /* Center text horizontally */
+  line-height: 35px;
+}
+
+
+input[type="file"]:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 10px; /* Reduced padding */
+  border: none;
+  border-radius: 5px;
+  background-color: #1a0749;
+  color: white;
+  font-size: 14px; /* Reduced font size */
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  width: 200px; /* Set a fixed width */
+  height: 35px; /* Set a fixed height */
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Select dropdown styling */
+select {
+  display: block;
+  margin: 10px auto; /* Reduced margin */
+  padding: 8px; /* Reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
+  background-color: #f9f9f9;
+  font-size: 14px; /* Reduced font size */
+  transition: border-color 0.3s;
+  width: 500px; /* Set a fixed width */
+  height: 35px; /* Set a fixed height */
+}
+
+select:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content {
+      padding: 15px; /* Reduced padding for smaller screens */
+  }
+
+  button, input[type="file"], select {
+      font-size: 12px; /* Reduced font size for smaller screens */
+  }
+}

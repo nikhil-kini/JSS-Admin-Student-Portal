@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
+import { catchError, Observable, of, throwError } from 'rxjs';
 
 interface Document {
   fileData: string;
@@ -19,10 +20,7 @@ interface Document {
 export class TeachingAidsComponent {
   // constructor(private router: Router) {}
   constructor(private http: HttpClient, private fb: FormBuilder,private router: Router) {
-    this.documentUploadForm = this.fb.group({
-      documentType: ['', Validators.required],
-      documentFile: [null, Validators.required]
-    });
+    
   }
 
   home(){
@@ -61,84 +59,80 @@ export class TeachingAidsComponent {
       this.router.navigate(['/login']);
     }
   
-  documentUploadForm: FormGroup;
-  uploadedDocuments: Document[] = [];
-  adminid: string | null = null;
-
- 
+    baseUrl = 'http://localhost:8080/api/files';
+    uploadedFileName = '';
+  fileList: string[] = [];
+  selectedFileName = '';
 
   ngOnInit() {
-    
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    this.adminid = currentUser?.employeeId || null; 
-
-    
-    if (!this.adminid) {
-        console.error('No employee ID found in localStorage.');
-        alert('Please log in to access document management features.'); 
-        return; 
-    }
-
-    // Fetch uploaded documents if employeeId is found
-    this.fetchUploadedDocuments();
+    this.getFileList();
 }
 
-  onFileChange(event: any) {
+onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.documentUploadForm.patchValue({ documentFile: file });
+        this.uploadFile(file).subscribe(
+            response => {
+                alert('File uploaded successfully');
+                this.uploadedFileName = response.downloadUrl;
+                this.getFileList(); // Refresh file list after upload
+            },
+            error => {
+                if (error.status === 409) { // Conflict
+                    alert('File already exists with the same name');
+                } else {
+                    console.error('Error uploading file:', error);
+                }
+            }
+        );
     }
-  }
+}
 
-  submitForm() {
-    if (this.documentUploadForm.valid && this.adminid) {
-      const formData = new FormData();
-      formData.append('file', this.documentUploadForm.get('documentFile')?.value);
-      formData.append('documentType', this.documentUploadForm.get('documentType')?.value);
-      formData.append('employeeId', this.adminid);
+uploadFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`${this.baseUrl}/upload`, formData);
+}
 
-      this.http.post('http://localhost:8080/documents/upload', formData)
-        .subscribe({
-          next: () => {
-            alert('Document uploaded successfully!');
-            this.fetchUploadedDocuments();
-            this.documentUploadForm.reset();
-          },
-          error: (error) => {
-            console.error('Error uploading document:', error);
-            alert('Failed to upload document. Please check the console for details.');
+
+
+onFileSelect() {
+    this.uploadedFileName = `${this.baseUrl}/download/${this.selectedFileName}`;
+}
+
+getFileList() {
+  this.http.get<string[]>(`${this.baseUrl}/list`).subscribe(
+      fileList => {
+          this.fileList = fileList;
+      },
+      error => {
+          console.error('Error fetching file list:', error);
+          if (error.status === 0) {
+              alert('Network error or server not reachable');
+          } else {
+              alert('Error fetching file list: ' + error.message);
           }
-        });
-    } else {
-      alert('Please select a document type and file.');
-    }
-  }
+      }
+  );
+}
 
-  fetchUploadedDocuments() {
-    if (!this.adminid) {
-      console.error('No employee ID found in localStorage.');
-      return;
-    }
-
-    this.http.get<Document[]>(`http://localhost:8080/documents/files/${this.adminid}`)
-      .subscribe({
-        next: (documents) => {
-          this.uploadedDocuments = documents;
-        },
-        error: (error) => {
-          console.error('Error fetching documents:', error);
-        }
-      });
+downloadSelectedFile() {
+  if (this.selectedFileName) {
+      const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
+      this.http.get(downloadUrl, { responseType: 'blob' })
+          .subscribe(blob => {
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = this.selectedFileName;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+          }, error => {
+              console.error('Error downloading file:', error);
+          });
+  } else {
+      alert('Please select a file to download');
   }
-
-  viewDocument(base64Data: string, documentType: string) {
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Uint8Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const blob = new Blob([byteNumbers], { type: documentType });
-    const blobUrl = URL.createObjectURL(blob);
-    window.open(blobUrl, '_blank');
-  }
+}
 }

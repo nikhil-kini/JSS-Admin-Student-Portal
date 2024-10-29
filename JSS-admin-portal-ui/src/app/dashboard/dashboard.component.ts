@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UploadfileService } from '../uploadfile.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  constructor(private router: Router,private http: HttpClient) {}
+  constructor(private router: Router,private http: HttpClient,private uploadService: UploadfileService) {}
   // constructor(private authService: AuthService, private router: Router) {}
   // onLogout() {
   //   localStorage.removeItem('isAuthenticated');
@@ -69,67 +70,104 @@ export class DashboardComponent {
   // } 
 
 
-  days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  timings: string[] = [
-    '9 AM',
-    '10 AM',
-    '11 AM',
-    '12 PM',
-    '1 PM',
-    '2 PM',
-    '3 PM',
-    '4 PM',
-    '5 PM'
-  ];
-  timetable: { [key: string]: string[] } = {
-    Monday: ['Math', 'Science', 'English', '', 'History', ''],
-    Tuesday: ['History', '', 'Geography', 'Art', '', ''],
-    Wednesday: ['PE', '', 'Music', '', 'Chemistry', ''],
-    Thursday: ['Art', '', 'Physics', 'Biology', '', ''],
-    Friday: ['Literature', 'Math', '', '', 'Chemistry', ''],
-    Saturday: ['Computer Science', '', 'History', '', 'Physics', '']
-  };
+  // days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  // timings: string[] = [
+  //   '9 AM',
+  //   '10 AM',
+  //   '11 AM',
+  //   '12 PM',
+  //   '1 PM',
+  //   '2 PM',
+  //   '3 PM',
+  //   '4 PM',
+  //   '5 PM'
+  // ];
+  // timetable: { [key: string]: string[] } = {
+  //   Monday: ['Math', 'Science', 'English', '', 'History', ''],
+  //   Tuesday: ['History', '', 'Geography', 'Art', '', ''],
+  //   Wednesday: ['PE', '', 'Music', '', 'Chemistry', ''],
+  //   Thursday: ['Art', '', 'Physics', 'Biology', '', ''],
+  //   Friday: ['Literature', 'Math', '', '', 'Chemistry', ''],
+  //   Saturday: ['Computer Science', '', 'History', '', 'Physics', '']
+  // };
 
 
-  private baseUrl = 'http://localhost:8080/api/files';
-
+  baseUrl = 'http://localhost:8080/api/files';
+    uploadedFileName = '';
+    fileList: string[] = [];
+    selectedFileName = '';
+  
+    // constructor(private http: HttpClient) {}
+  
+    ngOnInit() {
+        this.getFileList();
+    }
+  
     onFileChange(event: any) {
-      const file = event.target.files[0]; // Get the selected file
-      if (file) {
-        this.uploadFile(file).subscribe(
-          response => {
-            console.log('File uploaded successfully:', response);
+        const file = event.target.files[0];
+        if (file) {
+            this.uploadFile(file).subscribe(
+                response => {
+                    alert('File uploaded successfully');
+                    this.uploadedFileName = response.downloadUrl;
+                    this.getFileList(); // Refresh file list after upload
+                },
+                error => {
+                    if (error.status === 409) { // Conflict
+                        alert('File already exists with the same name');
+                    } else {
+                        console.error('Error uploading file:', error);
+                    }
+                }
+            );
+        }
+    }
+  
+    uploadFile(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${this.baseUrl}/upload`, formData);
+    }
+  
+   
+  
+    onFileSelect() {
+        this.uploadedFileName = `${this.baseUrl}/download/${this.selectedFileName}`;
+    }
+  
+    getFileList() {
+      this.http.get<string[]>(`${this.baseUrl}/list`).subscribe(
+          fileList => {
+              this.fileList = fileList;
           },
           error => {
-            console.error('Error uploading file:', error);
+              console.error('Error fetching file list:', error);
+              if (error.status === 0) {
+                  alert('Network error or server not reachable');
+              } else {
+                  alert('Error fetching file list: ' + error.message);
+              }
           }
-        );
-      }
-    }
-  
-    // Method to upload the file
-    uploadFile(file: File): Observable<any> {
-      const formData = new FormData();
-      formData.append('file', file); // Append the file to FormData
-  
-      return this.http.post(`${this.baseUrl}/upload`, formData); // Make the POST request
-    }
-  
-    // Method to download the file
-    downloadFile(fileName: string) {
-      this.http.get(`${this.baseUrl}/download/${fileName}`, { responseType: 'blob' }).subscribe(
-        blob => {
-          const url = window.URL.createObjectURL(blob); // Create a URL for the blob
-          const a = document.createElement('a'); // Create an anchor element
-          a.href = url;
-          a.download = fileName; // Set the file name for download
-          a.click(); // Programmatically click the anchor to trigger download
-          window.URL.revokeObjectURL(url); // Clean up the URL object
-        },
-        error => {
-          console.error('Error downloading file:', error);
-        }
       );
-    }
+  }
   
-}
+    downloadSelectedFile() {
+      if (this.selectedFileName) {
+          const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
+          this.http.get(downloadUrl, { responseType: 'blob' })
+              .subscribe(blob => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = this.selectedFileName;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+              }, error => {
+                  console.error('Error downloading file:', error);
+              });
+      } else {
+          alert('Please select a file to download');
+      }
+  }
+  }
