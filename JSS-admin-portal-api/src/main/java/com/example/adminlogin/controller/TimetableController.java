@@ -1,4 +1,4 @@
 package com.example.adminlogin.controller;
 
-public class DocumentController {
+public class TimetableController {
 }

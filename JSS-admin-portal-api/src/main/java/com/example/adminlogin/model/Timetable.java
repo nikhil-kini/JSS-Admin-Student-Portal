@@ -1,4 +1,4 @@
 package com.example.adminlogin.model;
 
-public class Document {
+public class Timetable {
 }
