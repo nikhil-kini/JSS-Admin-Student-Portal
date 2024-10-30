@@ -42,7 +42,9 @@ public class DocumentController {
                                                           @RequestParam("documentType") String documentType,
                                                           @RequestParam("fileName") String fileName,
                                                           @RequestParam("fileType") String fileType,
-                                                          @RequestParam("uploadDate") String uploadDate                                                        
+                                                          @RequestParam("uploadDate") String uploadDate
+
+
 
     ) {
         Map<String, String> response = new HashMap<>();

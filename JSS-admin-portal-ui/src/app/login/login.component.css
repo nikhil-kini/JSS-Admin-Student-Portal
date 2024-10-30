@@ -1,80 +1,39 @@
 
 
-html, body {
-  height: 100%; /* Set height to 100% for html and body */
-  margin: 0; /* Remove default margin */
-  overflow: hidden; /* Prevent scrolling */
-}
-/* .container {
-  height: 100vh; 
-  width: 100%; 
-  max-width: 1200px;
-  margin: 0 auto; 
-  display: flex;
-  align-items: center; 
-  justify-content: center; 
-  padding: 20px; 
-} */
-
-input[type="email"],
-input[type="password"] {
-    height: 50px; /* Set height */
-    font-size: 16px; /* Set font size */
-    padding: 10px; /* Add padding for better spacing */
-    border-radius: 5px; /* Optional: round corners */
-    border: 2px solid #ccc; /* Add border with color */
-    box-shadow: none; /* Remove default box shadow */
-}
-
-input[type="email"]:focus,
-input[type="password"]:focus {
-    border-color: #007bff; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: add a shadow effect */
-}
-.login-container {
-  padding: 30px;
-  background-color: #cb8080; /* White background for the login container */
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Full width */
-}
-
-/* .btn {
-  width: 100%;
-  border-radius: 5px; 
-} */
-
-button {
-  height: 50px; /* Keep the height consistent with input fields */
-  font-size: 16px; /* Set font size */
-  border-radius: 5px; /* Optional: round corners */
-  width: 90%; /* Set button width to 70% of the container width */
-  max-width: 400px; /* Optional: set a maximum width */
-  margin: 10px auto; /* Center the button horizontally with margin */
-  display: block; /* Ensure the button is a block element for centering */
-}
-.error {
-  color: red;
-  font-size: 12px;
-}
-.image-outline {
-  width: 100%; /* Adjust as needed */
-  max-width: 500px; /* Change to your desired maximum width */
-  height: auto; /* Maintain aspect ratio */
-  border: 5px solid #0f0c0c; /* Optional: add a border */
-  border-radius: 8px; /* Optional: rounded corners */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Optional: add shadow */
-}
-
-.change-password-link {
-  color: #0b0a0a; /* Change to your desired color */
-  text-decoration: underline; /* Optional: underline */
-  font-weight: bold; /* Optional: make it bold */
-  transition: color 0.3s; /* Smooth transition for color change */
-  margin-top: 10px; /* Adjust the space between button and link */
-}
-
-.change-password-link:hover {
-  color: #0056b3; /* Change color on hover */
-}
+  body{
+    background: #c9ccd1; 
+    }
+    .form-style input{
+        border:0;
+        height:50px;
+        border-radius:0;
+    border-bottom:1px solid #ebebeb;	
+    }
+    .form-style input:focus{
+    border-bottom:1px solid #007bff;	
+    box-shadow:none;
+    outline:0;
+    background-color:#ebebeb;	
+    }
+    .sideline {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color:#ccc;
+    }
+    button{
+    height:50px;	
+    }
+    .sideline:before,
+    .sideline:after {
+        content: '';
+        border-top: 1px solid #ebebeb;
+        margin: 0 20px 0 0;
+        flex: 1 0 20px;
+    }
+    
+    .sideline:after {
+        margin: 0 0 0 20px;
+    }

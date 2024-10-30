@@ -75,12 +75,13 @@
       <input type="file" (change)="onFileChange($event)" />
 
 <select [(ngModel)]="selectedFileName" (change)="onFileSelect()">
+  <option value="" disabled>Select the file to Download</option>
   <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
 </select>
   
       <button (click)="downloadSelectedFile()">Download Selected File</button>
       
-      <div class="upload">
+      <!-- <div class="upload">
         <h4>Uploaded Files:</h4>
         <table>
           
@@ -93,6 +94,6 @@
             No documents found.
           </div>
         </table>
-      </div>
+      </div> -->
     </div>
   </div>
