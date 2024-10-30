@@ -38,9 +38,14 @@ public class DocumentController {
     private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/upload/1st year/sem1/";
 
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
+                                                          @RequestParam("documentType") String documentType,
+                                                          @RequestParam("fileName") String fileName,
+                                                          @RequestParam("fileType") String fileType,
+                                                          @RequestParam("uploadDate") String uploadDate                                                        
 
+    ) {
+        Map<String, String> response = new HashMap<>();
         if (file.isEmpty()) {
             response.put("message", "File upload failed: File is empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -62,6 +67,16 @@ public class DocumentController {
             Files.copy(file.getInputStream(), path);
             response.put("message", "File uploaded successfully: " + sanitizedFilename);
             response.put("downloadUrl", "/files/" + sanitizedFilename);
+
+            // Create Document object and set properties
+            Document document = new Document();
+            document.setDocumentType(documentType);
+            document.setFileName(fileName);
+            document.setUploadDate(uploadDate);
+            document.setFileType(fileType);
+
+
+            documentRepo.save(document);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();

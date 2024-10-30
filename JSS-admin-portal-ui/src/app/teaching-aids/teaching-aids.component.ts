@@ -10,7 +10,12 @@ interface Document {
   documentType: string;
   fileName: string;
   fileType: string;
-  uploadDate?: Date; 
+  uploadDate?: Date;
+ 
+}
+interface UploadResponse {
+  message?: string; // Optional message for success
+  error?: string;   // Optional error message
 }
 @Component({
   selector: 'app-teaching-aids',
@@ -58,6 +63,8 @@ export class TeachingAidsComponent {
       this.router.navigate(['/personal-documents'])
     }
     logout() {
+      localStorage.removeItem('isAuthenticated'); 
+    localStorage.removeItem('loginUser');
       this.router.navigate(['/login']);
     }
   
@@ -80,17 +87,21 @@ export class TeachingAidsComponent {
     
         // Check if the selected document type matches the file type
         if (this.isFileTypeValid(documentType, documentTypeMapping)) {
-          // Ensure documentTypeMapping is a string before uploading
           if (documentTypeMapping) {
             this.uploadFile(file, documentType, documentName, documentTypeMapping).subscribe(
-              response => {
+              (response: UploadResponse) => { // Specify the response type here
+                if (response && response.error) {
+                  alert(response.error); // Handle the error message from the observable
+                  return; // Exit if there's an error
+                }
                 alert('File uploaded successfully');
+    
                 // Add the newly uploaded file to the fileList
                 this.fileList.push({ 
                   documentType, 
                   fileName: documentName, 
                   fileType: documentTypeMapping, 
-                  uploadDate: new Date() 
+                  uploadDate: new Date(),
                 });
                 this.selectedFileName = documentName; // Set the selected file name
                 this.getFileList(); // Optionally refresh file list from server
@@ -103,12 +114,14 @@ export class TeachingAidsComponent {
                 }
               }
             );
+          } else {
+            alert('File type mapping is invalid.');
           }
         } else {
           alert(`Invalid file type for ${documentType}. Please select a valid ${documentType} file.`);
         }
       } else {
-        alert('Please select a document type and file to upload');
+        alert('Please select a document type and file to upload.');
       }
     }
     
@@ -135,17 +148,25 @@ export class TeachingAidsComponent {
       }
     }
     
-    uploadFile(file: File, documentType: string, fileName: string, fileType: string) {
+    uploadFile(file: File, documentType: string, fileName: string, fileType: string): Observable<Object> {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('documentType', documentType);
       formData.append('fileName', fileName);
       formData.append('fileType', fileType);
       formData.append('uploadDate', new Date().toISOString()); // Add the upload date
-  
-      return this.http.post(`${this.baseUrl}/upload`, formData);
+    
+      // Get the logged-in user's email from local storage
+      const loginUser = localStorage.getItem('loginUser');
+      if (loginUser) {
+        formData.append('userId', loginUser); // Append userId to formData
+        return this.http.post(`${this.baseUrl}/upload`, formData); // Return the HTTP request
+      } else {
+        console.error('No logged-in user found.');
+        return of({ error: 'No logged-in user found.' }); // Return an Observable with an error message
+      }
     }
-  
+    
     getFileType(file: File): string | null {
       // Determine the file type based on the file's MIME type or extension
       if (file.type.includes('pdf')) {

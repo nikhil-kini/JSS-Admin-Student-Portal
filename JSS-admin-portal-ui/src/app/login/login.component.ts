@@ -14,41 +14,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-//   private authService=inject(AuthService); 
-//   private router = inject(Router);
-  
-//   ngOnInit() {
-//     this.resetForm();
-//   }
 
-//   resetForm(form?: NgForm) {
-//     if (form) {
-//       form.reset();
-//     }
-//   }
-
-// onSubmit(form: NgForm) {
-//   console.log('inside on submit', form.value);
-//   form.value.password = Base64.encode(form.value.password);
-//     this.authService.login(form.value).subscribe(
-//       {
-//         next: (response) => {
-//           if(response) {
-//             alert('Login successful');
-//             localStorage.setItem('isAuthenticated', 'true');
-//             this.router.navigate(['/home']);
-//           } else {
-//             alert('Login Failed');
-            
-//           }
-//         }
-
-      
-// });
- 
-
-// }
-// }
 
 loginData = {
   email: '',
@@ -63,6 +29,7 @@ onLoginSubmit() {
       (response: any) => {
           console.log('Login successful:', response);
           localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('loginUser', this.loginData.email)
           this.router.navigate(['/home']);
       },
       (error) => {

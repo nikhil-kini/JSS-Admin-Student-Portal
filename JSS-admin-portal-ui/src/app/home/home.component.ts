@@ -44,6 +44,8 @@ export class HomeComponent {
       this.router.navigate(['/personal-documents'])
     }
     logout() {
+      localStorage.removeItem('isAuthenticated');  
+    localStorage.removeItem('loginUser');  
       this.router.navigate(['/login']);
     }
   }

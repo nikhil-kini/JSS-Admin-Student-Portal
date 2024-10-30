@@ -12,7 +12,7 @@ import { IAModuleComponent } from './ia-module/ia-module.component';
 import { FeedbackSystemComponent } from './feedback-system/feedback-system.component';
 import { LessonPlanComponent } from './lesson-plan/lesson-plan.component';
 import { TeachingAidsComponent } from './teaching-aids/teaching-aids.component';
-import { Sidemenu1Component } from './sidemenu1/sidemenu1.component';
+
 import { StudentregComponent } from './studentreg/studentreg.component';
 import { PersonalDocumentsComponent } from './personal-documents/personal-documents.component';
 import { ChangedPasswordComponent } from './changed-password/changed-password.component';
@@ -40,7 +40,7 @@ export const routes: Routes = [
   {
     path:"home",
     component: HomeComponent,
-    // canActivate: [authGuard]
+  //  canActivate: [authGuard]
   },
   {
     path:"time-table",
@@ -84,11 +84,7 @@ export const routes: Routes = [
     component:TeachingAidsComponent,
     // canActivate: [authGuard]
   },
-  {
-    path:"sidemenu",
-    component:Sidemenu1Component,
-    // canActivate: [authGuard]
-  },
+  
   {
     path:"studentreg",
     component:StudentregComponent,

@@ -44,6 +44,8 @@ export class LessonPlanComponent {
       this.router.navigate(['/login']);
     }
     personaldocuments(){
+      localStorage.removeItem('isAuthenticated'); 
+    localStorage.removeItem('loginUser');
       this.router.navigate(['/personal-documents'])
     }
 }

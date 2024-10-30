@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 interface Document {
     docId?: number; 
@@ -103,6 +103,8 @@ export class DashboardComponent {
   selectedDocumentType = '';
   uploadedFileName = '';
 
+//   constructor(private router: Router, private http: HttpClient) {}
+
   ngOnInit() {
     this.getFileList();
   }
@@ -113,49 +115,85 @@ export class DashboardComponent {
       const documentType = this.selectedDocumentType; // Get selected document type
       const documentName = file.name; // Get the file name
       const documentTypeMapping = this.getFileType(file); // Get the file type
-
-      if (documentTypeMapping) {
-        this.uploadFile(file, documentType, documentName, documentTypeMapping).subscribe(
-          response => {
-            alert('File uploaded successfully');
-
-            // Update the local file list
-            const newDocument: Document = {
-              documentType,
-              fileName: documentName,
-              fileType: documentTypeMapping,
-              uploadDate: new Date()
-            };
-            this.fileList.push(newDocument); // Add new file to list
-            this.selectedFileName = documentName; // Set the selected file name
-
-            this.getFileList();
-          },
-          error => {
-            if (error.status === 409) {
-              alert('File already exists with the same name');
-            } else {
-              console.error('Error uploading file:', error);
+  
+      // Check if the selected document type matches the file type
+      if (this.isFileTypeValid(documentType, documentTypeMapping)) {
+        // Ensure documentTypeMapping is a string before uploading
+        if (documentTypeMapping) {
+          const uploadDate = new Date(); // Get current date
+          this.uploadFile(file, documentType, documentName, documentTypeMapping, uploadDate).subscribe(
+            response => {
+              alert('File uploaded successfully');
+              // Add the newly uploaded file to the fileList
+              this.fileList.push({
+                documentType,
+                fileName: documentName,
+                fileType: documentTypeMapping,
+                uploadDate: uploadDate // Set the upload date
+              });
+              this.selectedFileName = documentName; // Set the selected file name
+              this.getFileList(); // Optionally refresh file list from server
+            },
+            error => {
+              if (error.status === 409) {
+                alert('File already exists with the same name');
+              } else {
+                console.error('Error uploading file:', error);
+              }
             }
-          }
-        );
+          );
+        }
       } else {
-        alert('Invalid file type. Please upload a valid file.');
+        alert(`Invalid file type for ${documentType}. Please select a valid ${documentType} file.`);
       }
     } else {
       alert('Please select a document type and file to upload');
     }
   }
 
-  uploadFile(file: File, documentType: string, fileName: string, fileType: string) {
+  uploadFile(file: File, documentType: string, fileName: string, fileType: string, uploadDate: Date): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('documentType', documentType);
     formData.append('fileName', fileName);
     formData.append('fileType', fileType);
-    formData.append('uploadDate', new Date().toISOString()); // Add the upload date
+    formData.append('uploadDate', uploadDate.toISOString()); // Add the upload date in ISO format
+  
+    return this.http.post<any>(`${this.baseUrl}/upload`, formData).pipe(
+      tap(response => {
+        console.log('Upload successful. Server response:', response); // Log server response on success
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error uploading file. Full error details:', error); // Log full error details
+        console.error('Error message:', error.message);
+        console.error('Error status:', error.status);
+        console.error('Error status text:', error.statusText);
+        return throwError(() => new Error('Error uploading file'));
+      })
+    );
+  }
 
-    return this.http.post(`${this.baseUrl}/upload`, formData);
+  isFileTypeValid(selectedType: string, fileType: string | null): boolean {
+    // Return false if fileType is null
+    if (!fileType) {
+      return false;
+    }
+
+    // Validate the file type against the selected document type
+    switch (selectedType) {
+      case 'pdf':
+        return fileType === 'application/pdf';
+      case 'excel':
+        return fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      case 'word':
+        return fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      case 'image':
+        return fileType === 'image/jpeg' || fileType === 'image/png'; // Add more types if needed
+      case 'ppt':
+        return fileType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+      default:
+        return false; // Invalid type
+    }
   }
 
   getFileType(file: File): string | null {

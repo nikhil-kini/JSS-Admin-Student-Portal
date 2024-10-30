@@ -13,7 +13,7 @@ body {
 
 .container {
   height: 700px;
-  width: 100%; /* Make the container full width */
+  width: 100%; 
   display: flex;
   border-radius: 0; /* Remove rounded corners */
 }

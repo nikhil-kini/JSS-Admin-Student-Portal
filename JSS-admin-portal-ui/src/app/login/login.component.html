@@ -1,117 +1,4 @@
-<!-- 1
-<div class="login-page">
-  <div class="login-content">
-    <div class="login-banner">
-      <h2>JSS Polytechnic</h2>
-      <h5>Welcome </h5>
-      <img src="assets/education-image.png" alt="Online Education Illustration" />
-    </div>
 
-    <div class="login-container">
-      <h2>User Login</h2>
-      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="text" id="email" name="email" ngModel required #email="ngModel">
-          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-            Email is required.
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" ngModel required #password="ngModel">
-          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
-            Password is required.
-          </div>
-        </div>
-
-        <button type="submit" [disabled]="loginForm.invalid">Login</button>
-      </form>
-      
-      <div class="register-link">
-        <p>Don't have an account? <a routerLink="/register">Register here</a></p>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-
-
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
-  <script src="https://kit.fontawesome.com/4d0b4c932e.js" crossorigin="anonymous"></script>
-  
- 
- <div class="container">
-   <div class="row py-5 mt-4 align-items-center">
-       <div class="col-md-5 pr-lg-6 mb-5 mb-md-0">
- 
-   <img src="https://images.pexels.com/photos/7972518/pexels-photo-7972518.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="img-fluid mb-3 d-none d-md-block">
-   
-   <h1>Create an Account</h1>
-           <p class="font-italic text-muted mb-0">Create a minimal registeration page for
-           getting best travelling experience.
-         </p>
-       </div>
-      
-       
-       <div id="Contact"class="col-md-6 col-lg-6 ml-auto">
-        <form (ngSubmit)="onLoginSubmit()">
-               <div class="row">
-                
-                   <div class="input-group col-lg-12 mb-4">
-                       <div class="input-group-prepend">
-                           <span class="input-group-text bg-white px-4 border-md border-right-0">
-                               <i class="fa fa-envelope text-muted"></i>
-                           </span>
-                       </div>
-                       <input id="admin-email" type="email" name="email" placeholder="Email Address" class="form-control bg-white border-left-0 border-md" ngModel required #email="ngModel">
-                       <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                         Email is required.
-                       </div>
-
-                      </div>
-                 
-                    <div class="input-group col-lg-12 mb-4">
-                      <div class="input-group-prepend">
-                          <span class="input-group-text bg-white px-4 border-md border-right-0">
-                              <i class="fa fa-lock text-muted"></i>
-                          </span>
-                      </div>
-                      <input id="password" type="password" [(ngModel)]="loginData.password" name="password" placeholder="Password" 
-                             class="form-control bg-white border-left-0 border-md" required #password="ngModel" />
-                      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
-                          Password is required.
-                      </div>
-                  </div>
-
-                  <div class="form-group col-lg-12 mx-auto mb-0">
-                    <button type="submit" class="btn btn-primary btn-block py-3 btn-lg" (click)="onLoginSubmit()">
-                      <span class="font-weight-bold">Login</span>
-                    </button>
-                  </div>
-
-               
-               
-               </div>
-               <div>
-               <p>
-                <a routerLink="/changed-password">
-                  Change Password
-                </a>
-              </p>
-              </div>
-             
-              
-       </div> 
-   
-       -->
-
- 
 
 
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -148,10 +35,10 @@
                         </div>
                         <input type="password" id="password" [(ngModel)]="loginData.password" placeholder="Password" name="password" required class="form-control"/>
                     </div>
-                    <div class="form-group mb-4"> <!-- Add margin-bottom here -->
+                    <div class="form-group mb-4"> 
                       <button type="submit" class="btn btn-primary btn-lg">Login</button>
                   </div>
-                  <div class="text-center"> <!-- Center the Change Password link -->
+                  <div class="text-center"> 
                       <p>
                           <a routerLink="/changed-password" class="change-password-link">Change Password</a>
                       </p>

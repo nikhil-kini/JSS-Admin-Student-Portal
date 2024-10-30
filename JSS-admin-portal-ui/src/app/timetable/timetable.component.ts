@@ -58,14 +58,14 @@ export class TimetableComponent {
       this.router.navigate(['/teaching-aids']);
     }
     logout() {
+      localStorage.removeItem('isAuthenticated'); 
+    localStorage.removeItem('loginUser');
       this.router.navigate(['/login']);
     }
     personaldocuments(){
       this.router.navigate(['/personal-documents'])
     }
-ecdepartment(){
-  this.router.navigate(['/ecdepartment'])
-}
+
 
 
 selectedFile: File | null = null;
