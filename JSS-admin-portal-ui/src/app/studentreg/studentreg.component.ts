@@ -12,31 +12,29 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './studentreg.component.css'
 })
 export class StudentregComponent {
-  loginData = {
+  changePasswordData = {
     email: '',
-    password: ''
+    oldPassword: '',
+    newPassword: ''
   };
-
+  
   constructor(private http: HttpClient, private router: Router) {}
-
-  onLoginSubmit() {
-    console.log('Logging in with:', this.loginData);
-    this.http.post('http://localhost:8080/users/login', this.loginData).subscribe(
-      (response: any) => {
-        console.log('Login successful:', response);
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('loginUser', this.loginData.email);
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Login failed:', error);
-        if (error.status === 401) {
-          alert('Invalid credentials'); // Only alert for 401 errors
-        } else {
-          alert('An error occurred. Please try again later.');
-        }
-      }
-    );
+  
+  navigateToLogin() {
+    this.router.navigate(['/login']);
   }
-
-}
+  
+  onChangePasswordSubmit() {
+    this.http.put('http://localhost:8080/users/change-password', this.changePasswordData, { responseType: 'text' })
+      .subscribe(
+        (response: any) => {
+          alert('Password updated successfully');
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          alert('Failed to change password. Please check the old password and try again.');
+        }
+      );
+  }
+  }
+  

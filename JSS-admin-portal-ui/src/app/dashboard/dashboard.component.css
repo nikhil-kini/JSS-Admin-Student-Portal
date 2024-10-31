@@ -1,230 +1,58 @@
-
-
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  min-height: 100vh;
-  width: 100%;
-  background-color: rgba(0, 213, 255, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.container {
-  height: 700px;
-  width: 100%; /* Make the container full width */
-  display: flex;
-  border-radius: 0; /* Remove rounded corners */
+  font-family: "Lato", sans-serif;
 }
 
 .sidebar {
-  width: 320px;
-  background-color: #222;
-  padding: 20px;
-  box-sizing: border-box;
-  color: #fff;
-  overflow: hidden;
-  border-radius: 1rem 0 0 1rem;
-  transition: width 0.75s ease;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
 }
 
-li {
-  padding: 10px 10px;
-  border-bottom: 1px solid #444;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-li:hover {
-  background-color: #444;
-}
-
-a {
-  display: flex;
-  align-items: center;
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #ffcc00;
-}
-
-.item-txt {
-  padding-left: 0.5rem;
-}
-
- /* Content container */
- .content {
-  flex-grow: 1;
-  padding: 20px; /* Reduced padding */
-  background-color: #49a958;
-  border-radius: 1rem; /* Make all corners rounded */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px; 
-  height: 600px;
-  margin: auto; /* Center the content */
-  border: 1px solid #ccc; /* Optional: Add a border if desired */
-}
-
-/* Header styling */
-.content h2 {
-  font-size: 1.5rem; /* Reduced font size */
-  color: #333;
-  margin-bottom: 15px; /* Reduced margin */
-}
-
-input[type="file"] {
-  display: flex; /* Use flexbox to center content */
-  align-items: center; /* Vertically center content */
-  justify-content: center; /* Horizontally center content */
-  margin: 10px auto; /* Reduced margin */
-  padding: 5px; /* Further reduced padding */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 400px; /* Set a fixed width */
-  height: 35px; /* Set a fixed height */
-  background-color: #f9f9f9;
-  transition: border-color 0.3s;
-  text-align: center; /* Center text horizontally */
-  line-height: 35px;
-}
-
-input[type="file"]:hover {
-  border-color: #007bff; 
-  
-}
-
-/* Button styling */
-button {
-  width: 100%;
-  padding: 10px; /* Reduced padding */
-  border: none;
-  border-radius: 5px;
-  background-color: #073712;
-  color: white;
-  font-size: 14px; /* Reduced font size */
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-  width: 200px; /* Set a fixed width */
-  height: 35px; /* Set a fixed height */
-}
-
-button:hover {
-  background-color: #218838;
-}
-
-
- select {
+.sidebar a {
   display: block;
-  margin: 10px auto;
-  padding: 8px; 
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  font-size: 14px; 
-  transition: border-color 0.3s;
-  width: 500px; 
-  height: 35px; 
+  color: black;
+  padding: 16px;
+  text-decoration: none;
 }
 
-/* .select-file-name {
-  width: 150px; 
-  padding: 5px; 
-  font-size: 14px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  background-color: #fff; 
-  cursor: pointer; 
-  transition: border-color 0.3s ease; 
-} */
-select:hover {
-  border-color: #007bff; 
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
 }
 
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
 
-@media (max-width: 768px) {
-  .content {
-      padding: 15px; /* Reduced padding for smaller screens */
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
   }
-
-  button, input[type="file"], select {
-      font-size: 12px; /* Reduced font size for smaller screens */
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
   }
 }
 
-.upload {
-  margin: 20px 0;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.upload h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-.upload ul {
-  list-style-type: none; /* Remove default list styling */
-  padding: 0; /* Remove default padding */
-}
-
-.upload li {
-  display: flex; /* Use flexbox for layout */
-  justify-content: space-between; /* Space between filename and button */
-  align-items: center; /* Center align items */
-  padding: 10px 15px; /* Add padding to list items */
-  border: 1px solid #e0e0e0; /* Add border to each file item */
-  border-radius: 5px; /* Rounded corners */
-  margin-bottom: 10px; /* Space between list items */
-  background-color: #fff; /* White background for each item */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.upload li:hover {
-  background-color: #f0f0f0; /* Change background on hover */
-}
-
-.upload button {
-  background-color: #e74c3c; /* Red background for delete button */
-  color: #fff; /* White text color */
-  border: none; /* Remove default border */
-  border-radius: 4px; /* Slightly rounded corners */
-  padding: 3px 6px; /* Reduced padding for a smaller button */
-  font-size: 0.9rem; /* Smaller font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.upload button:hover {
-  background-color: #c0392b; /* Darker red on hover */
-}
-
-.select-document-type {
-  width: 100px; /* Adjust the width as needed */
-  padding: 3px; /* Add some padding for better appearance */
-  font-size: 14px; /* Adjust font size */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
 }
