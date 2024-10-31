@@ -1,59 +1,118 @@
-<!-- 
+<div class="container-fluid p-0">
+  <div class="row no-gutters">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-none d-md-block bg-dark sidebar" id="sidebarMenu">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-3">
+            <a routerLink="home" (click)="home()" class="nav-link text-white">
+              <i class="bi bi-house mr-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="time-table" (click)="timetable()" class="nav-link text-white">
+              <i class="bi bi-calendar3 mr-2"></i> Time Table
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="students-management" (click)="studentsmanagement()" class="nav-link text-white">
+              <i class="bi bi-person-workspace mr-2"></i> Students Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="attendance-management" (click)="attendancemanagement()" class="nav-link text-white">
+              <i class="bi bi-check-square mr-2"></i> Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="question-bank" (click)="questionbank()" class="nav-link text-white">
+              <i class="bi bi-book mr-2"></i> Question Bank
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="ia-module" (click)="iamodule()" class="nav-link text-white">
+              <i class="bi bi-card-list mr-2"></i> IA Module
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="feedback-system" (click)="feedbacksystem()" class="nav-link text-white">
+              <i class="bi bi-chat-dots mr-2"></i> Feedback System
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="lesson-plan" (click)="lessonplan()" class="nav-link text-white">
+              <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="teaching-aids" (click)="teachingaids()" class="nav-link text-white">
+              <i class="bi bi-easel mr-2"></i> Teaching Aids
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="personal-documents" (click)="personaldocuments()" class="nav-link text-white">
+              <i class="bi bi-folder mr-2"></i> Personal Documents
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a (click)="logout()" class="nav-link text-white">
+              <i class="bi bi-box-arrow-right mr-2"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-
-
-<img src="college.jpg">
-
-
-<script src="https://use.fontawesome.com/f59bcd8580.js"></script>
-<div class="container">
-<div class="row m-5 no-gutters shadow-lg">
-<div class="col-md-6 d-none d-md-block">
-<img src="https://images.unsplash.com/photo-1566888596782-c7f41cc184c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=2134&q=80" class="img-fluid" style="min-height:100%;" />
-</div>
-<div class="col-md-6 bg-white p-5">
-<h3 class="pb-3">Login Form</h3>
-<div class="form-style">
-<form>
-  <div class="form-group pb-3">    
-    <input type="email" placeholder="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">   
+    <!-- Content Area -->
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-4">
+      <div class="text-center">
+        <h1>WELCOME ADMIN</h1>
+        <p>
+          The JSS Polytechnic, Mysuru was established in the year 1986. The campus is situated on an extensive elevated stretch of over 6 Hectares in the JSS Technical Institutions’ 
+          Campus to the west of the University of Mysuru, Manasagangothri. It is located at about 6 kms from the city central bus stand and railway station.
+        </p>
+        
+        <h2>Our Vision</h2>
+        <p>
+          Our vision is to foster an environment of academic excellence and innovation, empowering students to achieve their full potential and contribute to the global community.
+          The institution emphasizes a holistic development approach, where students are encouraged to grow both academically and personally.
+        </p>
+    
+        <h2>Programs and Courses Offered</h2>
+        <p>
+          JSS Polytechnic offers a diverse range of diploma programs designed to equip students with practical skills and knowledge across various fields. Some of our core programs include:
+        </p>
+        <ul class="text-left">
+          <li>Computer Science and Engineering</li>
+          <li>Electronics and Communication Engineering</li>
+          <li>Mechanical Engineering</li>
+          <li>Civil Engineering</li>
+          <li>Information Science and Engineering</li>
+        </ul>
+    
+        <h2>Key Features of Our Campus</h2>
+        <p>
+          JSS Polytechnic is well-equipped with state-of-the-art facilities that cater to the academic and extracurricular needs of students. Key features include:
+        </p>
+        <ul class="text-left">
+          <li>Modern classrooms and labs</li>
+          <li>Experienced faculty and staff</li>
+          <li>Comprehensive library with digital access</li>
+          <li>On-campus hostel and cafeteria</li>
+          <li>Well-maintained sports facilities</li>
+        </ul>
+    
+        <h2>Reporting Staff Details</h2>
+        <p>
+          Our dedicated staff members work tirelessly to ensure the smooth functioning of the institution. They are committed to providing an enriching learning experience and supporting students throughout their academic journey.
+        </p>
+    
+        <h2>Contact Us</h2>
+        <p>
+          For more information, feel free to reach out to our administration office. We are here to answer any questions you may have about our programs, campus facilities, and admission process.
+        </p>
+      </div>
+    </main>
+    
   </div>
-  <div class="form-group pb-3">   
-    <input type="password" placeholder="Password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="d-flex align-items-center justify-content-between">
-<div class="d-flex align-items-center"><input name="" type="checkbox" value="" /> <span class="pl-2 font-weight-bold">Remember Me</span></div>
-<div><a href="#">Forget Password?</a></div>
-</div>
-   <div class="pb-2">
-  <button type="submit" class="btn btn-dark w-100 font-weight-bold mt-2">Submit</button>
-   </div>
-</form>
-  <div class="sideline">OR</div>
-  <div>
-  <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2"><i class="fa fa-facebook" aria-hidden="true"></i> Login With Facebook</button>
-  </div>
-  <div class="pt-4 text-center">
-  Get Members Benefit. <a href="#">Sign Up</a>
-  </div>
-</div>
-
-</div>
-</div>
-</div> -->
-
-
-
-<div class="sidebar">
-  <a class="active" href="#home">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
-</div>
-
-<div class="content">
-  <h2>Responsive Sidebar Example</h2>
-  <p>This example uses media queries to transform the sidebar into a top navigation bar when the screen size is 700px or less.</p>
-  <p>A media query is also added for screens that are 400px or less, which will vertically stack and center the navigation links.</p>
-  <h3>Resize the browser window to see the effect.</h3>
 </div>

@@ -16,4 +16,42 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 })
 export class DashboardComponent {
   constructor(private router: Router,private http: HttpClient) {}
+  home(){
+    this.router.navigate(['/home']);
+
+  }
+  timetable(){
+    this.router.navigate(['/time-table']);
+
+  }
+  studentsmanagement(){
+    this.router.navigate(['/students-management']);
+  }
+  attendancemanagement(){
+    this.router.navigate(['/attendance-management']);
+  }
+  questionbank(){
+    this.router.navigate(['/question-bank']);
+  }
+    iamodule(){
+      this.router.navigate(['/ia-module']);
+    }
+    feedbacksystem(){
+      this.router.navigate(['/feedback-system']);
+    }
+    lessonplan(){
+      this.router.navigate(['/lesson-plan']);
+    }
+    teachingaids(){
+      this.router.navigate(['/teaching-aids']);
+    }
+    personaldocuments(){
+      this.router.navigate(['/personal-documents'])
+    }
+    logout() {
+      localStorage.removeItem('isAuthenticated');  
+    localStorage.removeItem('loginUser');  
+      this.router.navigate(['/login']);
+    }
+  
 }
