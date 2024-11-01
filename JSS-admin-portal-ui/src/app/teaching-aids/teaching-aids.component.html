@@ -81,19 +81,101 @@
   
       <button (click)="downloadSelectedFile()">Download Selected File</button>
       
-      <!-- <div class="upload">
-        <h4>Uploaded Files:</h4>
-        <table>
-          
-         
-            <tr *ngFor="let file of fileList">
-              <td>{{ file }}</td>
-              
-          </tr>
-          <div *ngIf="fileList.length === 0" class="no-docs-message">
-            No documents found.
-          </div>
-        </table>
-      </div> -->
+     
     </div>
   </div>
+
+
+
+
+
+
+
+  <!-- <div class="container-fluid">
+    <div class="row">
+    
+      <div class="col-md-3 col-lg-2 bg-dark text-white py-4 sidebar">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-3">
+            <a routerLink="home" (click)="home()" class="nav-link text-white">
+              <i class="fas fa-home pr-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="time-table" (click)="timetable()" class="nav-link text-white">
+              <i class="fas fa-calendar-alt pr-2"></i> Time Table
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="students-management" (click)="studentsmanagement()" class="nav-link text-white">
+              <i class="fas fa-user-graduate pr-2"></i> Students Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="attendance-management" (click)="attendancemanagement()" class="nav-link text-white">
+              <i class="fas fa-check-square pr-2"></i> Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="question-bank" (click)="questionbank()" class="nav-link text-white">
+              <i class="fas fa-book pr-2"></i> Question Bank
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="ia-module" (click)="iamodule()" class="nav-link text-white">
+              <i class="fas fa-tasks pr-2"></i> IA Module
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="feedback-system" (click)="feedbacksystem()" class="nav-link text-white">
+              <i class="fas fa-comments pr-2"></i> Feedback System
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="lesson-plan" (click)="lessonplan()" class="nav-link text-white">
+              <i class="fas fa-file-alt pr-2"></i> Lesson Plan
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="teaching-aids" (click)="teachingaids()" class="nav-link text-white">
+              <i class="fas fa-chalkboard-teacher pr-2"></i> Teaching Aids
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="personal-documents" (click)="personaldocuments()" class="nav-link text-white">
+              <i class="fas fa-folder pr-2"></i> Personal Documents
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a (click)="logout()" class="nav-link text-white">
+              <i class="fas fa-sign-out-alt pr-2"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+  
+      <div class="container mt-4">
+        <h2>Teaching Aids Upload</h2>
+        <form (ngSubmit)="triggerUpload()" #uploadForm="ngForm">
+          <div class="form-group">
+            <label for="documentType">Document Type</label>
+            <select class="form-control" [(ngModel)]="selectedDocumentType" name="documentType" required>
+              <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fileInput">Choose File</label>
+            <input type="file" (change)="onFileChange($event)" id="fileInput" class="form-control" name="fileInput" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      
+        <h3 class="mt-4">Uploaded Files</h3>
+        <ul class="list-group mt-2">
+          <li class="list-group-item" *ngFor="let file of fileList">
+            {{ file.fileName }}
+            <button class="btn btn-danger btn-sm float-right" (click)="deleteFile(file.fileName)">Delete</button>
+          </li>
+        </ul>
+      </div>
+       -->

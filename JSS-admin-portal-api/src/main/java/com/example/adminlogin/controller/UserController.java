@@ -162,11 +162,47 @@ public class UserController {
     }
 
     // Change Password Endpoint
+//    @PutMapping("/change-password")
+//    public ResponseEntity<String> changePassword(@RequestBody Map<String, String> passwordData) {
+//        String email = passwordData.get("email");
+//        String oldPassword = passwordData.get("oldPassword");
+//        String newPassword = passwordData.get("newPassword");
+//
+//
+//        Optional<User> dbUser = userRepository.findByEmail(email);
+//        if (dbUser.isPresent()) {
+//            User existingUser = dbUser.get();
+//
+//            // Decode the stored password and compare with the provided old password
+//            String decodedStoredPassword = new String(Base64.getDecoder().decode(existingUser.getPassword()), StandardCharsets.UTF_8);
+//            if (!decodedStoredPassword.equals(oldPassword)) {
+//                return ResponseEntity.status(400).body("Old password is incorrect.");
+//            }
+//
+//            // Encode the new password and save it
+//            String encodedNewPassword = Base64.getEncoder().encodeToString(newPassword.getBytes(StandardCharsets.UTF_8));
+//            existingUser.setPassword(encodedNewPassword);
+//            userRepository.save(existingUser);
+//
+//            return ResponseEntity.ok("Password updated successfully.");
+//        } else {
+//            return ResponseEntity.status(404).body("Email not found.");
+//        }
+//
+//    }
+//
+
     @PutMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestBody Map<String, String> passwordData) {
         String email = passwordData.get("email");
         String oldPassword = passwordData.get("oldPassword");
         String newPassword = passwordData.get("newPassword");
+        String confirmPassword = passwordData.get("confirmPassword");
+
+        // Validate that new password and confirm password match
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password and confirm password do not match.");
+        }
 
         Optional<User> dbUser = userRepository.findByEmail(email);
         if (dbUser.isPresent()) {
@@ -175,7 +211,7 @@ public class UserController {
             // Decode the stored password and compare with the provided old password
             String decodedStoredPassword = new String(Base64.getDecoder().decode(existingUser.getPassword()), StandardCharsets.UTF_8);
             if (!decodedStoredPassword.equals(oldPassword)) {
-                return ResponseEntity.status(400).body("Old password is incorrect.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Old password is incorrect.");
             }
 
             // Encode the new password and save it
@@ -185,11 +221,11 @@ public class UserController {
 
             return ResponseEntity.ok("Password updated successfully.");
         } else {
-            return ResponseEntity.status(404).body("Email not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found.");
         }
-
     }
-        @GetMapping("/{id}")
+
+    @GetMapping("/{id}")
         public ResponseEntity<User> getUserById (@PathVariable Long id){
             Optional<User> user = userRepository.findById(id);
             return user.map(ResponseEntity::ok)

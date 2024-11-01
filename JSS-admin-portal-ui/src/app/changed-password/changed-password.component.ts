@@ -38,10 +38,13 @@ export class ChangedPasswordComponent {
 // }
 
 
+
+
 changePasswordData = {
   email: '',
   oldPassword: '',
-  newPassword: ''
+  newPassword: '',
+  confirmPassword: ''
 };
 
 constructor(private http: HttpClient, private router: Router) {}
@@ -51,15 +54,21 @@ navigateToLogin() {
 }
 
 onChangePasswordSubmit() {
+  // Validate that newPassword and confirmPassword match
+  if (this.changePasswordData.newPassword !== this.changePasswordData.confirmPassword) {
+      alert("New passwords do not match.");
+      return;
+  }
+
   this.http.put('http://localhost:8080/users/change-password', this.changePasswordData, { responseType: 'text' })
-    .subscribe(
-      (response: any) => {
-        alert('Password updated successfully');
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        alert('Failed to change password. Please check the old password and try again.');
-      }
-    );
+      .subscribe(
+          (response: any) => {
+              alert('Password updated successfully');
+              this.router.navigate(['/login']);
+          },
+          (error) => {
+              alert('Failed to change password. Please check the old password and try again.');
+          }
+      );
 }
 }

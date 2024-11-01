@@ -6,23 +6,17 @@ body {
   background-color: rgba(0, 213, 255, 1);
 }
 
-/* Container and row adjustments */
-.container-fluid {
-  min-height: 100vh;
-  display: flex;
-}
-
 /* Sidebar styling */
 .sidebar {
-  position: fixed; /* Fixes the sidebar to the left */
-  height: 100vh; /* Makes the sidebar full height */
-  width: 320px; /* Width of the sidebar */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 250px; /* Fixed width for the sidebar */
   background-color: #222;
   color: #fff;
-  padding: 20px;
-  border-radius: 0 1rem 1rem 0;
+  padding-top: 20px;
   transition: width 0.75s ease;
-  overflow-y: auto; /* Allows sidebar scrolling if content overflows */
+  overflow-y: auto; 
 }
 
 .sidebar .nav-link {
@@ -45,12 +39,10 @@ body {
 
 /* Content area styling */
 main {
-  margin-left: 320px; /* Gives space for the sidebar */
+  margin-left: 250px; /* Space for the fixed sidebar */
   padding: 40px;
   background-color: #ecf0f1;
-  border-radius: 0 1rem 1rem 0;
-  height: 100vh; /* Sets the height of the content area */
-  overflow-y: auto; /* Enables vertical scrolling in the content area */
+  min-height: 100vh;
 }
 
 main h1 {
@@ -73,16 +65,15 @@ main p {
   line-height: 1.6;
 }
 
-/* Responsive adjustments for smaller screens */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .sidebar {
+    position: relative;
     width: 100%;
-    position: static; /* Change to static for smaller screens */
-    height: auto; /* Sidebar height adjusts to content */
   }
 
   main {
-    margin-left: 0; /* Reset margin for smaller screens */
+    margin-left: 0;
     padding: 20px;
     text-align: center;
   }
