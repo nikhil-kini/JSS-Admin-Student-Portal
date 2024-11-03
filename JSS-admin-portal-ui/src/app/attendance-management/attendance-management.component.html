@@ -1,70 +1,74 @@
-
-<div class="container">
-    <div class="sidebar">
-        <ul>
-            <li>
-                <a routerLink="home" (click)="home()">
-                  <i class="fas fa-home" style="padding-right: 10px;"> </i> Home
-                </a>
-              </li>
-              <li>
-                <a routerLink="time-table" (click)="timetable()">
-                  <i class="fas fa-calendar-alt" style="padding-right: 10px;"></i> Time Table
-                </a>
-              </li>
-              <li>
-                <a routerLink="students-management" (click)="studentsmanagement()">
-                  <i class="fas fa-user-graduate" style="padding-right: 10px;"></i> Students Management
-                </a>
-              </li>
-              <li>
-                <a routerLink="attendance-management" (click)="attendancemanagement()">
-                  <i class="fas fa-check-square" style="padding-right: 10px;"></i> Attendance Management
-                </a>
-              </li>
-              <li>
-                <a routerLink="question-bank" (click)="questionbank()">
-                  <i class="fas fa-book" style="padding-right: 10px;"></i> Question Bank
-                </a>
-              </li>
-              <li>
-                <a routerLink="ia-module" (click)="iamodule()">
-                  <i class="fas fa-tasks" style="padding-right: 10px;"></i> IA Module
-                </a>
-              </li>
-              <li>
-                <a routerLink="feedback-system" (click)="feedbacksystem()">
-                  <i class="fas fa-comments" style="padding-right: 10px;"></i> Feedback System
-                </a>
-              </li>
-              <li>
-                <a routerLink="lesson-plan" (click)="lessonplan()">
-                  <i class="fas fa-file-alt" style="padding-right: 10px;"></i> Lesson Plan
-                </a>
-              </li>
-              <li>
-                <a routerLink="teaching-aids" (click)="teachingaids()">
-                  <i class="fas fa-chalkboard-teacher" style="padding-right: 10px;"></i> Teaching Aids
-                </a>
-              </li>
-              <li>
-                <a routerLink="personal-documents" (click)="personaldocuments()">
-                  <i class="fas fa-folder" style="padding-right: 10px;"></i> Personal Documents
-                </a>
-              </li>
-              <li>
-                <a (click)="logout()">
-                  <i class="fas fa-sign-out-alt" style="padding-right: 10px;"></i> Logout
-                </a>
-              </li>
-             
+<div class="container-fluid">
+  <div class="row no-gutters">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-3">
+            <a routerLink="/home" routerLinkActive="active" (click)="home()" class="nav-link text-white">
+              <i class="bi bi-house mr-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
+              <i class="bi bi-calendar3 mr-2"></i> Time Table
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/students-management" routerLinkActive="active" (click)="studentsmanagement()" class="nav-link text-white">
+              <i class="bi bi-person-workspace mr-2"></i> Students Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
+              <i class="bi bi-check-square mr-2"></i> Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/question-bank" routerLinkActive="active" (click)="questionbank()" class="nav-link text-white">
+              <i class="bi bi-book mr-2"></i> Question Bank
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/ia-module" routerLinkActive="active" (click)="iamodule()" class="nav-link text-white">
+              <i class="bi bi-card-list mr-2"></i> IA Module
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/feedback-system" routerLinkActive="active" (click)="feedbacksystem()" class="nav-link text-white">
+              <i class="bi bi-chat-dots mr-2"></i> Feedback System
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/lesson-plan" routerLinkActive="active" (click)="lessonplan()" class="nav-link text-white">
+              <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
+              <i class="bi bi-easel mr-2"></i> Teaching Aids
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/personal-documents" routerLinkActive="active" (click)="personaldocuments()" class="nav-link text-white">
+              <i class="bi bi-folder mr-2"></i> Personal Documents
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a (click)="logout()" class="nav-link text-white">
+              <i class="bi bi-box-arrow-right mr-2"></i> Logout
+            </a>
+          </li>
         </ul>
-    </div>
-    <div class="content">
-        <h1>WELCOME TO attendance-management</h1>
-        <p>
-          
-        </p>
-    </div>
+      </div>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="col-md-9 col-lg-10 px-4 pt-4">
+      <div class="text-center">
+        <h1>WELCOME TO ATTENDENCE MANAGEMENT</h1>
+        
+      </div>
+    </main>
   </div>
-  
+</div>
