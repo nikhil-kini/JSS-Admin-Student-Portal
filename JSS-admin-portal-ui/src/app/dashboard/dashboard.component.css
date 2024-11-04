@@ -1,80 +1,69 @@
-/* General body styling */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: rgba(0, 213, 255, 1);
+/* Ensures the container takes full height and allows sidebar styling */
+.container-fluid,
+.row.no-gutters {
+  height: 100vh;
 }
 
-/* Sidebar styling */
 .sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 250px; /* Fixed width for the sidebar */
-  background-color: #222;
-  color: #fff;
-  padding-top: 20px;
-  transition: width 0.75s ease;
-  overflow-y: auto; 
+  min-height: 100vh; /* Full height of the viewport */
+  background-color: #343a40; /* Dark background for sidebar */
 }
 
 .sidebar .nav-link {
   color: #ffffff;
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 0.5rem 1rem; /* Reduced vertical padding */
+  margin-bottom: 0.25rem; /* Added bottom margin for spacing between items */
 }
 
-.sidebar .nav-link i {
-  padding-right: 10px;
+.sidebar .nav-link.active {
+  background-color: #495057; /* Different color to indicate active link */
+  font-weight: bold;
 }
 
 .sidebar .nav-link:hover {
-  background-color: #444;
-  color: #ffcc00;
+  background-color: #6c757d; /* Slightly lighter on hover */
 }
 
-/* Content area styling */
-main {
-  margin-left: 250px; /* Space for the fixed sidebar */
-  padding: 40px;
-  background-color: #ecf0f1;
-  min-height: 100vh;
+.main-content {
+  display: flex; /* Enables flexbox */
+  flex-direction: column; /* Align items vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  padding: 20px;
+  margin-top: 20px; /* Add margin at the top */
+  overflow-y: auto; /* Allows scrolling for content if it overflows */
 }
 
-main h1 {
-  font-size: 2rem;
-  color: #333;
+h2 {
+  color: #343a40;
+  font-weight: bold;
   margin-bottom: 20px;
-  text-align: left;
 }
 
-main h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
+.form-control {
+  max-width: 400px; /* Limits width of form elements */
 }
 
-main p {
-  font-size: 1.1rem;
-  color: #555;
-  line-height: 1.6;
+button {
+  width: fit-content; /* Adjust button width to fit content */
+  margin-right: 10px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
+  /* Sidebar responsive behavior */
   .sidebar {
-    position: relative;
-    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 1000;
   }
 
-  main {
+  .sidebar.show {
+    display: block;
+  }
+
+  /* Main content will span full width on small screens */
+  .main-content {
     margin-left: 0;
-    padding: 20px;
-    text-align: center;
+    padding: 10px;
   }
 }

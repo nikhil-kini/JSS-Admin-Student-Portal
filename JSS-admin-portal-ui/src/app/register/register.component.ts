@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../authentication/auth.service';
 import { Base64 } from 'js-base64';
 
 

@@ -41,11 +41,12 @@ export class LessonPlanComponent {
       this.router.navigate(['/teaching-aids']);
     }
     logout() {
-      this.router.navigate(['/login']);
-    }
-    personaldocuments(){
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
+      this.router.navigate(['/auth/login']);
+    }
+    personaldocuments(){
+      
       this.router.navigate(['/personal-documents'])
     }
 }

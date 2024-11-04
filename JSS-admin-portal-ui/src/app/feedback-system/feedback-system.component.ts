@@ -46,6 +46,6 @@ export class FeedbackSystemComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
 }

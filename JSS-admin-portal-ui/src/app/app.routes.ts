@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+// import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { authGuard } from './auth.guard';
 import { HomeComponent } from './home/home.component';
@@ -15,7 +15,7 @@ import { TeachingAidsComponent } from './teaching-aids/teaching-aids.component';
 
 import { StudentregComponent } from './studentreg/studentreg.component';
 import { PersonalDocumentsComponent } from './personal-documents/personal-documents.component';
-import { ChangedPasswordComponent } from './changed-password/changed-password.component';
+// import { ChangedPasswordComponent } from './changed-password/changed-password.component';
 
 
 
@@ -23,15 +23,19 @@ import { ChangedPasswordComponent } from './changed-password/changed-password.co
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { 
+    path: 'auth', 
+    loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) 
+  },
   {
     path:"register",
     component:RegisterComponent
   },
-  {
-    path:"login",
-    component:LoginComponent
-  },
+  // {
+  //   path:"login",
+  //   component:LoginComponent
+  // },
   {
     path:"dashboard",
     component:DashboardComponent,
@@ -95,11 +99,11 @@ export const routes: Routes = [
     component:PersonalDocumentsComponent,
     // canActivate: [authGuard]
   },
-  {
-    path:"changedpassword",
-    component:ChangedPasswordComponent,
-    // canActivate: [authGuard]
-  }
+  // {
+  //   path:"changedpassword",
+  //   component:ChangedPasswordComponent,
+  //   // canActivate: [authGuard]
+  // }
     
       
   

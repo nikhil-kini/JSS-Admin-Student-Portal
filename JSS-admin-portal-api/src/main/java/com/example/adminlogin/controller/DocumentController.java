@@ -37,16 +37,65 @@ public class DocumentController {
 
     private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/upload/1st year/sem1/";
 
+//    @PostMapping("/upload")
+//    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
+//                                                          @RequestParam("documentType") String documentType,
+//                                                          @RequestParam("fileName") String fileName,
+//                                                          @RequestParam("fileType") String fileType,
+//                                                          @RequestParam("uploadDate") String uploadDate
+//
+//
+//
+//    ) {
+//        Map<String, String> response = new HashMap<>();
+//        if (file.isEmpty()) {
+//            response.put("message", "File upload failed: File is empty");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//        }
+//
+//        try {
+//            String originalFilename = file.getOriginalFilename();
+//            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
+//            Path path = Paths.get(uploadDir + sanitizedFilename);
+//
+//            // Check if file already exists
+//            if (Files.exists(path)) {
+//                response.put("message", "File with the same name already exists");
+//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
+//            }
+//
+//            // Proceed with file upload
+//            Files.createDirectories(path.getParent());
+//            Files.copy(file.getInputStream(), path);
+//            response.put("message", "File uploaded successfully: " + sanitizedFilename);
+//            response.put("downloadUrl", "/files/" + sanitizedFilename);
+//
+//            // Create Document object and set properties
+//            Document document = new Document();
+//            document.setDocumentType(documentType);
+//            document.setFileName(fileName);
+//            document.setUploadDate(uploadDate);
+//            document.setFileType(fileType);
+//
+//
+//            documentRepo.save(document);
+//            return ResponseEntity.ok(response);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            response.put("message", "File upload failed: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//        }
+//    }
+
+
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
                                                           @RequestParam("documentType") String documentType,
                                                           @RequestParam("fileName") String fileName,
                                                           @RequestParam("fileType") String fileType,
-                                                          @RequestParam("uploadDate") String uploadDate
+                                                          @RequestParam("uploadDate") String uploadDate,
+                                                          @RequestParam("userId") String userId) { // Changed to String
 
-
-
-    ) {
         Map<String, String> response = new HashMap<>();
         if (file.isEmpty()) {
             response.put("message", "File upload failed: File is empty");
@@ -73,10 +122,18 @@ public class DocumentController {
             // Create Document object and set properties
             Document document = new Document();
             document.setDocumentType(documentType);
-            document.setFileName(fileName);
+            document.setFileName(sanitizedFilename);
             document.setUploadDate(uploadDate);
             document.setFileType(fileType);
 
+            // Find user by email and set the document's user
+            Optional<User> userOptional = userRepo.findByEmail(userId); // Fetch user by email
+            if (userOptional.isPresent()) {
+                document.setUser(userOptional.get());
+            } else {
+                response.put("message", "User not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
 
             documentRepo.save(document);
             return ResponseEntity.ok(response);
@@ -103,14 +160,32 @@ public class DocumentController {
     }
 
     // Delete Document
-    @DeleteMapping("/{documentId}")
-    public ResponseEntity<String> deleteDocument(@PathVariable Long documentId) {
-        if (!documentRepo.existsById(documentId)) {
-            return ResponseEntity.status(404).body("Document not found.");
-        }
-        documentRepo.deleteById(documentId);
-        return ResponseEntity.ok("Document deleted successfully.");
-    }
+//    @DeleteMapping("/delete/{filename:.+}")
+//    public ResponseEntity<String> deleteFile(@PathVariable String filename) {
+//        try {
+//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+//            File fileToDelete = filePath.toFile();
+//
+//            // Check if file exists before deleting
+//            if (!fileToDelete.exists()) {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found.");
+//            }
+//
+//            // Delete the file
+//            if (fileToDelete.delete()) {
+//                // Optionally, also delete the document record from the database
+//                // Assuming DocumentRepo has a method to find by file name
+//                documentRepo.deleteByFileName(filename); // Create this method in your repository if it doesn't exist
+//                return ResponseEntity.ok("File deleted successfully.");
+//            } else {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File deletion failed.");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting file: " + e.getMessage());
+//        }
+//    }
+
 
     @GetMapping("/list")
     public ResponseEntity<List<String>> listUploadedFiles() {

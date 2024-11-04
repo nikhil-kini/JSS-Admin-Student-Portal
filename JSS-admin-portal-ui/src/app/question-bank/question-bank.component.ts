@@ -41,11 +41,12 @@ export class QuestionBankComponent {
       this.router.navigate(['/teaching-aids']);
     }
     logout() {
-      this.router.navigate(['/login']);
+      localStorage.removeItem('isAuthenticated'); 
+      localStorage.removeItem('loginUser');
+        this.router.navigate(['/auth/login']);
     }
     personaldocuments(){
-      localStorage.removeItem('isAuthenticated'); 
-    localStorage.removeItem('loginUser');
+      
       this.router.navigate(['/personal-documents'])
     }
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 @Table(name = "documents")
 public class Document {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long docId;
 
     @Column(name = "document_type")

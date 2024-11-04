@@ -3,8 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
+interface Document {
+  docId?: number;
+  documentType: string;
+  fileName: string;
+  fileType: string;
+  uploadDate?: Date;
+}
+
+interface UploadResponse {
+  message?: string;
+  error?: string;
+}
 
 @Component({
   selector: 'app-personal-documents',
@@ -15,9 +27,10 @@ import { Observable } from 'rxjs';
 })
 export class PersonalDocumentsComponent implements OnInit{
 
-  constructor(private router: Router,private http: HttpClient,private fb: FormBuilder) {}
- 
-  
+  baseUrl = 'http://localhost:8080/api/files';
+  fileList: Document[] = [];
+  selectedFileName = '';
+  selectedDocumentType = '';
 
   home(){
     this.router.navigate(['/home']);
@@ -48,91 +61,156 @@ export class PersonalDocumentsComponent implements OnInit{
     teachingaids(){
       this.router.navigate(['/teaching-aids']);
     }
-    personaldocuments(){
-      this.router.navigate(['/personal-documents'])
-    }
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
-  
-    baseUrl = 'http://localhost:8080/api/files';
-    uploadedFileName = '';
-    fileList: string[] = [];
-    selectedFileName = '';
-  
-    // constructor(private http: HttpClient) {}
-  
-    ngOnInit() {
-        this.getFileList();
+    personaldocuments(){
+      
+      this.router.navigate(['/personal-documents'])
     }
-  
-    onFileChange(event: any) {
-        const file = event.target.files[0];
-        if (file) {
-            this.uploadFile(file).subscribe(
-                response => {
-                    alert('File uploaded successfully');
-                    this.uploadedFileName = response.downloadUrl;
-                    this.getFileList(); // Refresh file list after upload
-                },
-                error => {
-                    if (error.status === 409) { // Conflict
-                        alert('File already exists with the same name');
-                    } else {
-                        console.error('Error uploading file:', error);
+
+
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit() {
+    this.getFileList();
+  }
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+        const documentType = this.selectedDocumentType; 
+        const documentName = file.name; 
+        const documentTypeMapping = this.getFileType(file); 
+
+        if (this.isFileTypeValid(documentType, documentTypeMapping)) {
+            if (documentTypeMapping) {
+                this.uploadFile(file, documentType, documentName, documentTypeMapping).subscribe(
+                    (response: UploadResponse) => {
+                        if (response && response.error) {
+                            alert(response.error); 
+                            return; 
+                        }
+                        alert('File uploaded successfully');
+                        this.getFileList(); // Refresh the file list instead of pushing manually
+                    },
+                    error => {
+                        if (error.status === 409) {
+                            alert('File already exists with the same name');
+                        } else {
+                            console.error('Error uploading file:', error);
+                        }
                     }
-                }
-            );
+                );
+            } else {
+                alert('Invalid file type. Please select a valid file.');
+            }
+        } else {
+            alert(`Invalid file type for ${documentType}. Please select a valid ${documentType} file.`);
         }
+    } else {
+        alert('Please select a document type and file to upload.');
     }
-  
-    uploadFile(file: File): Observable<any> {
-        const formData = new FormData();
-        formData.append('file', file);
+}
+
+
+
+  isFileTypeValid(selectedType: string, fileType: string | null): boolean {
+    if (!fileType) return false;
+    const validTypes: { [key: string]: string[] } = {
+      pdf: ['application/pdf'],
+      excel: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+      word: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+      image: ['image/jpeg', 'image/png'],
+      ppt: ['application/vnd.openxmlformats-officedocument.presentationml.presentation']
+    };
+    return validTypes[selectedType]?.includes(fileType) ?? false;
+  }
+
+  uploadFile(file: File, documentType: string, fileName: string, fileType: string): Observable<Object> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('documentType', documentType);
+    formData.append('fileName', fileName);
+    formData.append('fileType', fileType);
+    formData.append('uploadDate', new Date().toISOString());
+
+    const loginUser = localStorage.getItem('loginUser');
+    if (loginUser) {
+        formData.append('userId', loginUser);
+        console.log('Uploading with:', { file, documentType, fileName, fileType, uploadDate: new Date().toISOString(), userId: loginUser });
         return this.http.post(`${this.baseUrl}/upload`, formData);
+    } else {
+        console.error('No logged-in user found.');
+        return of({ error: 'No logged-in user found.' });
     }
-  
-   
-  
-    onFileSelect() {
-        this.uploadedFileName = `${this.baseUrl}/download/${this.selectedFileName}`;
-    }
-  
-    getFileList() {
-      this.http.get<string[]>(`${this.baseUrl}/list`).subscribe(
-          fileList => {
-              this.fileList = fileList;
-          },
-          error => {
-              console.error('Error fetching file list:', error);
-              if (error.status === 0) {
-                  alert('Network error or server not reachable');
-              } else {
-                  alert('Error fetching file list: ' + error.message);
-              }
-          }
-      );
+}
+
+
+  onFileSelect() {
+    console.log('Selected file:', this.selectedFileName);
   }
-  
-    downloadSelectedFile() {
-      if (this.selectedFileName) {
-          const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
-          this.http.get(downloadUrl, { responseType: 'blob' })
-              .subscribe(blob => {
-                  const url = window.URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = this.selectedFileName;
-                  document.body.appendChild(a);
-                  a.click();
-                  document.body.removeChild(a);
-              }, error => {
-                  console.error('Error downloading file:', error);
-              });
-      } else {
-          alert('Please select a file to download');
+
+  getFileType(file: File): string {
+    if (file.type.includes('pdf')) {
+      return 'application/pdf';
+    } else if (file.type.includes('image')) {
+      return 'image/jpeg'; // Adjust according to your requirements
+    } else if (file.type.includes('excel')) {
+      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    } else if (file.type.includes('word')) {
+      return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    } else if (file.type.includes('ppt')) {
+      return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+    }
+    return ''; // Return an empty string instead of null
+  }
+
+  getFileList() {
+    this.http.get<Document[]>(`${this.baseUrl}/list`).subscribe(
+      fileList => {
+        this.fileList = fileList;
+      },
+      error => {
+        console.error('Error fetching file list:', error);
+        alert('Error fetching file list: ' + error.message);
       }
+    );
   }
+  downloadSelectedFile() {
+    if (this.selectedFileName) {
+      const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
+      this.http.get(downloadUrl, { responseType: 'blob' }).subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = this.selectedFileName;
+        a.click();
+      });
+    } else {
+      alert('Please select a file to download');
+    }
   }
+
+//   deleteFile(fileName: string) {
+//     if (fileName) {
+//         if (confirm(`Are you sure you want to delete ${fileName}?`)) {
+//             this.http.delete(`${this.baseUrl}/delete/${fileName}`).subscribe(() => {
+//                 alert(`${fileName} deleted successfully`);
+//                 this.getFileList();
+//             }, error => {
+//                 console.error('Error deleting file:', error);
+//                 alert('Error deleting file: ' + error.message);
+//             });
+//         }
+//     } else {
+//         alert('Please select a file to delete');
+//     }
+// }
+
+  // Sidebar navigation methods
+
+}
