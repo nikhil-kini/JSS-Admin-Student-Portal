@@ -29,10 +29,18 @@
   flex-direction: column; /* Align items vertically */
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  padding: 20px;
-  margin-top: 20px; /* Add margin at the top */
+  padding: 20px; /* Inner padding for content */
+  margin: 20px auto; /* Center the entire content area */
   overflow-y: auto; /* Allows scrolling for content if it overflows */
+  border: 2px solid #0d0d0e;
+  border-radius: 5px; 
+  background-color: #ffffff; 
+  max-height: 500px;
+  max-width: 600px; 
+  box-sizing: border-box; 
 }
+
+
 
 h2 {
   color: #343a40;

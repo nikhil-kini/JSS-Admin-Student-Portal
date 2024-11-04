@@ -30,7 +30,7 @@ onLoginSubmit() {
           console.log('Login successful:', response);
           localStorage.setItem('isAuthenticated', 'true');
           localStorage.setItem('loginUser', this.loginData.email)
-          this.router.navigate(['/home']);
+          this.router.navigate(['/sidemenu/home']);
       },
       (error) => {
           console.error('Login failed:', error);

@@ -81,6 +81,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+		 <!-- Check for the latest version -->
+		</dependency>
+
 	</dependencies>
 
 	<build>

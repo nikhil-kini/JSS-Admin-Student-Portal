@@ -9,15 +9,9 @@ import { catchError, Observable, of, tap, throwError } from 'rxjs';
 
 interface Document {
   docId?: number;
-  documentType: string;
   fileName: string;
   fileType: string;
   uploadDate?: Date;
-}
-
-interface UploadResponse {
-  message?: string;
-  error?: string;
 }
 
 @Component({
@@ -28,10 +22,7 @@ interface UploadResponse {
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit{
-  baseUrl = 'http://localhost:8080/api/files';
-  fileList: Document[] = [];
-  selectedFileName = '';
-  selectedDocumentType = '';
+  
 
   sidebarLinks = [
     { name: 'Home', route: '/home', icon: 'bi bi-house', action: () => this.home() },
@@ -47,6 +38,10 @@ export class DashboardComponent implements OnInit{
     { name: 'Logout', route: '/login', icon: 'bi bi-box-arrow-right', action: () => this.logout() }
   ];
 
+  baseUrl = 'http://localhost:8080/api/pdocu';
+  fileList: Document[] = [];
+  selectedFileName = '';
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
@@ -56,58 +51,27 @@ export class DashboardComponent implements OnInit{
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-        const documentType = this.selectedDocumentType; 
-        const documentName = file.name; 
-        const documentTypeMapping = this.getFileType(file); 
-
-        if (this.isFileTypeValid(documentType, documentTypeMapping)) {
-            if (documentTypeMapping) {
-                this.uploadFile(file, documentType, documentName, documentTypeMapping).subscribe(
-                    (response: UploadResponse) => {
-                        if (response && response.error) {
-                            alert(response.error); 
-                            return; 
-                        }
-                        alert('File uploaded successfully');
-                        this.getFileList(); // Refresh the file list instead of pushing manually
-                    },
-                    error => {
-                        if (error.status === 409) {
-                            alert('File already exists with the same name');
-                        } else {
-                            console.error('Error uploading file:', error);
-                        }
-                    }
-                );
-            } else {
-                alert('Invalid file type. Please select a valid file.');
+        const fileName = file.name; // Use the name of the uploaded file
+        const fileType = file.type; // Use the type of the uploaded file
+        
+        this.uploadFile(file, fileName, fileType).subscribe(
+            (response: any) => {
+                alert(response.message || 'File uploaded successfully');
+                this.getFileList();
+            },
+            error => {
+                console.error('Error uploading file:', error);
+                alert('Error uploading file: ' + (error.error?.message || error.message));
             }
-        } else {
-            alert(`Invalid file type for ${documentType}. Please select a valid ${documentType} file.`);
-        }
+        );
     } else {
-        alert('Please select a document type and file to upload.');
+        alert('Please select a file to upload.');
     }
 }
 
-
-
-  isFileTypeValid(selectedType: string, fileType: string | null): boolean {
-    if (!fileType) return false;
-    const validTypes: { [key: string]: string[] } = {
-      pdf: ['application/pdf'],
-      excel: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
-      word: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-      image: ['image/jpeg', 'image/png'],
-      ppt: ['application/vnd.openxmlformats-officedocument.presentationml.presentation']
-    };
-    return validTypes[selectedType]?.includes(fileType) ?? false;
-  }
-
-  uploadFile(file: File, documentType: string, fileName: string, fileType: string): Observable<Object> {
+  uploadFile(file: File, fileName: string, fileType: string): Observable<Object> {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('documentType', documentType);
     formData.append('fileName', fileName);
     formData.append('fileType', fileType);
     formData.append('uploadDate', new Date().toISOString());
@@ -115,7 +79,13 @@ export class DashboardComponent implements OnInit{
     const loginUser = localStorage.getItem('loginUser');
     if (loginUser) {
         formData.append('userId', loginUser);
-        console.log('Uploading with:', { file, documentType, fileName, fileType, uploadDate: new Date().toISOString(), userId: loginUser });
+        console.log('Uploading with:', {
+            file,
+            fileName,
+            fileType,
+            uploadDate: new Date().toISOString(),
+            userId: loginUser
+        });
         return this.http.post(`${this.baseUrl}/upload`, formData);
     } else {
         console.error('No logged-in user found.');
@@ -123,25 +93,8 @@ export class DashboardComponent implements OnInit{
     }
 }
 
-
-  onFileSelect() {
-    console.log('Selected file:', this.selectedFileName);
-  }
-
-  getFileType(file: File): string {
-    if (file.type.includes('pdf')) {
-      return 'application/pdf';
-    } else if (file.type.includes('image')) {
-      return 'image/jpeg'; // Adjust according to your requirements
-    } else if (file.type.includes('excel')) {
-      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    } else if (file.type.includes('word')) {
-      return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    } else if (file.type.includes('ppt')) {
-      return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-    }
-    return ''; // Return an empty string instead of null
-  }
+  
+  
 
   getFileList() {
     this.http.get<Document[]>(`${this.baseUrl}/list`).subscribe(
@@ -154,6 +107,7 @@ export class DashboardComponent implements OnInit{
       }
     );
   }
+
   downloadSelectedFile() {
     if (this.selectedFileName) {
       const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
@@ -169,32 +123,21 @@ export class DashboardComponent implements OnInit{
     }
   }
 
-//   deleteFile(fileName: string) {
-//     if (fileName) {
-//         if (confirm(`Are you sure you want to delete ${fileName}?`)) {
-//             this.http.delete(`${this.baseUrl}/delete/${fileName}`).subscribe(() => {
-//                 alert(`${fileName} deleted successfully`);
-//                 this.getFileList();
-//             }, error => {
-//                 console.error('Error deleting file:', error);
-//                 alert('Error deleting file: ' + error.message);
-//             });
-//         }
-//     } else {
-//         alert('Please select a file to delete');
-//     }
-// }
+  private handleError(error: HttpErrorResponse) {
+    console.error('An error occurred:', error);
+    return of(null);
+  }
 
   // Sidebar navigation methods
-  home() { this.router.navigate(['/home']); }
-  timetable() { this.router.navigate(['/time-table']); }
-  studentsmanagement() { this.router.navigate(['/students-management']); }
-  attendancemanagement() { this.router.navigate(['/attendance-management']); }
-  questionbank() { this.router.navigate(['/question-bank']); }
-  iamodule() { this.router.navigate(['/ia-module']); }
-  feedbacksystem() { this.router.navigate(['/feedback-system']); }
-  lessonplan() { this.router.navigate(['/lesson-plan']); }
-  teachingaids() { this.router.navigate(['/teaching-aids']); }
-  personaldocuments() { this.router.navigate(['/personal-documents']); }
-  logout() { localStorage.clear(); this.router.navigate(['/login']); }
+  home() { this.router.navigate(['/sidemenu/home']); }
+  timetable() { this.router.navigate(['/sidemenu/time-table']); }
+  studentsmanagement() { this.router.navigate(['/sidemenu/students-management']); }
+  attendancemanagement() { this.router.navigate(['/sidemenu/attendance-management']); }
+  questionbank() { this.router.navigate(['/sidemenu/question-bank']); }
+  iamodule() { this.router.navigate(['/sidemenu/ia-module']); }
+  feedbacksystem() { this.router.navigate(['/sidemenu/feedback-system']); }
+  lessonplan() { this.router.navigate(['/sidemenu/lesson-plan']); }
+  teachingaids() { this.router.navigate(['/sidemenu/teaching-aids']); }
+  personaldocuments() { this.router.navigate(['/sidemenu/personal-documents']); }
+  logout() { localStorage.clear(); this.router.navigate(['/auth/login']); }
 }

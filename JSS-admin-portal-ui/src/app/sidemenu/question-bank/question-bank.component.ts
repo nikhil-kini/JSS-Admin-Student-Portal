@@ -12,33 +12,33 @@ export class QuestionBankComponent {
   constructor(private router: Router) {}
 
   home(){
-    this.router.navigate(['/home']);
+    this.router.navigate(['/sidemenu/home']);
 
   }
   timetable(){
-    this.router.navigate(['/time-table']);
+    this.router.navigate(['/sidemenu/time-table']);
 
   }
   studentsmanagement(){
-    this.router.navigate(['/students-management']);
+    this.router.navigate(['/sidemenu/students-management']);
   }
   attendancemanagement(){
-    this.router.navigate(['/attendance-management']);
+    this.router.navigate(['/sidemenu/attendance-management']);
   }
   questionbank(){
-    this.router.navigate(['/question-bank']);
+    this.router.navigate(['/sidemenu/question-bank']);
   }
     iamodule(){
-      this.router.navigate(['/ia-module']);
+      this.router.navigate(['/sidemenu/ia-module']);
     }
     feedbacksystem(){
-      this.router.navigate(['/feedback-system']);
+      this.router.navigate(['/sidemenu/feedback-system']);
     }
     lessonplan(){
-      this.router.navigate(['/lesson-plan']);
+      this.router.navigate(['/sidemenu/lesson-plan']);
     }
     teachingaids(){
-      this.router.navigate(['/teaching-aids']);
+      this.router.navigate(['/sidemenu/teaching-aids']);
     }
     logout() {
       localStorage.removeItem('isAuthenticated'); 
@@ -47,6 +47,6 @@ export class QuestionBankComponent {
     }
     personaldocuments(){
       
-      this.router.navigate(['/personal-documents'])
+      this.router.navigate(['/sidemenu/personal-documents'])
     }
 }
