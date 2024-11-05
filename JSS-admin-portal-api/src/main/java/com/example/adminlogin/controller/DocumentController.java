@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +26,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+
+
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -35,18 +46,50 @@ public class DocumentController {
     @Autowired
     private UserRepo userRepo;
 
-    private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/upload/1st year/sem1/";
+    private String getUploadDirectory(String semester) {
+        Map<String, String> semesterDirectories = new HashMap<>();
+        semesterDirectories.put("sem1", "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem1/");
+        semesterDirectories.put("sem2", "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem2/");
+        semesterDirectories.put("sem3", "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem3/");
+        semesterDirectories.put("sem4", "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem4/");
+        semesterDirectories.put("sem5", "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem5/");
+        semesterDirectories.put("sem6", "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem6/");
+
+        // Default to sem1 if no valid semester is provided
+        return semesterDirectories.getOrDefault(semester, "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem1/");
+    }
+
+//    public String getUploadDirectory(String semester) {
+//        // Replace this with your logic to return the correct directory based on the semester
+//        switch (semester) {
+//            case "sem1":
+//                return "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem1/";
+//            case "sem2":
+//                return "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem2/";
+//            case "sem3":
+//                return "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem3/";
+//            case "sem4":
+//                return "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem4/";
+//            case "sem5":
+//                return "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem5/";
+//            case "sem6":
+//                return "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem6/";
+//            default:
+//                throw new IllegalArgumentException("Invalid semester: " + semester);
+//        }
+//    }
+
+//    private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/1st year/";
+
 
 //    @PostMapping("/upload")
 //    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
 //                                                          @RequestParam("documentType") String documentType,
 //                                                          @RequestParam("fileName") String fileName,
 //                                                          @RequestParam("fileType") String fileType,
-//                                                          @RequestParam("uploadDate") String uploadDate
+//                                                          @RequestParam("uploadDate") String uploadDate,
+//                                                          @RequestParam("userId") String userId) { // Changed to String
 //
-//
-//
-//    ) {
 //        Map<String, String> response = new HashMap<>();
 //        if (file.isEmpty()) {
 //            response.put("message", "File upload failed: File is empty");
@@ -73,10 +116,18 @@ public class DocumentController {
 //            // Create Document object and set properties
 //            Document document = new Document();
 //            document.setDocumentType(documentType);
-//            document.setFileName(fileName);
+//            document.setFileName(sanitizedFilename);
 //            document.setUploadDate(uploadDate);
 //            document.setFileType(fileType);
 //
+//            // Find user by email and set the document's user
+//            Optional<User> userOptional = userRepo.findByEmail(userId); // Fetch user by email
+//            if (userOptional.isPresent()) {
+//                document.setUser(userOptional.get());
+//            } else {
+//                response.put("message", "User not found");
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//            }
 //
 //            documentRepo.save(document);
 //            return ResponseEntity.ok(response);
@@ -87,14 +138,14 @@ public class DocumentController {
 //        }
 //    }
 
-
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
                                                           @RequestParam("documentType") String documentType,
                                                           @RequestParam("fileName") String fileName,
                                                           @RequestParam("fileType") String fileType,
                                                           @RequestParam("uploadDate") String uploadDate,
-                                                          @RequestParam("userId") String userId) { // Changed to String
+                                                          @RequestParam("userId") String userId,
+                                                          @RequestParam("semester") String semester) {
 
         Map<String, String> response = new HashMap<>();
         if (file.isEmpty()) {
@@ -103,6 +154,9 @@ public class DocumentController {
         }
 
         try {
+            // Determine the upload directory based on semester
+            String uploadDir = getUploadDirectory(semester);
+
             String originalFilename = file.getOriginalFilename();
             String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
             Path path = Paths.get(uploadDir + sanitizedFilename);
@@ -125,9 +179,10 @@ public class DocumentController {
             document.setFileName(sanitizedFilename);
             document.setUploadDate(uploadDate);
             document.setFileType(fileType);
+            document.setSemester(semester);  // Set the selected semester
 
             // Find user by email and set the document's user
-            Optional<User> userOptional = userRepo.findByEmail(userId); // Fetch user by email
+            Optional<User> userOptional = userRepo.findByEmail(userId);
             if (userOptional.isPresent()) {
                 document.setUser(userOptional.get());
             } else {
@@ -135,6 +190,7 @@ public class DocumentController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
 
+            // Save the document in the database
             documentRepo.save(document);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
@@ -143,6 +199,10 @@ public class DocumentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    // Helper method to determine upload directory based on semester
+
+
 
     // Get all documents by user ID
     @GetMapping("/user/{id}")
@@ -187,36 +247,104 @@ public class DocumentController {
 //    }
 
 
+//    @GetMapping("/list")
+//    public ResponseEntity<List<String>> listUploadedFiles() {
+//        File folder = new File(uploadDir());
+//        File[] files = folder.listFiles();
+//
+//        if (files != null) {
+//            List<String> fileNames = Arrays.stream(files)
+//                    .map(File::getName)
+//                    .collect(Collectors.toList());
+//            return ResponseEntity.ok(fileNames);
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//    }
+
+//    @GetMapping("/download/{filename:.+}")
+//    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+//        try {
+//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+//            Resource resource = new UrlResource(filePath.toUri());
+//
+//            if (!resource.exists()) {
+//                return ResponseEntity.notFound().build();
+//            }
+//
+//            return ResponseEntity.ok()
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                    .body(resource);
+//        } catch (MalformedURLException e) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
+
     @GetMapping("/list")
-    public ResponseEntity<List<String>> listUploadedFiles() {
-        File folder = new File(uploadDir);
-        File[] files = folder.listFiles();
+    public ResponseEntity<List<String>> listUploadedFiles(@RequestParam String semester) {
+        try {
+            String uploadDir = getUploadDirectory(semester);  // Get directory based on semester
 
-        if (files != null) {
-            List<String> fileNames = Arrays.stream(files)
-                    .map(File::getName)
-                    .collect(Collectors.toList());
-            return ResponseEntity.ok(fileNames);
+            // Create a File object pointing to the upload directory
+            File folder = new File(uploadDir);
+
+            // Check if the folder exists and is a directory
+            if (!folder.exists() || !folder.isDirectory()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Collections.singletonList("Error: Directory not found"));
+            }
+
+            // Get a list of files from the directory
+            File[] files = folder.listFiles();
+
+            if (files != null && files.length > 0) {
+                // Extract file names and return them in the response
+                List<String> fileNames = Arrays.stream(files)
+                        .filter(File::isFile)  // Only consider files, not directories
+                        .map(File::getName)
+                        .collect(Collectors.toList());
+                return ResponseEntity.ok(fileNames);
+            } else {
+                // No files found in the directory
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonList("Error: Unable to fetch file list"));
         }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
-    @GetMapping("/download/{filename:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+    @GetMapping("/download/{semester}/{filename:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String semester, @PathVariable String filename) {
         try {
+            String uploadDir = getUploadDirectory(semester);
             Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+
+            if (!Files.exists(filePath)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 if file not found
+            }
+
             Resource resource = new UrlResource(filePath.toUri());
 
             if (!resource.exists()) {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 if resource not found
+            }
+
+            String mimeType = Files.probeContentType(filePath);
+            if (mimeType == null) {
+                mimeType = "application/octet-stream";  // Default MIME type
             }
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, mimeType)
                     .body(resource);
-        } catch (MalformedURLException e) {
-            return ResponseEntity.badRequest().build();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();  // 500 if internal server error
         }
     }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
@@ -7,15 +7,9 @@ import { Observable, of } from 'rxjs';
 
 interface Document {
   docId?: number;
-  documentType: string;
   fileName: string;
   fileType: string;
   uploadDate?: Date;
-}
-
-interface UploadResponse {
-  message?: string;
-  error?: string;
 }
 
 @Component({
@@ -27,10 +21,7 @@ interface UploadResponse {
 })
 export class PersonalDocumentsComponent implements OnInit{
 
-  baseUrl = 'http://localhost:8080/api/files';
-  fileList: Document[] = [];
-  selectedFileName = '';
-  selectedDocumentType = '';
+  
 
   home(){
     this.router.navigate(['/sidemenu/home']);
@@ -73,6 +64,10 @@ export class PersonalDocumentsComponent implements OnInit{
 
 
 
+    baseUrl = 'http://localhost:8080/api/pdocu';
+  fileList: string[] = [];  // List of file names (strings)
+  selectedFileName: string = '';
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
@@ -82,108 +77,48 @@ export class PersonalDocumentsComponent implements OnInit{
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-        const documentType = this.selectedDocumentType; 
-        const documentName = file.name; 
-        const documentTypeMapping = this.getFileType(file); 
-
-        if (this.isFileTypeValid(documentType, documentTypeMapping)) {
-            if (documentTypeMapping) {
-                this.uploadFile(file, documentType, documentName, documentTypeMapping).subscribe(
-                    (response: UploadResponse) => {
-                        if (response && response.error) {
-                            alert(response.error); 
-                            return; 
-                        }
-                        alert('File uploaded successfully');
-                        this.getFileList(); // Refresh the file list instead of pushing manually
-                    },
-                    error => {
-                        if (error.status === 409) {
-                            alert('File already exists with the same name');
-                        } else {
-                            console.error('Error uploading file:', error);
-                        }
-                    }
-                );
-            } else {
-                alert('Invalid file type. Please select a valid file.');
-            }
-        } else {
-            alert(`Invalid file type for ${documentType}. Please select a valid ${documentType} file.`);
+      this.uploadFile(file).subscribe(
+        (response: any) => {
+          alert(response.message || 'File uploaded successfully');
+          this.getFileList();
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+          alert('Error uploading file: ' + (error.error?.message || error.message));
         }
+      );
     } else {
-        alert('Please select a document type and file to upload.');
+      alert('Please select a file to upload.');
     }
-}
-
-
-
-  isFileTypeValid(selectedType: string, fileType: string | null): boolean {
-    if (!fileType) return false;
-    const validTypes: { [key: string]: string[] } = {
-      pdf: ['application/pdf'],
-      excel: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
-      word: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-      image: ['image/jpeg', 'image/png'],
-      ppt: ['application/vnd.openxmlformats-officedocument.presentationml.presentation']
-    };
-    return validTypes[selectedType]?.includes(fileType) ?? false;
   }
 
-  uploadFile(file: File, documentType: string, fileName: string, fileType: string): Observable<Object> {
+  uploadFile(file: File): Observable<Object> {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('documentType', documentType);
-    formData.append('fileName', fileName);
-    formData.append('fileType', fileType);
+    formData.append('fileName', file.name);
+    formData.append('fileType', file.type);
     formData.append('uploadDate', new Date().toISOString());
+    formData.append('userId', localStorage.getItem('loginUser') || '');
 
-    const loginUser = localStorage.getItem('loginUser');
-    if (loginUser) {
-        formData.append('userId', loginUser);
-        console.log('Uploading with:', { file, documentType, fileName, fileType, uploadDate: new Date().toISOString(), userId: loginUser });
-        return this.http.post(`${this.baseUrl}/upload`, formData);
-    } else {
-        console.error('No logged-in user found.');
-        return of({ error: 'No logged-in user found.' });
-    }
-}
-
-
-  onFileSelect() {
-    console.log('Selected file:', this.selectedFileName);
-  }
-
-  getFileType(file: File): string {
-    if (file.type.includes('pdf')) {
-      return 'application/pdf';
-    } else if (file.type.includes('image')) {
-      return 'image/jpeg'; // Adjust according to your requirements
-    } else if (file.type.includes('excel')) {
-      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    } else if (file.type.includes('word')) {
-      return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    } else if (file.type.includes('ppt')) {
-      return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-    }
-    return ''; 
+    return this.http.post(`${this.baseUrl}/upload`, formData);
   }
 
   getFileList() {
-    this.http.get<Document[]>(`${this.baseUrl}/list`).subscribe(
-      fileList => {
+    this.http.get<string[]>(`${this.baseUrl}/list`).subscribe(
+      (fileList) => {
         this.fileList = fileList;
       },
-      error => {
+      (error) => {
         console.error('Error fetching file list:', error);
         alert('Error fetching file list: ' + error.message);
       }
     );
   }
+
   downloadSelectedFile() {
     if (this.selectedFileName) {
       const downloadUrl = `${this.baseUrl}/download/${this.selectedFileName}`;
-      this.http.get(downloadUrl, { responseType: 'blob' }).subscribe(blob => {
+      this.http.get(downloadUrl, { responseType: 'blob' }).subscribe((blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -195,22 +130,15 @@ export class PersonalDocumentsComponent implements OnInit{
     }
   }
 
-//   deleteFile(fileName: string) {
-//     if (fileName) {
-//         if (confirm(`Are you sure you want to delete ${fileName}?`)) {
-//             this.http.delete(`${this.baseUrl}/delete/${fileName}`).subscribe(() => {
-//                 alert(`${fileName} deleted successfully`);
-//                 this.getFileList();
-//             }, error => {
-//                 console.error('Error deleting file:', error);
-//                 alert('Error deleting file: ' + error.message);
-//             });
-//         }
-//     } else {
-//         alert('Please select a file to delete');
-//     }
-// }
-
-  // Sidebar navigation methods
-
-}
+  openFile(fileName: string) {
+    if (!fileName) {
+      alert('File not found!');
+      return;
+    }
+    // Construct the file URL
+    const fileUrl = `${this.baseUrl}/download/${fileName}`;
+    
+    // Open the file in a new tab
+    window.open(fileUrl, '_blank');
+  }
+}  

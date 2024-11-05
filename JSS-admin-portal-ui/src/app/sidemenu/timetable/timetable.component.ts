@@ -4,16 +4,13 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { DepartmentService } from '../department.service';
+import { SubjectService } from '../subject.service';
+import { ToastrService } from '../toastr.service';
+import { LoaderService } from '../loader.service';
 
-interface DaySchedule {
-  time: string;    
-  subject: string; 
-}
 
-
-interface Timetable {
-  [semester: string]: DaySchedule[]; 
-}
 
 
 @Component({
@@ -48,6 +45,7 @@ export class TimetableComponent {
     iamodule(){
       this.router.navigate(['/sidemenu/ia-module']);
     }
+
     feedbacksystem(){
       this.router.navigate(['/sidemenu/feedback-system']);
     }
@@ -66,192 +64,98 @@ export class TimetableComponent {
       this.router.navigate(['/sidemenu/personal-documents'])
     }
 
-
-
-selectedFile: File | null = null;
-
-// constructor(private http: HttpClient) {}
-
-onFileChange(event: any) {
-  this.selectedFile = event.target.files[0];
-}
-
-onSubmit() {
-  if (this.selectedFile) {
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-
-    this.http.post('/api/timetable/upload', formData).subscribe(
-      response => {
-        console.log(response);
-        alert('File uploaded successfully!');
-      },
-      error => {
-        console.error(error);
-        alert('File upload failed!');
-      }
-    );
   }
-}
-}
 
-
-// selectedSemester = 'Sem 1';
-//   isMasterTimetableVisible = false;
-//   isTheoryTimetableVisible = false;
-//   isLabTimetableVisible = false;
-
-//   // Define theory timetable
-//   theoryTimetable: DaySchedule[] = [];
-//   labTimetable: DaySchedule[] = []; // Declare lab timetable here
-
-//   // Updated timetableData to include theory schedules
-//   timetableData: Timetable = {
-//     'Sem 1': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Theory: Engineering Mathematics I' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Theory: Applied Physics' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Theory: Applied Chemistry' },
-//       { time: '12:00 PM - 1:00 PM', subject: 'Theory: Engineering Drawing' },
-//       { time: '1:00 PM - 2:00 PM', subject: 'Lunch Break' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Theory: Basics of Computer Science' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Theory: Environmental Studies' },
-//       { time: '4:00 PM - 5:00 PM', subject: 'Physical Education' },
-//     ],
-//     'Sem 2': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Theory: Engineering Mathematics II' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Theory: Electrical Engineering' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Theory: Engineering Mechanics' },
-//       { time: '12:00 PM - 1:00 PM', subject: 'Theory: Material Science' },
-//       { time: '1:00 PM - 2:00 PM', subject: 'Lunch Break' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Theory: Computer Programming' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Theory: Manufacturing Process' },
-//       { time: '4:00 PM - 5:00 PM', subject: 'Workshop Practice' },
-//     ],
-//     'Sem 3': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Theory: Software Engineering' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Theory: Database Management Systems' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Theory: Operating Systems' },
-//       { time: '12:00 PM - 1:00 PM', subject: 'Theory: Computer Networks' },
-//       { time: '1:00 PM - 2:00 PM', subject: 'Lunch Break' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Theory: Web Technologies' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Theory: Computer Architecture' },
-//       { time: '4:00 PM - 5:00 PM', subject: 'Lab: Software Lab' },
-//     ],
-//     'Sem 4': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Theory: Computer Graphics' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Theory: Mobile Application Development' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Theory: Cloud Computing' },
-//       { time: '12:00 PM - 1:00 PM', subject: 'Theory: Cyber Security' },
-//       { time: '1:00 PM - 2:00 PM', subject: 'Lunch Break' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Theory: Data Science' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Theory: Agile Methodologies' },
-//       { time: '4:00 PM - 5:00 PM', subject: 'Lab: Database Lab' },
-//     ],
-//     'Sem 5': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Theory: Advanced Programming' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Theory: Human-Computer Interaction' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Theory: Software Testing' },
-//       { time: '12:00 PM - 1:00 PM', subject: 'Theory: Big Data' },
-//       { time: '1:00 PM - 2:00 PM', subject: 'Lunch Break' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Theory: Digital Marketing' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Theory: Internet of Things' },
-//       { time: '4:00 PM - 5:00 PM', subject: 'Lab: Advanced Programming Lab' },
-//     ],
-//     'Sem 6': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Theory: Project Management' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Theory: Ethical Hacking' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Theory: Blockchain Technology' },
-//       { time: '12:00 PM - 1:00 PM', subject: 'Theory: Data Analytics' },
-//       { time: '1:00 PM - 2:00 PM', subject: 'Lunch Break' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Theory: UI/UX Design' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Theory: DevOps' },
-//       { time: '4:00 PM - 5:00 PM', subject: 'Lab: Project Development Lab' },
-//     ],
-//   };
-
-//   // Sample lab timetable
-//   labTimetableData: Timetable = {
-//     'Sem 1': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Lab: Physics Lab' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Lab: Chemistry Lab' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Lab: Computer Lab' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Lab: Electrical Engineering Lab' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Lab: Workshop Practice' },
-//     ],
-//     'Sem 2': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Lab: Electrical Lab' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Lab: Electronics Lab' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Lab: Mechanics Lab' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Lab: Material Testing Lab' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Lab: Production Lab' },
-//     ],
-//     'Sem 3': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Lab: Networking Lab' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Lab: Software Lab' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Lab: Database Lab' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Lab: Web Development Lab' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Lab: Cloud Lab' },
-//     ],
-//     'Sem 4': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Lab: Computer Graphics Lab' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Lab: Cyber Security Lab' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Lab: Mobile Lab' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Lab: Software Testing Lab' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Lab: Data Science Lab' },
-//     ],
-//     'Sem 5': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Lab: Advanced Programming Lab' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Lab: Human-Computer Interaction Lab' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Lab: Big Data Lab' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Lab: Internet of Things Lab' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Lab: Digital Marketing Lab' },
-//     ],
-//     'Sem 6': [
-//       { time: '9:00 AM - 10:00 AM', subject: 'Lab: Ethical Hacking Lab' },
-//       { time: '10:00 AM - 11:00 AM', subject: 'Lab: Data Analytics Lab' },
-//       { time: '11:00 AM - 12:00 PM', subject: 'Lab: UI/UX Design Lab' },
-//       { time: '2:00 PM - 3:00 PM', subject: 'Lab: DevOps Lab' },
-//       { time: '3:00 PM - 4:00 PM', subject: 'Lab: Blockchain Lab' },
-//     ],
-//   };
-
-//   showMasterTimetable() {
-//     this.isMasterTimetableVisible = true;
-//     this.isTheoryTimetableVisible = false; // Hide theory timetable
-//     this.isLabTimetableVisible = false;    // Hide lab timetable
-//     this.theoryTimetable = this.timetableData[this.selectedSemester]; // Get theory timetable for the selected semester
-//     this.labTimetable = this.labTimetableData[this.selectedSemester]; // Get lab timetable for the selected semester
-//   }
-
-//   // Functions to show theory and lab timetables
-//   showTheoryTimetable() {
-//     this.isMasterTimetableVisible = false; // Hide master timetable
-//     this.isTheoryTimetableVisible = true;  // Show theory timetable
-//     this.isLabTimetableVisible = false;     // Hide lab timetable
-//     this.theoryTimetable = this.timetableData[this.selectedSemester]; // Get all theory subjects
-//   }
-
-//   showLabTimetable() {
-//     this.isMasterTimetableVisible = false; // Hide master timetable
-//     this.isTheoryTimetableVisible = false;  // Hide theory timetable
-//     this.isLabTimetableVisible = true;      // Show lab timetable
-//     this.labTimetable = this.labTimetableData[this.selectedSemester]; // Get all lab subjects
-//   }
-
-//   // Additional functions for handling semester change
-//   availableSemesters = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6'];
-
-//   onSemesterChange(event: any) {
-//     this.selectedSemester = event.target.value;
-    
-//     // Reset visibility flags
-//     this.isMasterTimetableVisible = false;
-//     this.isTheoryTimetableVisible = false;
-//     this.isLabTimetableVisible = false;
-
-//     // Clear the current timetables
-//     this.theoryTimetable = [];
-//     this.labTimetable = [];
-//   }
+//     timeTableDetails: FormGroup;
+//     departments: any[] = [];
+//     sectionList: any[] = [];
+//     subjectsList: any[] = [];
   
+//     private apiUrl = 'http://localhost:8080/api/timetable';
+  
+//     constructor(
+//       private fb: FormBuilder,
+//       private departmentServe: DepartmentService,
+//       private subjectsServe: SubjectService,
+//       private toast: ToastrService,
+//       private loader: LoaderService,
+//       private router: Router,
+//       private http: HttpClient
+//     ) {
+//       this.timeTableDetails = this.fb.group({
+//         departmentName: ['', Validators.required],
+//         year: ['', Validators.required],
+//         section: ['', Validators.required],
+//         timeTable: this.fb.group({
+//           monday: this.fb.group({
+//             1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
+//           }),
+//           tuesday: this.fb.group({
+//             1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
+//           }),
+//           wednesday: this.fb.group({
+//             1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
+//           }),
+//           thursday: this.fb.group({
+//             1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
+//           }),
+//           friday: this.fb.group({
+//             1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
+//           }),
+//         })
+//       });
+//     }
+  
+//     ngOnInit(): void {
+//       this.getDepartment();
+//       this.getSubjects();
+//     }
+  
+//     // Get departments and sections
+//     async getDepartment(): Promise<void> {
+//   this.departmentServe.getDepartmentDetails().subscribe(
+//     (departments) => {
+//       this.departments = departments;  // Now the data is available as an array
+//     },
+//     (error) => {
+//       console.error(error);  // Handle any errors
+//     }
+//   );
 // }
+
+  
+//     async getDepartmentDetails(): Promise<void> {
+//       const selectedDepartmentId = this.timeTableDetails.value.departmentName;
+//       const data = await this.departmentServe.getDepartmentById(selectedDepartmentId);
+//       this.sectionList = data.years[this.timeTableDetails.value.year];
+//     }
+  
+//     async getSubjects(): Promise<void> {
+//       this.subjectsList = await this.subjectsServe.getSubjects();
+//     }
+  
+//     // Handle form submission
+//     async handleSubmit(): Promise<void> {
+//       try {
+//         this.loader.show();
+//         const data = this.timeTableDetails.value;
+//         const result = await this.createTimeTable(data).toPromise();
+//         this.toast.success(result.message);
+//         this.router.navigate(['/timetable']);
+//       } catch (error: any) {
+//         this.toast.error(error.message || 'Error occurred');
+//       } finally {
+//         this.loader.hide();
+//       }
+//     }
+  
+//     // Create TimeTable using HTTP POST request
+//     createTimeTable(data: any): Observable<any> {
+//       return this.http.post<any>(`${this.apiUrl}/create`, data);
+//     }
+  
+//     // Get all TimeTables using HTTP GET request
+//     getTimeTables(): Observable<any[]> {
+//       return this.http.get<any[]>(`${this.apiUrl}/all`);
+//     }
+//   }

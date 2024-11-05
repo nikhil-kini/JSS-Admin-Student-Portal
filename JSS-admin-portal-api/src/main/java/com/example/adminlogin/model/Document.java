@@ -23,6 +23,9 @@ public class Document {
     //    @Temporal(TemporalType.TIMESTAMP)
     private String uploadDate;
 
+   @Column(name = "semester")
+   private String semester;
+
     //    @Lob
 //    private byte[] fileData;
     @ManyToOne
