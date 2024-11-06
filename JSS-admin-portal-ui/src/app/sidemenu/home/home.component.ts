@@ -41,7 +41,7 @@ export class HomeComponent {
       this.router.navigate(['/sidemenu/teaching-aids']);
     }
     personaldocuments(){
-      this.router.navigate(['/personal-documents'])
+      this.router.navigate(['/sidemenu/personal-documents'])
     }
     logout() {
       localStorage.removeItem('isAuthenticated');  

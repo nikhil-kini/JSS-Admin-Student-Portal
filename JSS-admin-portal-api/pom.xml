@@ -29,6 +29,19 @@
 	<properties>
 		<java.version>23</java.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>aspose-repo</id>
+			<url>https://repository.aspose.com/repo/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -81,6 +94,31 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.28</version> <!-- Use latest version -->
+		</dependency>
+
+
+
+
+
+		<!-- https://mvnrepository.com/artifact/com.aspose/aspose-words -->
+		<dependency>
+			<groupId>com.aspose</groupId>
+			<artifactId>aspose-words</artifactId>
+			<version>24.9</version>
+			<type>pom</type>
+		</dependency>
+
+
+		<!-- XMLBeans -->
+
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
 			<artifactId>jboss-logging</artifactId>

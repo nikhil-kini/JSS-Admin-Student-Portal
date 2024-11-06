@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -82,61 +83,6 @@ public class DocumentController {
 //    private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/1st year/";
 
 
-//    @PostMapping("/upload")
-//    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
-//                                                          @RequestParam("documentType") String documentType,
-//                                                          @RequestParam("fileName") String fileName,
-//                                                          @RequestParam("fileType") String fileType,
-//                                                          @RequestParam("uploadDate") String uploadDate,
-//                                                          @RequestParam("userId") String userId) { // Changed to String
-//
-//        Map<String, String> response = new HashMap<>();
-//        if (file.isEmpty()) {
-//            response.put("message", "File upload failed: File is empty");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//        }
-//
-//        try {
-//            String originalFilename = file.getOriginalFilename();
-//            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
-//            Path path = Paths.get(uploadDir + sanitizedFilename);
-//
-//            // Check if file already exists
-//            if (Files.exists(path)) {
-//                response.put("message", "File with the same name already exists");
-//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
-//            }
-//
-//            // Proceed with file upload
-//            Files.createDirectories(path.getParent());
-//            Files.copy(file.getInputStream(), path);
-//            response.put("message", "File uploaded successfully: " + sanitizedFilename);
-//            response.put("downloadUrl", "/files/" + sanitizedFilename);
-//
-//            // Create Document object and set properties
-//            Document document = new Document();
-//            document.setDocumentType(documentType);
-//            document.setFileName(sanitizedFilename);
-//            document.setUploadDate(uploadDate);
-//            document.setFileType(fileType);
-//
-//            // Find user by email and set the document's user
-//            Optional<User> userOptional = userRepo.findByEmail(userId); // Fetch user by email
-//            if (userOptional.isPresent()) {
-//                document.setUser(userOptional.get());
-//            } else {
-//                response.put("message", "User not found");
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-//            }
-//
-//            documentRepo.save(document);
-//            return ResponseEntity.ok(response);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            response.put("message", "File upload failed: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-//        }
-//    }
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
@@ -158,25 +104,31 @@ public class DocumentController {
             String uploadDir = getUploadDirectory(semester);
 
             String originalFilename = file.getOriginalFilename();
-            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
-            Path path = Paths.get(uploadDir + sanitizedFilename);
 
-            // Check if file already exists
+            // Sanitize the filename to remove illegal characters
+            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
+
+            // Modify the filename to include the semester, so files can be uploaded multiple times
+            String semesterSpecificFilename = semester + "_" + sanitizedFilename;
+
+            Path path = Paths.get(uploadDir + semesterSpecificFilename);
+
+            // Check if file already exists in the chosen semester directory
             if (Files.exists(path)) {
-                response.put("message", "File with the same name already exists");
+                response.put("message", "File with the same name already exists in this semester");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
             }
 
             // Proceed with file upload
             Files.createDirectories(path.getParent());
             Files.copy(file.getInputStream(), path);
-            response.put("message", "File uploaded successfully: " + sanitizedFilename);
-            response.put("downloadUrl", "/files/" + sanitizedFilename);
+            response.put("message", "File uploaded successfully: " + semesterSpecificFilename);
+            response.put("downloadUrl", "/files/" + semesterSpecificFilename);
 
             // Create Document object and set properties
             Document document = new Document();
             document.setDocumentType(documentType);
-            document.setFileName(sanitizedFilename);
+            document.setFileName(semesterSpecificFilename);  // Save the file with the semester-specific filename
             document.setUploadDate(uploadDate);
             document.setFileType(fileType);
             document.setSemester(semester);  // Set the selected semester
@@ -192,6 +144,12 @@ public class DocumentController {
 
             // Save the document in the database
             documentRepo.save(document);
+
+            // Add more information to the response
+            response.put("documentId", document.getDocId().toString());  // Add document ID to the response
+            response.put("uploadDate", document.getUploadDate());  // Add upload date to the response
+            response.put("documentType", document.getDocumentType());  // Add document type to the response
+
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();
@@ -200,7 +158,7 @@ public class DocumentController {
         }
     }
 
-    // Helper method to determine upload directory based on semester
+
 
 
 
@@ -262,23 +220,7 @@ public class DocumentController {
 //        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 //    }
 
-//    @GetMapping("/download/{filename:.+}")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-//        try {
-//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
-//            Resource resource = new UrlResource(filePath.toUri());
-//
-//            if (!resource.exists()) {
-//                return ResponseEntity.notFound().build();
-//            }
-//
-//            return ResponseEntity.ok()
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//                    .body(resource);
-//        } catch (MalformedURLException e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
+
 
     @GetMapping("/list")
     public ResponseEntity<List<String>> listUploadedFiles(@RequestParam String semester) {
@@ -316,6 +258,38 @@ public class DocumentController {
         }
     }
 
+//    @GetMapping("/download/{semester}/{filename:.+}")
+//    public ResponseEntity<Resource> downloadFile(@PathVariable String semester, @PathVariable String filename) {
+//        try {
+//            String uploadDir = getUploadDirectory(semester);
+//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+//
+//            if (!Files.exists(filePath)) {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 if file not found
+//            }
+//
+//            Resource resource = new UrlResource(filePath.toUri());
+//
+//            if (!resource.exists()) {
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // 404 if resource not found
+//            }
+//
+//            String mimeType = Files.probeContentType(filePath);
+//            if (mimeType == null) {
+//                mimeType = "application/octet-stream";  // Default MIME type
+//            }
+//
+//            return ResponseEntity.ok()
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+//                    .header(HttpHeaders.CONTENT_TYPE, mimeType)
+//                    .body(resource);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();  // 500 if internal server error
+//        }
+//    }
+
     @GetMapping("/download/{semester}/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String semester, @PathVariable String filename) {
         try {
@@ -345,6 +319,23 @@ public class DocumentController {
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();  // 500 if internal server error
+        }
+    }
+    @GetMapping("/viewText/{semester}/{filename:.+}")
+    public ResponseEntity<String> viewTextFile(@PathVariable String semester, @PathVariable String filename) {
+        try {
+            String uploadDir = getUploadDirectory(semester);
+            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+
+            if (!Files.exists(filePath)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            String content = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
+            return ResponseEntity.ok(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

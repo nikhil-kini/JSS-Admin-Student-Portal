@@ -1,10 +1,10 @@
 package com.example.adminlogin.controller;
 
-import com.example.adminlogin.model.Document;
 import com.example.adminlogin.model.Pdocument;
 import com.example.adminlogin.model.User;
 import com.example.adminlogin.repository.PdocuRepo;
 import com.example.adminlogin.repository.UserRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -15,21 +15,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static org.hibernate.query.sqm.tree.SqmNode.log;
-
-@CrossOrigin
+//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/pdocu")
+
 public class PersonalDocuController {
+
 
     private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/personaldocupload/1st year/";
 
@@ -40,96 +41,7 @@ public class PersonalDocuController {
     private UserRepo userRepo;
 
 
-//    @PostMapping("/upload")
-//    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
-//
-//                                                          @RequestParam("fileName") String fileName,
-//                                                          @RequestParam("fileType") String fileType,
-//                                                          @RequestParam("uploadDate") String uploadDate,
-//                                                          @RequestParam("userId") String userId) { // Changed to String
-//
-//        Map<String, String> response = new HashMap<>();
-//        if (file.isEmpty()) {
-//            response.put("message", "File upload failed: File is empty");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//        }
-//
-//        try {
-//            String originalFilename = file.getOriginalFilename();
-//            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
-//            Path path = Paths.get(uploadDir + sanitizedFilename);
-//
-//            // Check if file already exists
-//            if (Files.exists(path)) {
-//                response.put("message", "File with the same name already exists");
-//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
-//            }
-//
-//            // Proceed with file upload
-//            Files.createDirectories(path.getParent());
-//            Files.copy(file.getInputStream(), path);
-//            response.put("message", "File uploaded successfully: " + sanitizedFilename);
-//            response.put("downloadUrl", "/files/" + sanitizedFilename);
-//
-//            // Create Document object and set properties
-//            Pdocument pdocument = new Pdocument();
-//
-//            pdocument.setFileName(sanitizedFilename);
-//            pdocument.setUploadDate(uploadDate);
-//            pdocument.setFileType(fileType);
-//
-//            // Find user by email and set the document's user
-//            Optional<User> userOptional = userRepo.findByEmail(userId); // Fetch user by email
-//            if (userOptional.isPresent()) {
-//                pdocument.setUser(userOptional.get());
-//            } else {
-//                response.put("message", "User not found");
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-//            }
-//
-//            pdocuRepo.save(pdocument);
-//            return ResponseEntity.ok(response);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            response.put("message", "File upload failed: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-//        }
-//    }
-//
-//
-//    @GetMapping("/list")
-//    public ResponseEntity<List<String>> listUploadedFiles() {
-//        File folder = new File(uploadDir);
-//        File[] files = folder.listFiles();
-//
-//        if (files != null) {
-//            List<String> fileNames = Arrays.stream(files)
-//                    .map(File::getName)
-//                    .collect(Collectors.toList());
-//            return ResponseEntity.ok(fileNames);
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//    }
-//    @GetMapping("/download/{filename:.+}")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-//        try {
-//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
-//            Resource resource = new UrlResource(filePath.toUri());
-//
-//            if (!resource.exists()) {
-//                return ResponseEntity.notFound().build();
-//            }
-//
-//            // Allow the file to open directly in the browser
-//            return ResponseEntity.ok()
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
-//                    .body(resource);
-//        } catch (MalformedURLException e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-//
+
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
@@ -145,29 +57,24 @@ public class PersonalDocuController {
         }
 
         try {
-            // Sanitize the filename to avoid illegal characters
             String sanitizedFilename = fileName.replaceAll("[<>:\"/\\|?*]", "_");
-            Path path = Paths.get(uploadDir + sanitizedFilename);
+            Path path = Paths.get(uploadDir, sanitizedFilename);
 
-            // Check if the file already exists
             if (Files.exists(path)) {
                 response.put("message", "File with the same name already exists");
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             }
 
-            // Proceed with file upload
             Files.createDirectories(path.getParent());
             Files.copy(file.getInputStream(), path);
 
             response.put("message", "File uploaded successfully: " + sanitizedFilename);
 
-            // Save file metadata
             Pdocument pdocument = new Pdocument();
             pdocument.setFileName(sanitizedFilename);
             pdocument.setUploadDate(uploadDate);
             pdocument.setFileType(fileType);
 
-            // Find user by email and set the document's user
             Optional<User> userOptional = userRepo.findByEmail(userId);
             userOptional.ifPresent(pdocument::setUser);
 
@@ -237,9 +144,5 @@ public class PersonalDocuController {
         }
     }
 
-}
 
-
-
-
-
+   }

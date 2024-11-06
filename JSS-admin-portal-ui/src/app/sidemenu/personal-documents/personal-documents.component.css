@@ -49,12 +49,12 @@ body {
   padding: 20px; /* Inner padding for content */
   margin: 20px auto; /* Center the entire content area */
   overflow-y: auto; /* Allows scrolling for content if it overflows */
-  border: 2px solid #0d0d0e;
+  /* border: 2px solid #0d0d0e;
   border-radius: 5px; 
   background-color: #ffffff; 
   max-height: 450px;
   max-width: 700px; 
-  box-sizing: border-box; 
+  box-sizing: border-box;  */
 }
 
 h2 {

@@ -65,10 +65,10 @@
 
     <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
       <h2 class="text-center">UPLOAD PERSONAL DOCUMENTS</h2>
-    
+
       <!-- File Upload Input -->
       <input type="file" (change)="onFileChange($event)" class="form-control mb-3" />
-    
+
       <!-- Dropdown to select file for download -->
       <div class="form-group">
         <select [(ngModel)]="selectedFileName" class="form-control mb-3">
@@ -76,10 +76,10 @@
           <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
         </select>
       </div>
-    
+
       <!-- Button to download selected file -->
       <button (click)="downloadSelectedFile()" class="btn btn-primary mb-3">Download Selected File</button>
-    
+
       <!-- Display the list of uploaded files as clickable links -->
       <div class="file-list mt-4">
         <h3>View Uploaded Documents</h3>

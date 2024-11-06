@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 
 interface Document {
@@ -75,6 +75,8 @@ export class StudentregComponent {
   selectedFileName = '';
   selectedDocumentType = '';
   selectedSemester: 'sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6' = 'sem1';  // Restrict to valid semester values
+  uploadedFiles: string[] = [];
+  textContent: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -82,32 +84,21 @@ export class StudentregComponent {
     this.getFileList();
   }
   getFileList() {
-    // Assuming selectedSemester is the variable where the selected semester is stored
-    const semester = this.selectedSemester ;  // Use 'sem1' as default if no semester is selected
-
-    // Call the backend to get the list of files for the selected semester
+    const semester = this.selectedSemester;  // Use the selected semester
+  
     this.http.get<string[]>(`${this.baseUrl}/list?semester=${semester}`).subscribe(
       (fileList: string[]) => {
-        this.fileList = fileList;  // Set the file list from the response
+        this.fileList = fileList;  // Set the file list based on the selected semester
       },
       error => {
         console.error('Error fetching file list:', error);
         alert('Error fetching file list: ' + error.message);  // Show error if the list fetch fails
       }
     );
-}
+  }
+ 
 
-// getFileList() {
-//   this.http.get<Document[]>(`${this.baseUrl}/list`).subscribe(
-//     fileList => {
-//       this.fileList = fileList;
-//     },
-//     error => {
-//       console.error('Error fetching file list:', error);
-//       alert('Error fetching file list: ' + error.message);
-//     }
-//   );
-// }
+
   
   // Handle file selection and upload
   onFileChange(event: any) {
@@ -190,19 +181,24 @@ export class StudentregComponent {
     formData.append('fileName', fileName);
     formData.append('fileType', fileType);
     formData.append('uploadDate', new Date().toISOString());
-    formData.append('uploadDir', uploadDir);  // Include the upload directory in the request
+    formData.append('uploadDir', uploadDir);
+    formData.append('semester', this.selectedSemester || '');
     
-    // Ensure selectedSemester is a valid string (empty string if null)
-    formData.append('semester', this.selectedSemester || '');  // Default to an empty string if null
-  
     const loginUser = localStorage.getItem('loginUser');
     if (loginUser) {
       formData.append('userId', loginUser);
-      return this.http.post(`${this.baseUrl}/upload`, formData);
+      return this.http.post(`${this.baseUrl}/upload`, formData).pipe(
+        tap(() => {
+          // Update uploaded files list after upload
+          this.getFileList(); // Refresh the list of uploaded files
+        })
+      );
     } else {
       return of({ error: 'No logged-in user found.' });
     }
   }
+
+  
   
   // Get file type (mimicking the backend's file detection)
   getFileType(file: File): string {
@@ -220,10 +216,9 @@ export class StudentregComponent {
     return '';
   }
 
-  // Handle file selection for download
   downloadSelectedFile() {
     if (this.selectedFileName) {
-      const downloadUrl = `${this.baseUrl}/download/Fall2024/${this.selectedFileName}`; // Adjust for the correct semester and filename
+      const downloadUrl = `${this.baseUrl}/download/${this.selectedSemester}/${this.selectedFileName}`;
       this.http.get(downloadUrl, { responseType: 'blob' }).subscribe(
         (blob) => {
           const url = window.URL.createObjectURL(blob);
@@ -242,7 +237,7 @@ export class StudentregComponent {
       alert('Please select a file to download');
     }
   }
-
+  
   fetchFileList() {
     // Replace 'semester' with the actual semester you're interested in
     const semester = 'Fall2024';
@@ -263,7 +258,56 @@ export class StudentregComponent {
   getFileDownloadUrl(fileName: string): string {
     return `${this.baseUrl}/download/${fileName}`;
   }
+
+
+onSemesterChange() {
+  this.getFileList();  // Fetch the files for the selected semester
 }
+
+
+viewDocument(fileName: string): void {
+  const fileExtension = this.getFileExtension(fileName);
+
+  // If it's a PDF or image, open it in a new window (or inline viewer for supported file types)
+  if (fileExtension === 'pdf' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png') {
+    const semester = this.selectedSemester;
+    const fileUrl = `${this.baseUrl}/download/${semester}/${fileName}`;
+    this.openFileInViewer(fileUrl);
+  } else {
+    // For other file types, trigger a download instead
+    this.downloadFile(fileName);
+  }
+}
+
+// Get the file extension to check the type
+getFileExtension(fileName: string): string {
+  return fileName.split('.').pop() || '';
+}
+
+// Open the file in a new window (viewer)
+openFileInViewer(fileUrl: string): void {
+  const viewerWindow = window.open(fileUrl, '_blank');
+  if (viewerWindow) {
+    viewerWindow.focus();
+  }
+}
+
+// Trigger the download of the selected file
+downloadFile(fileName: string): void {
+  const semester = this.selectedSemester;
+  const fileUrl = `${this.baseUrl}/download/${semester}/${fileName}`;
+  const a = document.createElement('a');
+  a.href = fileUrl;
+  a.download = fileName;
+  a.click();
+}
+}
+
+
+
+
+
+
    // changePasswordData = {
   //   email: '',
   //   oldPassword: '',
