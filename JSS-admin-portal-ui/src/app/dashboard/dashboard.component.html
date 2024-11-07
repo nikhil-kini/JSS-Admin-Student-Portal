@@ -12,313 +12,8 @@
         </ul>
       </div>
     </nav>
-
-    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
-      <h2 class="text-center">TIME TABLE</h2>
-    
-      <table>
-        <thead>
-           <tr>
-              <td id="sub1">         </td>
-              <td id="sub">8:30-9:30</td>
-              <td id="sub">9:30-10:30</td>
-              <td id="sub">10:30-11:30</td>
-              <td id="sub">11:30-12:30</td>
-              <td id="sub">12:30-2:00</td>
-              <td id="sub">2:00-3:00</td>
-              <td id="sub">3:00-4:00</td>
-              <td id="sub">4:00-5:00</td>
-           </tr>
-        </thead>
-        <tbody>
-           <tr>
-              <td id="sub">MONDAY</td>
-              <td id="blank">---</td>
-              <td id="box1">SUB1</td>
-              <td id="box2">SUB2</td>
-              <td id="box3">SUB3</td>
-              <td rowspan="6">L<br>U<br>N<br>C<br>H
-              <td id="box4">SUB4</td>
-              <td id="box5">SUB5</td>
-              <td id="s">counselling class</td>
-           </tr>
-           <tr>
-              <td id="sub">TUESDAY</td>
-              <td id="box1">SUB1</td>
-              <td id="box2">SUB2</td>
-              <td id="box3">SUB3</td>
-              <td id="blank">---</td>
-              <td id="box2">SUB2</td>
-              <td id="box2">SUB2</td>
-              <td id="sub2">library</td>
-           </tr>
-           <tr>
-              <td id="sub">WEDNESDAY</td>
-              <td id="box1">SUB1</td>
-              <td id="box2">SUB2</td>
-              <td id="box5">SWA</td>
-              <td id="blank">---</td>
-              <td colspan="3"id="sub3" >LAB</td>
-           </tr>
-           <tr>
-              <td id="sub">THURSDAY</td>
-              <td id="box1">SUB1</td>
-              <td id="box2">SUB2</td>
-              <td id="box3">SUB3</td>
-              <td id="blank">---</td>
-              <td id="box2">SUB2</td>
-              <td id="box2">SUB2</td>
-              <td id="sub2">library</td>
-           </tr>
-           <tr>
-              <td id="sub">FRIDAY</td>
-              <td id="box1">SUB1</td>
-              <td id="box2">SUB2</td>
-              <td id="box3">SUB3</td>
-              <td id="blank">---</td>
-              <td id="box4">SUB4</td>
-              <td id="box5">SUB5</td>
-              <td id="sub2">library</td>
-           </tr>
-           <tr>
-              <td id="sub">SATURDAY</td>
-              <td id="box1">SUB1</td>
-              <td colspan="3" id="seminar">seminar</td>
-              <td id="box4">SUB4</td>
-              <td id="box5">SUB5</td>
-              <td id="sub2">library</td>
-           </tr>
-        </tbody>
-     </table>
-      
-    </main>
-     -->
-
-     <!-- <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
-     <div class="container mt-4">
-      <h2 class="text-center">Timetable for JSS Polytechnic, Mysuru</h2>
-      <div class="d-flex justify-content-between my-3">
-        <div class="form-group">
-          <label for="semester">Select Semester</label>
-           <select class="form-control" id="semester" [(ngModel)]="selectedSemester" (change)="onSemesterChange()">
-            <option *ngFor="let sem of semesters" [value]="sem">Semester {{ sem }}</option>
-          </select>
-        </div>
-        <button class="btn btn-success" (click)="uploadTimetable()">Upload Timetable</button>
-      </div>
-    
-      <div *ngIf="selectedSemester">
-        <h4>Timetable for Semester {{ selectedSemester }}</h4>
-        <table class="table table-bordered text-center">
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th *ngFor="let slot of timeSlots">{{ slot }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let day of days">
-              <td>{{ day }}</td>
-              <td *ngFor="let slot of timeSlots">{{ semesterTimetable[selectedSemester]?.[day]?.[slot] || '' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div> -->
-
-
-    <!-- original
-    <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
-      <div class="container mt-4">
-        <h2 class="text-center">Timetable for JSS Polytechnic, Mysuru</h2>
-        <div class="d-flex justify-content-between my-3">
-          <div class="form-group">
-            <label for="semester">Select Semester</label>
-            <select class="form-control" id="semester" [(ngModel)]="selectedSemester" (change)="onSemesterChange()">
-              <option [value]="'all'">All Semesters</option>
-              <option *ngFor="let sem of semesters" [value]="sem">Semester {{ sem }}</option>
-            </select>
-          </div>
-          <button class="btn btn-success" (click)="uploadTimetable()">Upload Timetable</button>
-        </div>
-    
-        <div *ngIf="selectedSemester === 'all'">
-          <h4>All Timetables</h4>
-          <ng-container *ngFor="let sem of semesters">
-            <h5>Timetable for Semester {{ sem }}</h5>
-            <table class="table table-bordered text-center mb-4">
-              <thead>
-                <tr>
-                  <th>Day</th>
-                  <th *ngFor="let slot of timeSlots">{{ slot }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let day of days">
-                  <td>{{ day }}</td>
-                  <td *ngFor="let slot of timeSlots">{{ semesterTimetable[sem]?.[day]?.[slot] || '' }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </ng-container>
-        </div>
-    
-        <div *ngIf="selectedSemester !== 'all'">
-          <h4>Timetable for Semester {{ selectedSemester }}</h4>
-          <table class="table table-bordered text-center">
-            <thead>
-              <tr>
-                <th>Day</th>
-                <th *ngFor="let slot of timeSlots">{{ slot }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let day of days">
-                <td>{{ day }}</td>
-                <td *ngFor="let slot of timeSlots">{{ semesterTimetable[selectedSemester]?.[day]?.[slot] || '' }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
-     -->
-
-
-    <!-- <div class="container">
-      <h3>Class Timetable</h3>
-      <div class="form-group">
-        <label for="semesterSelect">Select Semester:</label>
-        <select class="form-control" id="semesterSelect" [(ngModel)]="selectedSemester">
-          <option *ngFor="let sem of [1, 2, 3, 4, 5, 6]" [value]="sem">Semester {{ sem }}</option>
-        </select>
-      </div>
-    
-      <button class="btn btn-success" (click)="uploadTimetable()">Upload Timetable</button>
-    
-      <div *ngIf="semesterTimetable[selectedSemester]" class="mt-4">
-        <h4>Timetable for Semester {{ selectedSemester }}</h4>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>9.00 TO 10.00 am</th>
-              <th>10.00 TO 11.00 am</th>
-              <th>11.00 TO 12.00 pm</th>
-              <th>12.00 Tpm TO 1.00 pm</th>
-              <th>1.00 to 2.00 PM</th>
-              <th>2.00 to 3.00 PM</th>
-              <th>3.00 tp 4.00 PM</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let day of ['MON', 'TUE', 'WED', 'THURS', 'FRI', 'SAT']">
-              <td>{{ day }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['9.00 TO 10.00 am'] || '-' }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['10.00 TO 11.00 am'] || '-' }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['11.00 TO 12.00 pm'] || '-' }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['12.00 Tpm TO 1.00 pm'] || '-' }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['1.00 to 2.00 PM'] || 'LUNCH BREAK' }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['2.00 to 3.00 PM'] || '-' }}</td>
-              <td>{{ semesterTimetable[selectedSemester][day]?.['3.00 tp 4.00 PM'] || '-' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div> -->
-    
-
-
-    
-
- 
-    <!-- </main> -->
-
-
-    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
-  <div class="container-fluid">
-    <h2 class="text-center mb-4">Timetable for JSS Polytechnic, Mysuru</h2>
-    <h4 class="text-center mb-3">Select Semester and Upload Timetable</h4>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div class="form-group mb-0">
-        <label for="semester">Select Semester</label>
-        <select class="form-control" id="semester" [(ngModel)]="selectedSemester" (change)="onSemesterChange()">
-          <option [value]="'all'">All Semesters</option>
-          <option *ngFor="let sem of semesters" [value]="sem">Semester {{ sem }}</option>
-        </select>
-      </div>
-      <button class="btn btn-success upload-timetable-btn" (click)="uploadTimetable()">Upload Timetable</button>
-    </div>
-
-    <div class="timetable-section">
-      <div *ngIf="selectedSemester === 'all'">
-        <h4 class="text-secondary text-center">All Timetables</h4>
-        <ng-container *ngFor="let sem of semesters">
-          <h5 class="text-primary text-center">Timetable for Semester {{ sem }}</h5>
-       
-          <div class="table-responsive timetable-grid">
-            <table class="table table-bordered text-center">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Day</th>
-                  <th *ngFor="let slot of timeSlots">{{ slot }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let day of days">
-                  <td>{{ day }}</td>
-                  <td *ngFor="let slot of timeSlots">{{ semesterTimetable[sem]?.[day]?.[slot] || '' }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </ng-container>
-      </div>
-
-      
-
-
-        <div *ngIf="selectedSemester !== 'all' && filteredTimetable">
-          <h4>Timetable for Semester {{ selectedSemester }}</h4>
-          <table class="table table-bordered text-center">
-            <thead>
-              <tr>
-                <th>Day</th>
-                <th *ngFor="let slot of timeSlots">{{ slot }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let day of days">
-                <td>{{ day }}</td>
-                <td *ngFor="let slot of timeSlots">{{ filteredTimetable[day]?.[slot] || '' }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-      </div>
-    </div> -->
-  
-
-    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
-      <div class="container-fluid">
-        <h1 class="text-center">JSS POLYTECHNIC TIMETABLE </h1>
-    <header class="bg-dark text-white py-3">
-      <div class="container">
-        
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <div class="form-group mb-0">
-            <label for="semester">Select Semester</label>
-            <select class="form-control" id="semester" [(ngModel)]="selectedSemester" (change)="onSemesterChange()">
-              <option [value]="'all'">All Semesters</option>
-              <option *ngFor="let sem of semesters" [value]="sem">Semester {{ sem }}</option>
-            </select>
-          </div>
-          <button class="btn btn-success upload-timetable-btn" (click)="uploadTimetable()">Upload Timetable</button>
-        </div>
-      </div>
-    </header> -->
-
+   
+<!-- maincontent -->
     <main class="col-md-8 col-lg-10 px-4 pt-4">
       <div class="text-center">
     
@@ -337,11 +32,14 @@
                   </select>
                 </div>
                 <div class="col-md-4 text-center">
-                  <h2 class="header-title">Timetable</h2>
+                  <h2 class="header-title">TIME-TABLE</h2>
                 </div>
                 <div class="col-md-4 text-end">
-                  <button class="btn btn-green btn-lg" (click)="uploadTimetable()">Upload Timetable</button>
+                  <input type="file" (change)="onFileSelect($event)" style="display: none;" #fileInput accept=".xls,.xlsx" />
+                  <button class="btn btn-green btn-lg" (click)="fileInput.click()">Upload Timetable</button>
+                  <!-- <button (click)="uploadFile()">Upload Timetable</button> -->
                 </div>
+                
               </div>
             </div>
           
@@ -367,8 +65,10 @@
                   <tbody>
                     <tr *ngFor="let day of days">
                       <td>{{ day }}</td>
-                      <td *ngFor="let slot of timeSlots">{{ semesterTimetable[sem]?.[day]?.[slot] || '' }}</td>
-                    </tr>
+                      <td *ngFor="let slot of timeSlots">{{ semesterTimetable[sem]?.[day]?.[slot] || '' }}
+                     
+  </td>
+</tr>
                   </tbody>
                 </table>
               </div>

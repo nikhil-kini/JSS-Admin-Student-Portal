@@ -7,42 +7,52 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.poi.ss.usermodel.*; // For Workbook, Sheet, Row, etc.
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/timetable")
+@RequestMapping("/api/timetables")
 public class TimetableController {
     @Autowired
     private TimetableRepo timetableRepo;
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadTimetable(@RequestParam("file") MultipartFile file) {
-        List<Timetable> timetableList = new ArrayList<>();
 
-        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
+//    @PostMapping("/upload-timetable")
+//    public ResponseEntity<?> uploadTimetable(@RequestParam("file") MultipartFile file) {
+//        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+//            Sheet sheet = workbook.getSheetAt(0);
+//            List<Timetable> timetables = new ArrayList<>();
+//
+//            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+//                Row row = sheet.getRow(i);
+//                if (row != null) {
+//                    // Check if required fields are present
+//                    Timetable timetable = new Timetable();
+//                    timetable.setSemester((int) row.getCell(0).getNumericCellValue());
+//                    timetable.setDay(row.getCell(1).getStringCellValue());
+//                    timetable.setTimeSlot(row.getCell(2).getStringCellValue());
+//                    timetable.setSubject(row.getCell(3).getStringCellValue());
+//
+//                    timetables.add(timetable);
+//                }
+//            }
+//
+//            timetableRepo.saveAll(timetables);
+//            return ResponseEntity.ok().body("File uploaded successfully");
+//        } catch (IOException e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error processing file"));
+//        }
+//    }
+//
 
-            for (Row row : sheet) {
-                if (row.getRowNum() == 0) continue; // Skip header row
-                Timetable timetable = new Timetable();
-                timetable.setSubject(row.getCell(0).getStringCellValue());
-                timetable.setDayOfWeek(row.getCell(1).getStringCellValue());
-                timetable.setStartTime(row.getCell(2).getStringCellValue());
-                timetable.setEndTime(row.getCell(3).getStringCellValue());
-                timetableList.add(timetable);
-            }
-
-            timetableRepo.saveAll(timetableList);
-            return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>("Failed to upload file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping
+    public ResponseEntity<List<Timetable>> getAllTimetables() {
+        List<Timetable> timetables = timetableRepo.findAll();
+        return ResponseEntity.ok().body(timetables);
     }
 }
-

@@ -1,4 +1,4 @@
-<!-- 
+<!-- <!-- 
 
 
 <section class="vh-100" style="background-color: #508bfc;">
@@ -43,9 +43,9 @@
   </div>
 </section> -->
 
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row no-gutters">
-    <!-- Sidebar -->
+   
     <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
       <div class="position-sticky">
         <ul class="nav flex-column">
@@ -136,7 +136,7 @@
       </div>
 
       
-      <!-- Document Type Selection -->
+     
       <div class="form-group row mb-0">
         <label for="documentType" class="col-sm-5 col-form-label p-0 m-0">Document Type:</label>
         <div class="col-sm-7 p-0">
@@ -151,32 +151,26 @@
         </div>
       </div>
     
-      <!-- File Input for Upload -->
+     
       <input type="file" (change)="onFileChange($event)" class="form-control mb-3" />
     
-      <!-- File Selection Dropdown for Download -->
+      
       <div class="form-group">
-        <!-- <label for="semester" class="col-sm-5 col-form-label p-0 m-0">Select the file to view</label> -->
+        
         <select [(ngModel)]="selectedFileName" (change)="onFileSelect()" class="form-control mb-3">
           <option value="" disabled>Select the file to view</option>
           <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
         </select>
       </div>
       
-      <!-- Download Button -->
+      
       <button (click)="downloadSelectedFile()" class="btn btn-primary mb-3">Download Selected File</button>
     
-      <!-- Display uploaded documents with clickable links -->
+      
       <div class="mt-4">
         <h3>Uploaded Documents</h3>
 
-        <!-- <ul class="list-group">
-          <li *ngFor="let file of fileList" class="list-group-item">
-            <a [href]="getFileDownloadUrl(file)" target="_blank" class="text-primary">
-              {{ file }}
-            </a>
-          </li>
-        </ul> -->
+        
 
 
         <ul class="list-group">
@@ -197,4 +191,49 @@
        
       </div>
     </main>
+      -->
+
     
+
+ 
+  
+
+<!-- <div>
+  <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
+</div>
+
+<div *ngIf="excelData">
+  <h3>Uploaded Data:</h3>
+  <pre>{{ excelData | json }}</pre>
+</div> -->
+
+
+<!-- <div class="container" *ngIf="flag">
+<input (change)="selectFile($event)" type="file"/>
+<button (click)="uploadFile()" class="btn" mat-raised-button>Upload</button>
+</div> -->
+
+<div class="container">
+  <h3 class="text-primary text-center">Angular file upload | download example</h3><hr/>
+</div>
+
+
+<div class="container">
+
+  <label class="">UserName</label> <input class="form-control" type="text" [(ngModel)]="userName"/>
+  <input class="form-control" type="file"
+  (change)="onFileSelected($event)"
+  />
+  <button (click)="save()" class="btn btn-primary">Save</button>
+
+<div class="row">
+  <div class="col-sm-6 col-md-3" *ngFor="let user of userList">
+      <div class="card text-center" style="width: 200px;height: 200px;margin-bottom: 50px;">
+        <img class="card-img-top rounded-circle" style="width: 100%;height: 100%;object-fit: cover;" [src]="'data:image/png;base64,'+user.displayPicture" alt="Title" />
+        <div class="card-body">
+          <h4 class="card-title">{{user.userName}}</h4>
+        </div>
+      </div>
+  </div>
+</div>
+</div>

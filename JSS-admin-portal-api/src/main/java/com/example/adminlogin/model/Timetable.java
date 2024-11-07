@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "timetable")
+@Table(name = "timetables")
 @Data
 public class Timetable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "timetable_id")  // Set the column name to timetable_id
-    private Long timetableId;
+    private Long timeId;
 
+    private int semester;
+    private String day;
+    private String timeSlot;
     private String subject;
-    private String dayOfWeek;
-    private String startTime;
-    private String endTime;
 }
