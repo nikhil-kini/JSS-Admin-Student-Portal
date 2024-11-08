@@ -1,0 +1,96 @@
+<body>
+  <div class="brand-logo" aria-hidden="true"></div>
+  <div class="website-name-box">
+      <div class="circle"></div>
+      <h1>Student Register</h1>
+    
+      <img src="/student.jpg">
+  </div>
+
+  
+      >
+
+    <div class="registration-card">
+    <h2>Register</h2>
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      
+
+      
+      <div class="form-group-row">
+        <div class="form-group">
+          <label for="username">UserName:</label>
+          <input type="text" id="username" name="username" [(ngModel)]="student.username" required #username="ngModel">
+          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error">
+            First name is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" [(ngModel)]="student.email" required #email="ngModel">
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+            Email is required.
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group-row">
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" [(ngModel)]="student.password" required #password="ngModel">
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+            Password is required.
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="form-group-row">
+        <div class="form-group">
+          <label for="dept">Department:</label>
+          <input type="text" id="dept" name="dept" [(ngModel)]="student.dept" required #dept="ngModel">
+          <div *ngIf="dept.invalid && (dept.dirty || dept.touched)" class="error">
+            Department is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group-row">
+        <div class="form-group">
+          <label for="semester">Semester:</label>
+          
+          <select id="semester" name="semester" [(ngModel)]="student.semester" required #semester="ngModel">
+            <option value="" disabled selected>Select Semester</option>
+            <option *ngFor="let sem of [1, 2, 3, 4, 5, 6]" [value]="sem">Semester {{ sem }}</option>
+          </select>
+          <div *ngIf="semester.invalid && (semester.dirty || semester.touched)" class="error">
+            Semester is required.
+          </div>
+        </div>
+      </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+<div class="form-group-row">
+  <div class="form-group">
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+</div>
+</div>
+    
+</form>
+
+    <div class="login-link">
+      <p>Already have an account? <a routerLink="/auth/login">Login here</a></p>
+    </div>
+  <!-- </div>
+</div> -->
+
