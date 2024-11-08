@@ -11,8 +11,11 @@ public class Timetable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long timeId;
 
-    private int semester;
+    private String semester;
     private String day;
     private String timeSlot;
     private String subject;
+
+//    private String field1;
+//    private int field2;
 }

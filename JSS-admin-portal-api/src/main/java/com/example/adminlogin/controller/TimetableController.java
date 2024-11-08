@@ -7,21 +7,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/timetables")
+//@RequestMapping("/api/timetables")
+@RequestMapping("/uploadExcel")
 public class TimetableController {
-    @Autowired
-    private TimetableRepo timetableRepo;
 
+}
 
+//    @Autowired
+//    private TimetableRepo timetableRepo;
+
+//    @PostMapping
+//    public ResponseEntity<String> handleFileUpload(@RequestParam("file") ){
+//
+//    }
+////
+//}
 //    @PostMapping("/upload-timetable")
 //    public ResponseEntity<?> uploadTimetable(@RequestParam("file") MultipartFile file) {
 //        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
@@ -50,9 +61,8 @@ public class TimetableController {
 //    }
 //
 
-    @GetMapping
-    public ResponseEntity<List<Timetable>> getAllTimetables() {
-        List<Timetable> timetables = timetableRepo.findAll();
-        return ResponseEntity.ok().body(timetables);
-    }
-}
+//    @GetMapping
+//    public ResponseEntity<List<Timetable>> getAllTimetables() {
+//        List<Timetable> timetables = timetableRepo.findAll();
+//        return ResponseEntity.ok().body(timetables);
+//    }

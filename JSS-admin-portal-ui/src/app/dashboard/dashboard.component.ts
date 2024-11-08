@@ -294,19 +294,7 @@ onFileSelect(event: any): void {
 
 uploadTimetable(): void {
   if (this.selectedFile) {
-    // const formData = new FormData();
-    // formData.append('file', this.selectedFile);
-    // this.http.post('http://localhost:8080/api/timetables/upload-timetable', formData).subscribe({
-    //   next: response => {
-    //     console.log('File uploaded successfully', response);
-    //     alert('File uploaded successfully!');
-    //   },
-    //   error: error => {
-    //     console.error('Error uploading file', error);
-    //     alert('Failed to upload file.');
-    //   }
-  // });
-
+    
     const formData = new FormData();
 formData.append('file', this.selectedFile, this.selectedFile.name);
 
@@ -323,75 +311,26 @@ this.http.post('http://localhost:8080/api/timetables/upload-timetable', formData
 
 
 
-fetchTimetableData(): void {
-  this.http.get<any>('http://localhost:8080/api/timetables').subscribe({
-    next: (data) => {
-      this.semesterTimetable = data;
-      this.onSemesterChange();  // Refilter data if necessary
-    },
-    error: (error) => {
-      console.error('Error fetching timetables', error);
-    }
-  });
-}
+// fetchTimetableData(): void {
+//   this.http.get<any>('http://localhost:8080/api/timetables').subscribe({
+//     next: (data) => {
+//       this.semesterTimetable = data;
+//       this.onSemesterChange();  // Refilter data if necessary
+//     },
+//     error: (error) => {
+//       console.error('Error fetching timetables', error);
+//     }
+//   });
+// }
 
-ngOnInit() {
+// ngOnInit() {
   
-  this.fetchTimetableData();
-}
-
-// uploadTimetable(formData: FormData) {
-//   const url = 'http://localhost:8080/api/timetables/upload-timetable';
-//   return this.http.post(url, formData);
-// }
-
-// updateTimetable(): void {
-//   this.http.put('http://localhost:8080/api/timetables/upload-timetable', this.semesterTimetable)
-//     .subscribe(
-//       response => {
-//         console.log('Timetable updated successfully:', response);
-//         alert('Timetable updated successfully!');
-//       },
-//       error => {
-//         console.error('Error updating timetable:', error);
-//         alert('Failed to update timetable.');
-//       }
-//     );
+//   this.fetchTimetableData();
 // }
 
 
 
-// loadTimetable(): void {
-//   this.http.get<any>('http://localhost:8080/api/timetables/upload-timetable')
-//     .subscribe(
-//       data => {
-//         this.semesterTimetable = data;
-//         console.log('Timetable loaded:', this.semesterTimetable);
-//       },
-//       error => {
-//         console.error('Error loading timetable:', error);
-//       }
-//     );
-// }
 
-// uploadTimetable(): void {
-//   if (this.selectedFile) {
-//     const formData = new FormData();
-//     formData.append('file', this.selectedFile);
-    
-//     // Ensure the request headers are set correctly
-//     this.http.post('http://localhost:8080/api/timetables/upload-timetable', formData).subscribe({
-//       next: response => {
-//         console.log('File uploaded successfully', response);
-//         alert('File uploaded successfully!');
-//       },
-//       error: error => {
-//         console.error('Error uploading file', error);
-//         alert('Failed to upload file.');
-//       }
-//     });
-//   } else {
-//     console.error('No file selected');
-//   }
-// }
+
+
 }

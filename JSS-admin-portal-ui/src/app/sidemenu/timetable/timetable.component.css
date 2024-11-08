@@ -1,173 +1,154 @@
-/* General body styling */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: rgba(0, 213, 255, 1);
-}
-
-/* Sidebar styling */
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 250px; /* Fixed width for the sidebar */
-  background-color: #222;
-  color: #fff;
-  padding-top: 20px;
-  transition: width 0.75s ease;
-  overflow-y: auto; 
-}
-
-.sidebar .nav-link {
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.sidebar .nav-link i {
-  padding-right: 10px;
-}
-
-.sidebar .nav-link:hover {
-  background-color: #444;
-  color: #ffcc00;
-}
-
-/* Content area styling */
-main {
-  margin-left: 250px; /* Space for the fixed sidebar */
-  padding: 40px;
-  background-color: #ecf0f1;
-  min-height: 100vh;
-}
-
-main h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-main h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-main p {
-  font-size: 1.1rem;
-  color: #555;
-  line-height: 1.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
+	margin: 0;
+	padding: 0;
+	font-family: 'Arial', sans-serif;
+	background-color: rgba(0, 213, 255, 1);
+  }
+  
+  /* Sidebar styling */
   .sidebar {
-    position: relative;
-    width: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	width: 250px; /* Fixed width for the sidebar */
+	background-color: #222;
+	color: #fff;
+	padding-top: 20px;
+	transition: width 0.75s ease;
+	overflow-y: auto; 
   }
-
+  
+  .sidebar .nav-link {
+	color: #ffffff;
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+	border-radius: 0.5rem;
+	transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar .nav-link i {
+	padding-right: 10px;
+  }
+  
+  .sidebar .nav-link:hover {
+	background-color: #444;
+	color: #ffcc00;
+  }
+  
+  /* Content area styling */
   main {
-    margin-left: 0;
-    padding: 20px;
-    text-align: center;
+	margin-left: 250px; /* Space for the fixed sidebar */
+	padding: 40px;
+	background-color: #ecf0f1;
+	min-height: 100vh;
   }
-}
-
-/* Center-align the header text and adjust margins */
-.header-container {
-  background-color: #195998; /* Light background for the header */
-  border: 3px solid #0a0909;    /* Light border for definition */
-  border-radius: 8px;        /* Rounded corners */
-  padding: 18px;             /* Padding around header content */
-  margin-bottom: 15px; 
-       
-}
-
-/* Styling for the Select Semester label */
-.header-container .form-label {
-  font-weight: 700;
-  margin-bottom: 0;
-  font-size: 1 rem; 
-}
-
-/* Align button vertically in line with the dropdown */
-.header-container .btn {
-  margin-top: auto;
-  margin-bottom: auto;
-  padding: 4px 12px;            /* Reduced button padding */
-  font-size: 1 rem;
-}
-
-/* Center the main header title */
-.header-title {
-  margin: 0;
-  font-size: 2 rem;
-  font-weight: 700;
-  color: #333;
-}
-
-/* Table styling for a cleaner look */
-.table-bordered th,
-.table-bordered td {
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 8px;
-}
-.form-select-sm {
-  max-width: 150px; /* Set the desired width here */
-}
-.small-dropdown {
-  width: 120px;         /* Adjust the width as desired */
-  padding: 0.25rem 0.5rem; /* Reduced padding for a smaller look */
-  font-size: 0.875rem;  /* Smaller font size */
-}
-
-.btn-green {
-  background-color: #28a745; /* Custom green shade */
-  color: white;
-  border: none;
-}
-
-.btn-green:hover {
-  background-color: #218838; /* Darker green for hover effect */
-}
-.btn-upload {
-  padding: 12px 30px;         /* Increase padding for larger button */
-  font-size: 1.25rem;         /* Larger font size */
-  border-radius: 8px;         /* Optional: maintain rounded corners */
-}
-
-main {
-  border: 2px solid black;   
-  border-radius: 5px;         
-  padding: 12px;             
-}
-
-body, html {
-  height: 100%;               
-  margin: 0;
-}
-
-/* .container {
-  display: flex;              
-  justify-content: center;   
-  align-items: center;        
-  height: 100vh;  
-}             */
-
-/* main {
-  width: 83%;                 
-  max-width: 2000px;          
-  padding: 15px;              
-  border: 2px solid black;    
-  border-radius: 8px;   
-  align-items: center;       
-  justify-content: center;
-  display: flex;    
-} */
+  
+  main h1 {
+	font-size: 2rem;
+	color: #333;
+	margin-bottom: 20px;
+	text-align: left;
+  }
+  
+  main h2 {
+	font-size: 2rem;
+	color: #333;
+	margin-bottom: 20px;
+	text-align: center;
+  }
+  
+  main p {
+	font-size: 1.1rem;
+	color: #555;
+	line-height: 1.6;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+	.sidebar {
+	  position: relative;
+	  width: 100%;
+	}
+  
+	main {
+	  margin-left: 0;
+	  padding: 20px;
+	  text-align: center;
+	}
+  }
+  
+  /* Center-align the header text and adjust margins */
+  .header-container {
+	background-color: #195998; /* Light background for the header */
+	border: 3px solid #0a0909;    /* Light border for definition */
+	border-radius: 8px;        /* Rounded corners */
+	padding: 18px;             /* Padding around header content */
+	margin-bottom: 15px; 
+		 
+  }
+  
+  /* Styling for the Select Semester label */
+  .header-container .form-label {
+	font-weight: 700;
+	margin-bottom: 0;
+	font-size: 1 rem; 
+  }
+  
+  /* Align button vertically in line with the dropdown */
+  .header-container .btn {
+	margin-top: auto;
+	margin-bottom: auto;
+	padding: 4px 12px;            /* Reduced button padding */
+	font-size: 1 rem;
+  }
+  
+  /* Center the main header title */
+  .header-title {
+	margin: 0;
+	font-size: 2 rem;
+	font-weight: 700;
+	color: #333;
+  }
+  
+  /* Table styling for a cleaner look */
+  .table-bordered th,
+  .table-bordered td {
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 8px;
+  }
+  .form-select-sm {
+	max-width: 150px; /* Set the desired width here */
+  }
+  .small-dropdown {
+	width: 120px;         /* Adjust the width as desired */
+	padding: 0.25rem 0.5rem; /* Reduced padding for a smaller look */
+	font-size: 0.875rem;  /* Smaller font size */
+  }
+  
+  .btn-green {
+	background-color: #28a745; /* Custom green shade */
+	color: white;
+	border: none;
+  }
+  
+  .btn-green:hover {
+	background-color: #218838; /* Darker green for hover effect */
+  }
+  .btn-upload {
+	padding: 12px 30px;         /* Increase padding for larger button */
+	font-size: 1.25rem;         /* Larger font size */
+	border-radius: 8px;         /* Optional: maintain rounded corners */
+  }
+  
+  main {
+	border: 2px solid black;   
+	border-radius: 5px;         
+	padding: 12px;             
+  }
+  
+  body, html {
+	height: 100%;               
+	margin: 0;
+  }

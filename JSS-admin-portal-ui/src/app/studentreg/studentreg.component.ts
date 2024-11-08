@@ -28,10 +28,6 @@ import * as XLSX from 'xlsx';
 //   timeSlot: string;
 // }
 
-interface User {
-  userName: string;
-  displayPicture: string;
-}
 
 @Component({
   selector: 'app-studentreg',
@@ -42,50 +38,51 @@ interface User {
 })
 export class StudentregComponent {
 
-  title = 'angular-file-upload-download';
+//   title = 'angular-file-upload-download';
 
-  userName!: string;
-  selectedFile!:File;
+//   userName!: string;
+//   selectedFile!:File;
 
-  userList: User[] = [];
+//   userList: User[] = [];
 
-  constructor(private httpClient: HttpClient) { }
-  ngOnInit(): void {
+//   constructor(private httpClient: HttpClient) { }
+//   ngOnInit(): void {
 
-    this.getUserList();
+//     this.getUserList();
 
-  }
-  private getUserList() {
-    this.httpClient.get<User[]>("http://localhost:8080/user").subscribe(response => {
-      this.userList = response;
+//   }
+//   private getUserList() {
+//     this.httpClient.get<User[]>("http://localhost:8080/user").subscribe(response => {
+//       this.userList = response;
 
 
-    }, error => {
-      console.log("error occured while fetching user list");
-    });
-  }
+//     }, error => {
+//       console.log("error occured while fetching user list");
+//     });
+//   }
 
-  onFileSelected(event:any){
-    this.selectedFile=event.target.files[0];
-  }
-  save():void{
+//   onFileSelected(event:any){
+//     this.selectedFile=event.target.files[0];
+//   }
+//   save():void{
  
-   const formData=new FormData();
-   formData.append("name",this.userName);
-   formData.append("file",this.selectedFile);
+//    const formData=new FormData();
+//    formData.append("name",this.userName);
+//    formData.append("file",this.selectedFile);
    
-    this.httpClient.post("http://localhost:8080/user",formData).subscribe(response=>{
-      console.log(response);
-      this.getUserList();
-    },error=>{
-      console.log(error);
-    });
-    console.log("saved");
+//     this.httpClient.post("http://localhost:8080/user",formData).subscribe(response=>{
+//       console.log(response);
+//       this.getUserList();
+//     },error=>{
+//       console.log(error);
+//     });
+//     console.log("saved");
 
-  }
-}
+//   }
+// }
 
-//   constructor(private http: HttpClient, private router: Router) {}
+
+   constructor(private http: HttpClient, private router: Router) {}
 // fileuploadurl=""
 // file:any;
 
@@ -112,21 +109,33 @@ export class StudentregComponent {
 // }
 
 
-//   excelData: any[] | undefined;
+  excelData: any[] | undefined;
 
-//   onFileChange(event: any) {
-//     const file = event.target.files[0];
-//     const reader = new FileReader();
-//     reader.onload = (e: any) => {
-//       const workbook = XLSX.read(e.target.result, { type: 'binary' });
-//       const firstSheetName = workbook.SheetNames[0];
-//       const worksheet = workbook.Sheets[firstSheetName];
-//       this.excelData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-//       console.log('Excel data:', this.excelData);
-//     };
-//     reader.readAsBinaryString(file);
-//   }
-// }
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      this.excelData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      console.log('Excel data:', this.excelData);
+
+      // Send the file to the backend
+      const formData = new FormData();
+      formData.append('file', file);
+      this.http.post('http://localhost:8080/uploadExcel', formData).subscribe(
+        response => {
+          console.log('File uploaded successfully:', response);
+        },
+        error => {
+          console.error('File upload failed:', error);
+        }
+      );
+    };
+    reader.readAsBinaryString(file);
+  }
+}
 
 
 
