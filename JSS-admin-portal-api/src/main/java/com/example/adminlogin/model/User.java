@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "Users")
 @NoArgsConstructor
@@ -12,19 +14,20 @@ import org.hibernate.annotations.Type;
 public class User {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password;
-//    @JoinColumn(name = "role_id", nullable = false)
-//@Enumerated(EnumType.STRING)
 
-
-//    private Role role;
-
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 }
 

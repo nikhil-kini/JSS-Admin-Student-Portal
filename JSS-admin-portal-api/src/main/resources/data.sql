@@ -12,6 +12,6 @@ INSERT INTO users (id, email, password, role)
 SELECT 2, 'admin2@example.com', 'YWRtaW4xMjM=', 'Admin'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'admin2@example.com');
 
-INSERT INTO Roles (role_name)
-VALUES ('Admin'),
-       ('Student');
+--INSERT INTO Roles (role_name)
+--VALUES ('Admin'),
+--       ('Student');

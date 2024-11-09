@@ -63,12 +63,12 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
+    
     <main class="col-md-9 col-lg-10 px-4 pt-4">
       <div class="text-center" >
         
-          <!-- <main> -->
-            <h1 id="FeedbackSystemTitle">Feedback System</h1>
+        
+            <!-- <h1 id="FeedbackSystemTitle">Feedback System</h1>
             <br />
             <div class="row">
               <div class="col-md-8">
@@ -135,8 +135,7 @@
               </form>
               <br />
             </div>
-          <!-- </main> -->
-          <!-- Modal -->
+          
           <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -159,4 +158,18 @@
             </div>
           </div>
         </div>
-        
+         -->
+
+         <h2>Student Feedback Submission</h2>
+
+         <form (ngSubmit)="submitFeedback()">
+           <label for="question">Select Question:</label>
+           <select [(ngModel)]="selectedQuestion" name="question" required>
+             <option *ngFor="let question of availableQuestions" [value]="question">{{ question }}</option>
+           </select>
+         
+           <label for="answer">Your Answer:</label>
+           <input type="text" [(ngModel)]="studentAnswer" name="answer" required>
+         
+           <button type="submit">Submit</button>
+         </form>

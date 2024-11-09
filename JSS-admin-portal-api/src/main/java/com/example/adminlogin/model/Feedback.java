@@ -31,6 +31,9 @@ public class Feedback {
     @Column(name = "Username")
     private String username;
 
+    @Column(name = "Type")  // This field will differentiate between "Question" and "Response"
+    private String type;
+
     @CreationTimestamp
     @Column(name = "Created_at",updatable = false)
     private LocalDateTime createdAt;

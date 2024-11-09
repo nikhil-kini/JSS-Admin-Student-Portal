@@ -63,12 +63,12 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
+    
     <main class="col-md-9 col-lg-10 px-4 pt-4">
       <div class="text-center" >
         
-          <!-- <main> -->
-            <h1 id="FeedbackSystemTitle">Feedback System</h1>
+          
+            <!-- <h1 id="FeedbackSystemTitle">Feedback System</h1>
             <br />
             <div class="row">
               <div class="col-md-8">
@@ -135,8 +135,7 @@
               </form>
               <br />
             </div>
-          <!-- </main> -->
-          <!-- Modal -->
+          
           <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -159,4 +158,39 @@
             </div>
           </div>
         </div>
-        
+         -->
+
+         <h2>Admin Feedback Management</h2>
+         <button (click)="displayCreateForm()">Create New Feedback Question</button>
+         
+         <div *ngIf="showCreateForm">
+          <form (ngSubmit)="submitNewQuestion()">
+            <label for="newQuestion">Feedback Question:</label>
+            <input type="text" [(ngModel)]="newQuestion" [ngModelOptions]="{standalone: true}" required>
+            <button type="submit">Submit</button>
+          </form>
+         </div>
+         
+         <h3>Feedback Questions</h3>
+         <ul>
+           <li *ngFor="let question of feedbackQuestions">{{ question }}</li>
+         </ul>
+         
+         <h3>Feedback Responses</h3>
+         <table>
+           <thead>
+             <tr>
+               <th>Question</th>
+               <th>Answer</th>
+               <th>Student Name</th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr *ngFor="let response of feedbackResponses">
+               <td>{{ response.question }}</td>
+               <td>{{ response.answer }}</td>
+               <td>{{ response.studentName }}</td>
+             </tr>
+           </tbody>
+         </table>
+         

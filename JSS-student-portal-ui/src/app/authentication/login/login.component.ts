@@ -33,7 +33,9 @@ onSubmit() {
     .subscribe({
       next: (response) => { 
         console.log('Login Success:', response);
-        localStorage.setItem('isAuthenticated', 'true'); // Set authentication status
+        localStorage.setItem('isAuthenticated', 'true'); 
+        localStorage.setItem('loginUser', this.student.email)
+
         console.log('Navigating to dashboard...');
         this.router.navigate(['/dashboard']);
         alert("Login Successful");
