@@ -53,39 +53,31 @@ export class FeedbackSystemComponent {
       this.router.navigate(['/auth/login']);
     }
 
-    paginationArray: number[] = []; 
+    // paginationArray: number[] = []; 
 
     feedbacks: any[] = [];
     feedbackQuestions: any[] = [];
     paginatedFeedbacks: any[] = [];
     searchTerm: string = '';
     currentPage: number = 1;
-    pageSize: number = 10;
-    totalPages: number = 0;
+    pageSize: number = 10; 
+    totalPages: number = 0; 
     selectedQuestion: string = '';
     feedbackText: string = '';
     newFeedbackQuestion: string = '';
     user: any = JSON.parse(localStorage.getItem('user') || '{}');
     showTable: boolean = true;
     showAddForm: boolean = false;
-    
-    ngOnInit(): void {
-      this.fetchFeedback();
-      this.fetchFeedbackQuestions();
-    }
-  
-   
+    username: string | null = localStorage.getItem('username'); 
 
     
     
   
-    performSearch(): void {
-      
-      this.paginatedFeedbacks = this.feedbacks.filter(feedback =>
-        feedback.question.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
+    ngOnInit(): void {
+      this.fetchFeedback();
+      this.fetchFeedbackQuestions();
     }
-  
+
 
     isUserRole(roleId: number): boolean {
       return this.user.roleId === roleId;
@@ -103,6 +95,7 @@ export class FeedbackSystemComponent {
         }
       );
     }
+    
   
     fetchFeedbackQuestions(): void {
       this.http.get<any[]>('http://localhost:8080/feedback/all').subscribe(
@@ -120,7 +113,7 @@ export class FeedbackSystemComponent {
         question: this.selectedQuestion,
         answer: this.feedbackText,
         addedBy: 'Student',
-        username: localStorage.getItem('loginUser') ,
+        username: this.username ,
         type:'Response'
       };
   
@@ -170,68 +163,43 @@ export class FeedbackSystemComponent {
       this.showAddForm = true;
       this.showTable = false;
     }
-  
+    performSearch(): void {
+      this.paginatedFeedbacks = this.feedbacks.filter(feedback =>
+        feedback.question.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
+      this.updatePagination();
+    }
+
     updatePagination(): void {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       this.paginatedFeedbacks = this.feedbacks.slice(startIndex, endIndex);
     }
-  
-    gotoPage(pageNumber: number): void {
-      this.currentPage = pageNumber;
-      this.updatePagination();
+    
+    goToPage(page: number): void {
+      if (page > 0 && page <= this.totalPages) {
+        this.currentPage = page;
+        this.updatePagination();
+      }
     }
+    
+    nextPage(): void {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.updatePagination();
+      }
+    }
+    
+    previousPage(): void {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updatePagination();
+      }
+    }
+    
   }
 
 
 
 
-//   availableQuestions: string[] = [];
-//   selectedQuestion: string = '';
-//   studentAnswer: string = '';
-//   loginUser: string | null = null;
-
-
- 
-//   ngOnInit(): void {
-//     this.fetchAvailableQuestions();
-//   }
-
-//   fetchAvailableQuestions(): void {
-//     this.http.get<string[]>('http://localhost:8080/feedback/questions').subscribe(
-//       (data) => {
-//         this.availableQuestions = data;
-//       },
-//       (error) => {
-//         console.error('Error fetching questions:', error);
-//       }
-//     );
-//   }
-
-//   submitFeedback(): void {
-//     const feedbackResponse = {
-//       question: this.selectedQuestion,
-//       answer: this.studentAnswer,
-//       // type: 
-//       username: localStorage.getItem('loginUser') 
-
-//     };
-  
-//     this.http.post('http://localhost:8080/feedback/submitResponse', feedbackResponse).subscribe(
-//       () => {
-//         alert('Feedback submitted successfully');
-//         this.studentAnswer = '';
-//         this.selectedQuestion = '';
-//       },
-//       (error) => {
-//         console.error('Error submitting feedback:', error);
-//         alert('There was a problem submitting your feedback');
-//         // Log additional details for debugging
-//         console.log('Error details:', error);
-//         console.log('Response Body:', error.error); // Check if the backend sends any error message
-//         console.log('Status:', error.status); // Check HTTP status code
-//         console.log('Message:', error.message); // Check specific error message
-//       }
-//     );
-//   }
-// }  

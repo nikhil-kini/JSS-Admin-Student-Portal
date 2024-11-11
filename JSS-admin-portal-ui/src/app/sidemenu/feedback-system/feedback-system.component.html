@@ -64,152 +64,98 @@
     </nav>
 
     
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
-      <div class="text-center" >
+   
+
+         <main class="col-md-9 col-lg-10 px-4 pt-4">
+          <div class="container-fluid">
+            <h1 id="FeedbackSystemTitle" class="text-center mb-4">Feedback System</h1>
         
-          
-             <h1 id="FeedbackSystemTitle">Feedback System</h1>
-            <!-- <br /> -->
-            <div class="row">
-              <div class="col-md-8">
-                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Feedback Management Actions">
-                  <div class="btn-group me-2" role="group" aria-label="Manage Feedbacks">
-                    <button type="button" class="btn btn-secondary" (click)="displayManageFeedbacks()">Manage Feedbacks</button>
-                  </div>
-
-                  <!-- <div class="btn-group me-2" role="group" aria-label="Add New Feedback">
-                    <button type="button" class="btn btn-secondary" (click)="displayAddFeedbackForm()">Add Feedback</button>
-                  </div> -->
-
-                  <div class="btn-group me-2" role="group" id="create-feedback-btn-group" *ngIf="!isUserRole(5)">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
-                      Create Feedback Question
-                    </button>
-                  </div>
-                </div>
+            <!-- Button Toolbar -->
+            <div class="btn-toolbar mb-4 d-flex justify-content-center" role="toolbar">
+              <button type="button" class="btn btn-primary me-2" (click)="displayManageFeedbacks()">Manage Feedbacks</button>
+              <div class="btn-group me-2" role="group" id="create-feedback-btn-group" *ngIf="!isUserRole(5)">
+                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                  Create Feedback Question
+                </button>
               </div>
             </div>
-            <br />
-
-            <!-- <div class="input-group mb-3">
-              <input type="text" id="searchInput" class="form-control" placeholder="Search by Feedback Name" [(ngModel)]="searchTerm" (input)="performSearch()" />
-            </div> -->
-
-            <br />
-            <table id="DisplayFeedbackList" class="table table-striped" *ngIf="showTable">
+        
+            <!-- Table Display -->
+            <table id="DisplayFeedbackList" class="table table-striped table-hover" *ngIf="showTable">
               <thead class="thead-dark">
                 <tr>
+                  <th>S.No</th>
                   <th>Feedback Question</th>
                   <th>Feedback Answer</th>
                   <th>Name</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let feedback of paginatedFeedbacks">
+                <tr *ngFor="let feedback of paginatedFeedbacks; let i = index">
+                  <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
                   <td>{{ feedback.question }}</td>
                   <td>{{ feedback.answer }}</td>
                   <td>{{ feedback.username }}</td>
                 </tr>
               </tbody>
             </table>
-            <br />
-            <ul class="pagination" *ngIf="totalPages > 1">
-              <li *ngFor="let page of paginationArray; let i = index" class="page-item" [class.active]="currentPage === i + 1">
-                <a class="page-link" href="#" (click)="gotoPage(i + 1)">{{ i + 1 }}</a>
-              </li>
-            </ul>
-            <br />
-            <div id="AddFeedbackForm" *ngIf="showAddForm" class="w-100">
-              <h3>Add Feedback</h3>
-              <br />
-              <form (ngSubmit)="submitFeedback()">
-                <div class="form-group">
-                  <label for="feedbackQuestionDropdown">Select Feedback Question</label>
-                  <select class="form-control" id="feedbackQuestionDropdown" [(ngModel)]="selectedQuestion" name="selectedQuestion" required>
-                    <option *ngFor="let question of feedbackQuestions" [value]="question.question">{{ question.question }}</option>
-                  </select>
-                </div>
-                <br />
-                <div class="form-group">
-                  <label for="feedback">Your Answer</label>
-                  <input type="text" class="form-control" id="feedback" name="feedback" [(ngModel)]="feedbackText" required />
-                </div>
-                <br />
-                <button type="submit" class="btn btn-primary">Submit Feedback</button>
-              </form>
-              <br />
+        
+            <!-- Pagination Controls -->
+            <div class="pagination-controls d-flex justify-content-center mt-4" *ngIf="showTable">
+              <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+              <span>Page {{ currentPage }} of {{ totalPages }}</span>
+              <button class="btn btn-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
             </div>
-          
-          <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="feedbackModalLabel">Create Feedback Question</h5>
-                </div>
-                <div class="modal-body">
-                  <form (ngSubmit)="addFeedbackQuestion()">
-                    <div class="mb-3">
-                      <label for="modalFeedback" class="form-label">Feedback Question</label>
-                      <input type="text" class="form-control" id="modalFeedback" [(ngModel)]="newFeedbackQuestion" name="newFeedbackQuestion" required />
+        
+            <!-- Add Feedback Form -->
+            <div id="AddFeedbackForm" *ngIf="showAddForm" class="d-flex justify-content-center mt-4">
+              <div class="w-100 p-4" style="max-width: 600px; border: 1px solid #ccc; border-radius: 8px;">
+                <h3 class="text-center">Add Feedback</h3>
+                <form (ngSubmit)="submitFeedback()">
+                  <div class="form-group mb-3 row align-items-center">
+                    <label for="feedbackQuestionDropdown" class="col-sm-3 col-form-label">Select Question:</label>
+                    <div class="col-sm-8">
+                      <select class="form-control" id="feedbackQuestionDropdown" [(ngModel)]="selectedQuestion" name="selectedQuestion" required>
+                        <option value="" disabled selected>Select feedback question</option>
+                        <option *ngFor="let question of feedbackQuestions" [value]="question.question">{{ question.question }}</option>
+                      </select>
                     </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" (click)="addFeedbackQuestion()">Add Feedback Question</button>
+                  </div>
+                  <div class="form-group mb-3 row align-items-center">
+                    <label for="feedback" class="col-sm-3 col-form-label">Your Answer:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="feedback" name="feedback" [(ngModel)]="feedbackText" required>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-success">Submit Feedback</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+        
+            <!-- Modal for Creating Feedback Question -->
+            <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Create Feedback Question</h5>
+                  </div>
+                  <div class="modal-body">
+                    <form (ngSubmit)="addFeedbackQuestion()">
+                      <div class="mb-3">
+                        <label for="modalFeedback" class="form-label">Feedback Question</label>
+                        <input type="text" class="form-control" id="modalFeedback" [(ngModel)]="newFeedbackQuestion" name="newFeedbackQuestion" required>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" (click)="addFeedbackQuestion()">Add Feedback Question</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </main>
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         <!-- <h2>Admin Feedback Management</h2>
-         <button (click)="displayCreateForm()">Create New Feedback Question</button>
-         
-         <div *ngIf="showCreateForm">
-          <form (ngSubmit)="submitNewQuestion()">
-            <label for="newQuestion">Feedback Question:</label>
-            <input type="text" [(ngModel)]="newQuestion" [ngModelOptions]="{standalone: true}" required>
-            <button type="submit">Submit</button>
-          </form>
-         </div>
-         
-         <h3>Feedback Questions</h3>
-         <ul>
-           <li *ngFor="let question of feedbackQuestions">{{ question }}</li>
-         </ul>
-         
-         <h3>Feedback Responses</h3>
-         <table>
-           <thead>
-             <tr>
-               <th>Question</th>
-               <th>Answer</th>
-               <th>Student Name</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr *ngFor="let response of feedbackResponses">
-               <td>{{ response.question }}</td>
-               <td>{{ response.answer }}</td>
-               <td>{{ response.studentName }}</td>
-             </tr>
-           </tbody>
-         </table>
-          -->

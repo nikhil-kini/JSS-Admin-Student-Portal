@@ -11,11 +11,12 @@ import { QuestionBankComponent } from './question-bank/question-bank.component';
 import { StudentManagementComponent } from './student-management/student-management.component';
 import { TeachingAidsComponent } from './teaching-aids/teaching-aids.component';
 import { TimetableComponent } from './timetable/timetable.component';
+import { authGuard } from '../auth.guard';
 
 const routes: Routes = [
   {path:'home',component: HomeComponent},
   { path: 'attendance-management', component: AttendanceManagementComponent },
-  { path: 'feedback-system', component: FeedbackSystemComponent },
+  { path: 'feedback-system', component: FeedbackSystemComponent,canActivate: [authGuard], },
   {path:'ia-module',component: IAModuleComponent},
   {path:'lesson-plan',component: LessonPlanComponent},
   {path:'personal-documents',component: PersonalDocumentsComponent},

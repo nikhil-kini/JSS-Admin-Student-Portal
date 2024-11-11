@@ -50,7 +50,7 @@ changePasswordData = {
 constructor(private http: HttpClient, private router: Router) {}
 
 navigateToLogin() {
-  this.router.navigate(['/login']);
+  this.router.navigate(['/auth/login']);
 }
 
 onChangePasswordSubmit() {
@@ -64,7 +64,7 @@ onChangePasswordSubmit() {
       .subscribe(
           (response: any) => {
               alert('Password updated successfully');
-              this.router.navigate(['/login']);
+              this.router.navigate(['/auth/login']);
           },
           (error) => {
               alert('Failed to change password. Please check the old password and try again.');

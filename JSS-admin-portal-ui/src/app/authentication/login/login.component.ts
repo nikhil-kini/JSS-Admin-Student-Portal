@@ -29,7 +29,8 @@ onLoginSubmit() {
       (response: any) => {
           console.log('Login successful:', response);
           localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem('loginUser', this.loginData.email)
+          localStorage.setItem('loginUser', this.loginData.email),
+        
           this.router.navigate(['/sidemenu/home']);
       },
       (error) => {

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Modal } from 'bootstrap';
 
 
 
@@ -54,209 +55,165 @@ export class FeedbackSystemComponent {
     localStorage.removeItem('loginUser');
       this.router.navigate(['/auth/login']);
     }
-
-    paginationArray: number[] = []; 
-
-    feedbacks: any[] = [];
-    feedbackQuestions: any[] = [];
-    paginatedFeedbacks: any[] = [];
-    searchTerm: string = '';
-    currentPage: number = 1;
-    pageSize: number = 10;
-    totalPages: number = 0;
-    selectedQuestion: string = '';
-    feedbackText: string = '';
-    newFeedbackQuestion: string = '';
-    user: any = JSON.parse(localStorage.getItem('user') || '{}');
-    showTable: boolean = true;
-    showAddForm: boolean = false;
-    
-  
    
-  
-    ngOnInit(): void {
-      this.fetchFeedback();
-      this.fetchFeedbackQuestions();
-    }
-  
-   
+ 
 
-    
-    
+  feedbacks: any[] = [];
+  feedbackQuestions: any[] = [];
+  paginatedFeedbacks: any[] = [];
+  searchTerm: string = '';
+  currentPage: number = 1;
+  pageSize: number = 10; 
+  totalPages: number = 0; 
+  selectedQuestion: string = '';
+  feedbackText: string = '';
+  newFeedbackQuestion: string = '';
+  user: any = JSON.parse(localStorage.getItem('user') || '{}');
+  showTable: boolean = true;
+  showAddForm: boolean = false;
+  username: string | null = localStorage.getItem('username'); 
+
   
-    performSearch(): void {
-      // Example logic for search functionality
-      this.paginatedFeedbacks = this.feedbacks.filter(feedback =>
-        feedback.question.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
   
 
-    isUserRole(roleId: number): boolean {
-      return this.user.roleId === roleId;
-    }
-  
-    fetchFeedback(): void {
-      this.http.get<any[]>('http://localhost:8080/feedback/all').subscribe(
-        (data) => {
-          this.feedbacks = data;
-          this.totalPages = Math.ceil(this.feedbacks.length / this.pageSize);
-          this.updatePagination();
-        },
-        (error) => {
-          console.error('Error fetching feedback:', error);
-        }
-      );
-    }
-  
-    fetchFeedbackQuestions(): void {
-      this.http.get<any[]>('http://localhost:8080/feedback/all').subscribe(
-        (data) => {
-          this.feedbackQuestions = data.filter((q) => q.addedBy === 'Admin');
-        },
-        (error) => {
-          console.error('Error fetching feedback questions:', error);
-        }
-      );
-    }
-  
-    submitFeedback(): void {
-      const feedback = {
-        question: this.selectedQuestion,
-        answer: this.feedbackText,
-        addedBy: this.user.roleName,
-        username: this.user.username
-      };
-  
-      this.http.post('http://localhost:8080/feedback/addFeedback', feedback).subscribe(
-        (response) => {
-          alert('Feedback submitted successfully');
-          this.feedbackText = '';
-          this.selectedQuestion = '';
-          this.displayManageFeedbacks();
-        },
-        (error) => {
-          console.error('Error submitting feedback:', error);
-          alert('There was a problem submitting your feedback');
-        }
-      );
-    }
-  
-    addFeedbackQuestion(): void {
-      const feedback = {
-        question: this.newFeedbackQuestion,
-        answer: 'Not Applicable for Admin',
-        addedBy: 'Admin',
-        username: localStorage.getItem('loginUser'),
-        type: 'Question'
-      };
-  
-      this.http.post('http://localhost:8080/feedback/addFeedback', feedback).subscribe(
-        (response) => {
-          alert('Feedback question added successfully');
-          this.newFeedbackQuestion = '';
-          this.fetchFeedback();
-        },
-        (error) => {
-          console.error('Error adding feedback question:', error);
-          alert('There was a problem adding the feedback question');
-        }
-      );
-    }
-  
-    displayManageFeedbacks(): void {
-      this.showAddForm = false;
-      this.showTable = true;
-      this.fetchFeedback();
-    }
-  
-    displayAddFeedbackForm(): void {
-      this.showAddForm = true;
-      this.showTable = false;
-    }
-  
-    updatePagination(): void {
-      const startIndex = (this.currentPage - 1) * this.pageSize;
-      const endIndex = startIndex + this.pageSize;
-      this.paginatedFeedbacks = this.feedbacks.slice(startIndex, endIndex);
-    }
-  
-    gotoPage(pageNumber: number): void {
-      this.currentPage = pageNumber;
-      this.updatePagination();
-    }
+  ngOnInit(): void {
+    this.fetchFeedback();
+    this.fetchFeedbackQuestions();
   }
 
 
+  isUserRole(roleId: number): boolean {
+    return this.user.roleId === roleId;
+  }
 
-
-
-
-
-
-
-
-
-
-//   newQuestion: string = ''; 
-//   feedbackQuestions: string[] = []; 
-//   feedbackResponses: any[] = [];
-//   showCreateForm: boolean = false;
-//   loginUser: string | null = null;
+  fetchFeedback(): void {
+    this.http.get<any[]>('http://localhost:8080/feedback/all').subscribe(
+      (data) => {
+        this.feedbacks = data;
+        this.totalPages = Math.ceil(this.feedbacks.length / this.pageSize);
+        this.updatePagination();
+      },
+      (error) => {
+        console.error('Error fetching feedback:', error);
+      }
+    );
+  }
   
 
-//   ngOnInit(): void {
-//     this.fetchFeedbackQuestions(); 
-//     this.fetchFeedbackResponses(); }
+  fetchFeedbackQuestions(): void {
+    this.http.get<any[]>('http://localhost:8080/feedback/all').subscribe(
+      (data) => {
+        this.feedbackQuestions = data.filter((q) => q.addedBy === 'Admin');
+      },
+      (error) => {
+        console.error('Error fetching feedback questions:', error);
+      }
+    );
+  }
 
-//   displayCreateForm(): void {
-//     this.showCreateForm = true;
-//   }
+  submitFeedback(): void {
+    const feedback = {
+      question: this.selectedQuestion,
+      answer: this.feedbackText,
+      addedBy: 'Student',
+      username: 'Admin' ,
+      type:'Response'
+    };
 
-//   submitNewQuestion(): void {
-//     const feedback = {
-//       question: this.newQuestion,
-//       answer: 'Not Applicable for Admin',
-//       addedBy: 'Admin',
-//      username: localStorage.getItem('loginUser') 
+    this.http.post('http://localhost:8080/feedback/addFeedback', feedback).subscribe(
+      (response) => {
+        alert('Feedback submitted successfully');
+        this.feedbackText = '';
+        this.selectedQuestion = '';
+        this.displayManageFeedbacks();
+      },
+      (error) => {
+        console.error('Error submitting feedback:', error);
+        alert('There was a problem submitting your feedback');
+      }
+    );
+  }
+
+  addFeedbackQuestion(): void {
+    const feedback = {
+      question: this.newFeedbackQuestion,
+      answer: 'Not Applicable for Admin',
+       addedBy: 'Admin',
       
-//     };
+      username: 'Admin'
+    };
 
-//     this.http.post('http://localhost:8080/feedback/addQuestion', feedback).subscribe(
-//       () => {
-//         alert('Feedback question added successfully');
-//         this.newQuestion = '';
-//         this.fetchFeedbackQuestions(); 
-//         this.showCreateForm = false;
-//       },
-//       (error) => {
-//         console.error('Error adding feedback question:', error);
-//         alert('There was a problem adding the feedback question');
-//       }
-//     );
-//   }
+    this.http.post('http://localhost:8080/feedback/addFeedback', feedback).subscribe(
+      (response) => {
+        alert('Feedback question added successfully');
+        this.newFeedbackQuestion = '';
+        this.fetchFeedback();
+      },
+      (error) => {
+        console.error('Error adding feedback question:', error);
+        alert('There was a problem adding the feedback question');
+      }
+    );
+  }
 
+  displayManageFeedbacks(): void {
+    this.showAddForm = false;
+    this.showTable = true;
+    this.fetchFeedback();
+  }
+
+  displayAddFeedbackForm(): void {
+    this.showAddForm = true;
+    this.showTable = false;
+  }
+  performSearch(): void {
+    this.paginatedFeedbacks = this.feedbacks.filter(feedback =>
+      feedback.question.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedFeedbacks = this.feedbacks.slice(startIndex, endIndex);
+  }
   
-//   fetchFeedbackQuestions(): void {
-//     this.http.get<string[]>('http://localhost:8080/feedback/questions').subscribe(
-//       (data) => {
-//         this.feedbackQuestions = data;
-//       },
-//       (error) => {
-//         console.error('Error fetching feedback questions:', error);
-//       }
-//     );
-//   }
-
+  goToPage(page: number): void {
+    if (page > 0 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagination();
+    }
+  }
   
-//   fetchFeedbackResponses(): void {
-//     this.http.get<any[]>('http://localhost:8080/feedback/submitResponse').subscribe(
-//       (data) => {
-//         this.feedbackResponses = data;
-//       },
-//       (error) => {
-//         console.error('Error fetching feedback responses:', error);
-//       }
-//     );
-//   }
-// }
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+  
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

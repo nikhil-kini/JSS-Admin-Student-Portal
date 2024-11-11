@@ -26,15 +26,43 @@ registrationForm: any;
 
  
 
+// onSubmit() {
+//   console.log("Attempting to log in with:", this.student);
+ 
+//   this.http.post('http://localhost:8080/register-user/login', this.student, { responseType: 'text' })
+//     .subscribe({
+//       next: (response) => { 
+//         console.log('Login Success:', response);
+//         localStorage.setItem('isAuthenticated', 'true'); 
+//         localStorage.setItem('loginUser', this.student.email);
+        
+
+//         console.log('Navigating to dashboard...');
+//         this.router.navigate(['/dashboard']);
+//         alert("Login Successful");
+//       },
+//       error: (error: HttpErrorResponse) => {
+//         console.error('Login Error:', error);
+//         alert("Login Unsuccessful");
+//       }
+//     });
+// }
+
+// }
+
+
 onSubmit() {
   console.log("Attempting to log in with:", this.student);
- 
-  this.http.post('http://localhost:8080/register-user/login', this.student, { responseType: 'text' })
+
+  this.http.post<any>('http://localhost:8080/register-user/login', this.student, { responseType: 'json' })
     .subscribe({
-      next: (response) => { 
+      next: (response) => {
         console.log('Login Success:', response);
-        localStorage.setItem('isAuthenticated', 'true'); 
-        localStorage.setItem('loginUser', this.student.email)
+
+        // Assuming the backend returns a 'username' field along with other details
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('loginUser', this.student.email);  // Store email
+        localStorage.setItem('username', response.username);    // Store username
 
         console.log('Navigating to dashboard...');
         this.router.navigate(['/dashboard']);
@@ -46,5 +74,4 @@ onSubmit() {
       }
     });
 }
-
 }

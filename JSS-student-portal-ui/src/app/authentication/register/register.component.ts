@@ -42,6 +42,7 @@ onSubmit() {
     .subscribe({
       next: (response) => { 
         console.log('Success:', response);
+        localStorage.setItem('loginUser', this.student.username)
         this.router.navigate(['/auth/login']);
         alert("Registration Successful");
       },
