@@ -72,7 +72,7 @@ export class FeedbackSystemComponent {
   showTable: boolean = true;
   showAddForm: boolean = false;
   username: string | null = localStorage.getItem('username'); 
-
+  highlightedFeedbacks: any[] = [];
   
   
 
@@ -117,7 +117,7 @@ export class FeedbackSystemComponent {
       answer: this.feedbackText,
       addedBy: 'Student',
       username: 'Admin' ,
-      type:'Response'
+      type:'Question'
     };
 
     this.http.post('http://localhost:8080/feedback/addFeedback', feedback).subscribe(
@@ -139,7 +139,7 @@ export class FeedbackSystemComponent {
       question: this.newFeedbackQuestion,
       answer: 'Not Applicable for Admin',
        addedBy: 'Admin',
-      
+      type:'Question',
       username: 'Admin'
     };
 
@@ -166,13 +166,7 @@ export class FeedbackSystemComponent {
     this.showAddForm = true;
     this.showTable = false;
   }
-  performSearch(): void {
-    this.paginatedFeedbacks = this.feedbacks.filter(feedback =>
-      feedback.question.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-    this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
-    this.updatePagination();
-  }
+  
 
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -198,6 +192,26 @@ export class FeedbackSystemComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.updatePagination();
+    }
+  }
+  
+
+  
+
+  performSearch(): void {
+    if (this.searchTerm.trim() === '') {
+      this.updatePagination(); // Reset to show all feedbacks if the search term is empty
+      this.highlightedFeedbacks = [];
+    } else {
+      // Find feedbacks that match the complete question
+      this.highlightedFeedbacks = this.feedbacks.filter(feedback =>
+        feedback.question.toLowerCase() === this.searchTerm.toLowerCase()
+      );
+  
+      // Only display the matched feedbacks
+      this.paginatedFeedbacks = this.highlightedFeedbacks;
+      this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
+      this.goToPage(1); // Reset to the first page of the filtered results
     }
   }
   

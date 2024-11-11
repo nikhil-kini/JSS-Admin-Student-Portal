@@ -69,6 +69,16 @@
          <main class="col-md-9 col-lg-10 px-4 pt-4">
           <div class="container-fluid">
             <h1 id="FeedbackSystemTitle" class="text-center mb-4">Feedback System</h1>
+
+            <div class="mb-4 d-flex justify-content-center">
+              <input
+                type="text"
+                class="form-control w-50"
+                placeholder="Search by feedback question"
+                [(ngModel)]="searchTerm"
+                (input)="performSearch()"
+              />
+            </div>
         
             <!-- Button Toolbar -->
             <div class="btn-toolbar mb-4 d-flex justify-content-center" role="toolbar">
@@ -91,7 +101,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let feedback of paginatedFeedbacks; let i = index">
+                <tr *ngFor="let feedback of paginatedFeedbacks; let i = index" 
+                    [ngClass]="{'table-warning': highlightedFeedbacks.includes(feedback)}">
                   <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
                   <td>{{ feedback.question }}</td>
                   <td>{{ feedback.answer }}</td>
@@ -99,7 +110,6 @@
                 </tr>
               </tbody>
             </table>
-        
             <!-- Pagination Controls -->
             <div class="pagination-controls d-flex justify-content-center mt-4" *ngIf="showTable">
               <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>

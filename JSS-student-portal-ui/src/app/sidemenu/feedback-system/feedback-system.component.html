@@ -73,6 +73,17 @@
 
          <div class="container-fluid">
           <h1 id="FeedbackSystemTitle" class="text-center mb-4">Feedback System</h1>
+
+          <div class="mb-4 d-flex justify-content-center">
+            <input
+              type="text"
+              class="form-control w-50"
+              placeholder="Search by feedback question"
+              [(ngModel)]="searchTerm"
+              (input)="performSearch()"
+            />
+          </div>
+
           
           <div class="btn-toolbar mb-4 d-flex justify-content-center" role="toolbar">
             <button type="button" class="btn btn-primary me-2" (click)="displayManageFeedbacks()">Manage Feedbacks</button>
@@ -86,24 +97,27 @@
 
          
         
-        <table id="DisplayFeedbackList" class="table table-striped table-hover" *ngIf="showTable">
-          <thead class="thead-dark">
-            <tr>
-              <th>S.No</th>
-              <th>Feedback Question</th>
-              <th>Feedback Answer</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let feedback of paginatedFeedbacks; let i = index">
-              <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td> 
-              <td>{{ feedback.question }}</td>
-              <td>{{ feedback.answer }}</td>
-              <td>{{ feedback.username }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Table Display -->
+<table id="DisplayFeedbackList" class="table table-striped table-hover" *ngIf="showTable">
+  <thead class="thead-dark">
+    <tr>
+      <th>S.No</th>
+      <th>Feedback Question</th>
+      <th>Feedback Answer</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let feedback of paginatedFeedbacks; let i = index" 
+        [ngClass]="{'table-warning': highlightedFeedbacks.includes(feedback)}">
+      <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+      <td>{{ feedback.question }}</td>
+      <td>{{ feedback.answer }}</td>
+      <td>{{ feedback.username }}</td>
+    </tr>
+  </tbody>
+</table>
+
         
         
         <div class="pagination-controls d-flex justify-content-center mt-4" *ngIf="showTable">

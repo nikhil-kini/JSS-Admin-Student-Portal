@@ -69,7 +69,7 @@ export class FeedbackSystemComponent {
     showTable: boolean = true;
     showAddForm: boolean = false;
     username: string | null = localStorage.getItem('username'); 
-
+    highlightedFeedbacks: any[] = [];
     
     
   
@@ -163,13 +163,7 @@ export class FeedbackSystemComponent {
       this.showAddForm = true;
       this.showTable = false;
     }
-    performSearch(): void {
-      this.paginatedFeedbacks = this.feedbacks.filter(feedback =>
-        feedback.question.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-      this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
-      this.updatePagination();
-    }
+    
 
     updatePagination(): void {
       const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -198,6 +192,23 @@ export class FeedbackSystemComponent {
       }
     }
     
+    performSearch(): void {
+      if (this.searchTerm.trim() === '') {
+        this.updatePagination(); // Reset to show all feedbacks if the search term is empty
+        this.highlightedFeedbacks = [];
+      } else {
+        // Find feedbacks that match the complete question
+        this.highlightedFeedbacks = this.feedbacks.filter(feedback =>
+          feedback.question.toLowerCase() === this.searchTerm.toLowerCase()
+        );
+    
+        // Only display the matched feedbacks
+        this.paginatedFeedbacks = this.highlightedFeedbacks;
+        this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
+        this.goToPage(1); // Reset to the first page of the filtered results
+      }
+    }
+  
   }
 
 

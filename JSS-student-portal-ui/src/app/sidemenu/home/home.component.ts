@@ -10,6 +10,11 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   constructor(private router: Router) {}
+  username: string | null = localStorage.getItem('username');
+  ngOnInit(): void {
+   
+    console.log('Username:', this.username);
+  }
 
   home(){
     this.router.navigate(['/sidemenu/home']);
