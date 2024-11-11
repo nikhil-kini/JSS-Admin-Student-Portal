@@ -68,17 +68,19 @@
       <div class="text-center" >
         
           
-            <!-- <h1 id="FeedbackSystemTitle">Feedback System</h1>
-            <br />
+             <h1 id="FeedbackSystemTitle">Feedback System</h1>
+            <!-- <br /> -->
             <div class="row">
               <div class="col-md-8">
                 <div class="btn-toolbar mb-3" role="toolbar" aria-label="Feedback Management Actions">
                   <div class="btn-group me-2" role="group" aria-label="Manage Feedbacks">
                     <button type="button" class="btn btn-secondary" (click)="displayManageFeedbacks()">Manage Feedbacks</button>
                   </div>
-                  <div class="btn-group me-2" role="group" aria-label="Add New Feedback">
+
+                  <!-- <div class="btn-group me-2" role="group" aria-label="Add New Feedback">
                     <button type="button" class="btn btn-secondary" (click)="displayAddFeedbackForm()">Add Feedback</button>
-                  </div>
+                  </div> -->
+
                   <div class="btn-group me-2" role="group" id="create-feedback-btn-group" *ngIf="!isUserRole(5)">
                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
                       Create Feedback Question
@@ -88,16 +90,18 @@
               </div>
             </div>
             <br />
-            <div class="input-group mb-3">
+
+            <!-- <div class="input-group mb-3">
               <input type="text" id="searchInput" class="form-control" placeholder="Search by Feedback Name" [(ngModel)]="searchTerm" (input)="performSearch()" />
-            </div>
+            </div> -->
+
             <br />
             <table id="DisplayFeedbackList" class="table table-striped" *ngIf="showTable">
               <thead class="thead-dark">
                 <tr>
                   <th>Feedback Question</th>
                   <th>Feedback Answer</th>
-                  <th>Employee Name</th>
+                  <th>Name</th>
                 </tr>
               </thead>
               <tbody>
@@ -158,9 +162,24 @@
             </div>
           </div>
         </div>
-         -->
+        
 
-         <h2>Admin Feedback Management</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         <!-- <h2>Admin Feedback Management</h2>
          <button (click)="displayCreateForm()">Create New Feedback Question</button>
          
          <div *ngIf="showCreateForm">
@@ -193,4 +212,4 @@
              </tr>
            </tbody>
          </table>
-         
+          -->

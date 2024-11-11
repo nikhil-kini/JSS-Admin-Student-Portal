@@ -78,11 +78,11 @@ main p {
     text-align: center;
   }
 }
-main {
+/* main {
   margin-left: 295px;
   margin-top: 1.5em;
   margin-right: 1.2em;
-}
+} */
 
 #submit,
 #create-feedback-btn,

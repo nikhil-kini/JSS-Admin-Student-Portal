@@ -78,13 +78,13 @@ main p {
     text-align: center;
   }
 }
-main {
+/* main {
   margin-left: 295px;
   margin-top: 1.5em;
   margin-right: 1.2em;
-}
+} */
 
-#submit,
+/* #submit,
 #create-feedback-btn,
 #modalSubmitBtn {
   background-color: grey;
@@ -125,4 +125,53 @@ main {
   background-color: grey;
   border-color: grey;
   color: white;
+} */
+
+
+#FeedbackSystemTitle {
+  font-size: 2rem;
+  color: #343a40;
+}
+
+.table-striped {
+  border: 1px solid #dee2e6;
+}
+
+thead.thead-dark th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.btn-toolbar .btn {
+  margin-right: 5px;
+}
+
+.modal-content {
+  border-radius: 8px;
+}
+
+.pagination .page-link {
+  color: #007bff;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+form .form-control {
+  max-width: 300px;
+  margin: 0 auto;
+}
+/* .custom-input-size {
+  max-width: 300px; /* Adjust as needed 
+}*/
+
+.form-border {
+  border: 2px solid #ccc;
+  border-radius: 7px;
+  padding: 15px;
 }
