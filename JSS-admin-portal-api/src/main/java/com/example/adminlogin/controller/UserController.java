@@ -1,6 +1,7 @@
 package com.example.adminlogin.controller;
 
 import com.example.adminlogin.model.User;
+import com.example.adminlogin.repository.RoleRepo;
 import com.example.adminlogin.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -124,6 +125,14 @@ public class UserController {
 
     @Autowired
     private UserRepo userRepository;
+    private RoleRepo roleRepo;
+
+    @Autowired
+    public UserController(UserRepo userRepository, RoleRepo roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepo = roleRepo;
+    }
+
 
     // GET all users
     @GetMapping("/all")

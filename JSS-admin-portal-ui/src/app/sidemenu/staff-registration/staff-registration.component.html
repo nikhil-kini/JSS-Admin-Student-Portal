@@ -1,78 +1,165 @@
-<div class="container mt-5">
-  <div class="card shadow-sm">
-    <div class="card-header bg-primary text-white">
-      <h4 class="mb-0">Staff Registration Form</h4>
-    </div>
-    <div class="card-body">
-      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-          <label for="staffName" class="form-label">Staff Name:</label>
-          <input type="text" id="staffName" formControlName="staffName" class="form-control" placeholder="Enter staff name" />
-        </div>
-
-        <div class="col-md-6">
-          <label for="adharNo" class="form-label">Adhar No:</label>
-          <input type="text" id="adharNo" formControlName="adharNo" class="form-control" placeholder="Enter 12-digit Adhar number" />
-        </div>
-        </div>
-        
-        <div class="row mb-3">
-          <div class="col-md-6">
-          <label for="email" class="form-label">Email:</label>
-          <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter email" />
-        </div>
-
-        <div class="col-md-6">
-          <label for="password" class="form-label">Password:</label>
-          <input type="text" id="password" formControlName="password" class="form-control" placeholder="Enter password" />
-        </div>
-
+<div class="container-fluid">
+  <div class="row no-gutters">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-3">
+            <a routerLink="/home" routerLinkActive="active" (click)="home()" class="nav-link text-white">
+              <i class="bi bi-house mr-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
+              <i class="bi bi-calendar3 mr-2"></i> Time Table
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+              <a routerLink="/staff-management" routerLinkActive="active" (click)="staffmanagement()" class="nav-link text-white">
+                <i class="bi bi-person-fill mr-2"></i> Staff Management
+              </a>
+            </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/students-management" routerLinkActive="active" (click)="studentsmanagement()" class="nav-link text-white">
+              <i class="bi bi-person-workspace mr-2"></i> Students Management
+            </a>
+          </li>
+          
+          <li class="nav-item mb-3">
+            <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
+              <i class="bi bi-check-square mr-2"></i> Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/question-bank" routerLinkActive="active" (click)="questionbank()" class="nav-link text-white">
+              <i class="bi bi-book mr-2"></i> Question Bank
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/ia-module" routerLinkActive="active" (click)="iamodule()" class="nav-link text-white">
+              <i class="bi bi-card-list mr-2"></i> IA Module
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/feedback-system" routerLinkActive="active" (click)="feedbacksystem()" class="nav-link text-white">
+              <i class="bi bi-chat-dots mr-2"></i> Feedback System
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/lesson-plan" routerLinkActive="active" (click)="lessonplan()" class="nav-link text-white">
+              <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
+              <i class="bi bi-easel mr-2"></i> Teaching Aids
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/personal-documents" routerLinkActive="active" (click)="personaldocuments()" class="nav-link text-white">
+              <i class="bi bi-folder mr-2"></i> Personal Documents
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a (click)="logout()" class="nav-link text-white">
+              <i class="bi bi-box-arrow-right mr-2"></i> Logout
+            </a>
+          </li>
+        </ul>
       </div>
-        
-      <div class="form-group mb-3">
-          <label for="phone" class="form-label">Phone:</label>
-          <input type="tel" id="phone" formControlName="phone" class="form-control" placeholder="Enter phone number" />
-        </div>
+    </nav>
+
+   
+    <main class="col-md-9 col-lg-10 px-4 pt-4">
       
-        
-        
-        <div class="form-group mb-3">
-          <label for="address" class="form-label">Address:</label>
-          <textarea id="address" formControlName="address" class="form-control" rows="1" placeholder="Enter address"></textarea>
-        </div>
-        
-       
-
-        <!-- Row for SSLC Marks Card and BE Marks Card -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="sslcMarksCard" class="form-label">SSLC Marks Card:</label>
-            <input type="file" id="sslcMarksCard" (change)="onFileChange($event, 'sslcMarksCard')" class="form-control" />
+      <div class="container mt-5">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Staff Registration Form</h4>
           </div>
-
-          <div class="col-md-6">
-            <label for="beMarksCard" class="form-label">BE Marks Card:</label>
-            <input type="file" id="beMarksCard" (change)="onFileChange($event, 'beMarksCard')" class="form-control" />
+          <div class="card-body">
+            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      
+      
+              <div class="row mb-3">
+                <div class="col-md-6">
+                <label for="staffName" class="form-label">Staff Name:</label>
+                <input type="text" id="staffName" formControlName="staffName" class="form-control" placeholder="Enter staff name" />
+              </div>
+      
+              <div class="col-md-6">
+                <label for="adharNo" class="form-label">Adhar No:</label>
+                <input type="text" id="adharNo" formControlName="adharNo" class="form-control" placeholder="Enter 12-digit Adhar number" />
+              </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter email" />
+              </div>
+      
+              <div class="col-md-6">
+                <label for="password" class="form-label">Password:</label>
+                <input type="text" id="password" formControlName="password" class="form-control" placeholder="Enter password" />
+              </div>
+      
+            </div>
+              
+            <div class="form-group mb-3">
+                <label for="phone" class="form-label">Phone:</label>
+                <input type="tel" id="phone" formControlName="phone" class="form-control" placeholder="Enter phone number" />
+              </div>
+            
+              
+              
+              <div class="form-group mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <textarea id="address" formControlName="address" class="form-control" rows="1" placeholder="Enter address"></textarea>
+              </div>
+              
+             
+      
+              <!-- Row for SSLC Marks Card and BE Marks Card -->
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="sslcMarksCard" class="form-label">SSLC Marks Card:</label>
+                  <input type="file" id="sslcMarksCard" (change)="onFileChange($event, 'sslcMarksCard')" class="form-control" />
+                </div>
+      
+                <div class="col-md-6">
+                  <label for="beMarksCard" class="form-label">BE Marks Card:</label>
+                  <input type="file" id="beMarksCard" (change)="onFileChange($event, 'beMarksCard')" class="form-control" />
+                </div>
+              </div>
+      
+              <div class="row mb-3">
+                <div class="col-md-6">
+                <label for="degreeCertificate" class="form-label">Degree Certificate:</label>
+                <input type="file" id="degreeCertificate" (change)="onFileChange($event, 'degreeCertificate')" class="form-control" />
+              </div>
+      
+              <div class="col-md-6">
+                <label for="photo" class="form-label">Photo:</label>
+                <input type="file" id="photo" (change)="onFileChange($event, 'photo')" class="form-control" />
+              </div>
+              </div>
+      
+              <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="!registrationForm.valid">Register</button>
+            </form>
           </div>
         </div>
+      </div>
+      
+      
+    
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-          <label for="degreeCertificate" class="form-label">Degree Certificate:</label>
-          <input type="file" id="degreeCertificate" (change)="onFileChange($event, 'degreeCertificate')" class="form-control" />
-        </div>
-
-        <div class="col-md-6">
-          <label for="photo" class="form-label">Photo:</label>
-          <input type="file" id="photo" (change)="onFileChange($event, 'photo')" class="form-control" />
-        </div>
-        </div>
-
-        <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="!registrationForm.valid">Register</button>
-      </form>
-    </div>
+     
+    </main>
+    
   </div>
 </div>
+
+
+
+

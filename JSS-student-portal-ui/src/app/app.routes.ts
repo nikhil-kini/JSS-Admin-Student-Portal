@@ -13,7 +13,7 @@ import { FeedbackSystemComponent } from './sidemenu/feedback-system/feedback-sys
 import { LessonPlanComponent } from './sidemenu/lesson-plan/lesson-plan.component';
 import { TeachingAidsComponent } from './sidemenu/teaching-aids/teaching-aids.component';
 
-import { StudentregComponent } from './studentreg/studentreg.component';
+// import { StudentregComponent } from './studentreg/studentreg.component';
 import { PersonalDocumentsComponent } from './sidemenu/personal-documents/personal-documents.component';
 // import { ChangedPasswordComponent } from './changed-password/changed-password.component';
 
@@ -50,11 +50,7 @@ export const routes: Routes = [
   
  
   
-  {
-    path:"studentreg",
-    component:StudentregComponent,
-    // canActivate: [authGuard]
-  }
+  
   
     
       

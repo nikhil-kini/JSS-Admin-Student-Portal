@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-@Table(name = "Students")
+@Table(name = "Users")
 @Entity
 @Data
 @NoArgsConstructor
@@ -39,5 +39,7 @@ public class Student {
     @Column(name = "reg_no")
     private String regno;
 
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
 }

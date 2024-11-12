@@ -19,10 +19,6 @@ public class Role {
 
     private String roleName;
 
-//  @ManyToMany(mappedBy = "roles")
-//    private Set<User> users;
-//
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<Student> students;
+
 }
 
