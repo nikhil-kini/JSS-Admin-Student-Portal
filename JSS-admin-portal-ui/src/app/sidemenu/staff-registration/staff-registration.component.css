@@ -1,0 +1,17 @@
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+}

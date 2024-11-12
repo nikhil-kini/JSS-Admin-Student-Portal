@@ -65,6 +65,9 @@ export class TeachingAidsComponent implements OnInit {
       
       this.router.navigate(['/sidemenu/personal-documents'])
     }
+    staffmanagement(){
+      this.router.navigate(['/sidemenu/staff-management'])
+    }
 
 
 

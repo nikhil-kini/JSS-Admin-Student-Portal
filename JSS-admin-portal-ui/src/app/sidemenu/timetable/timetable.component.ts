@@ -59,6 +59,9 @@ export class TimetableComponent {
     personaldocuments(){
       this.router.navigate(['/sidemenu/personal-documents'])
     }
+    staffmanagement(){
+      this.router.navigate(['/sidemenu/staff-management'])
+    }
 
 
     semesters = [1, 2, 3, 4, 5, 6];

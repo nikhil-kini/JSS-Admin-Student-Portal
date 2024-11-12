@@ -48,4 +48,7 @@ export class StudentManagementComponent {
     personaldocuments(){
       this.router.navigate(['/sidemenu/personal-documents'])
     }
+    staffmanagement(){
+      this.router.navigate(['/sidemenu/staff-management'])
+    }
 }

@@ -48,4 +48,7 @@ export class IAModuleComponent {
     localStorage.removeItem('loginUser');
       this.router.navigate(['/auth/login']);
     }
+    staffmanagement(){
+      this.router.navigate(['/sidemenu/staff-management'])
+    }
 }

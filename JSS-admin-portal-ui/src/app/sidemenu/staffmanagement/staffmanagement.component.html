@@ -1,0 +1,143 @@
+<div class="container-fluid">
+    <div class="row no-gutters">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
+        <div class="position-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item mb-3">
+              <a routerLink="/home" routerLinkActive="active" (click)="home()" class="nav-link text-white">
+                <i class="bi bi-house mr-2"></i> Home
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
+                <i class="bi bi-calendar3 mr-2"></i> Time Table
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+                <a routerLink="/staff-management" routerLinkActive="active" (click)="staffmanagement()" class="nav-link text-white">
+                  <i class="bi bi-person-fill mr-2"></i> Staff Management
+                </a>
+              </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/students-management" routerLinkActive="active" (click)="studentsmanagement()" class="nav-link text-white">
+                <i class="bi bi-person-workspace mr-2"></i> Students Management
+              </a>
+            </li>
+            
+            <li class="nav-item mb-3">
+              <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
+                <i class="bi bi-check-square mr-2"></i> Attendance Management
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/question-bank" routerLinkActive="active" (click)="questionbank()" class="nav-link text-white">
+                <i class="bi bi-book mr-2"></i> Question Bank
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/ia-module" routerLinkActive="active" (click)="iamodule()" class="nav-link text-white">
+                <i class="bi bi-card-list mr-2"></i> IA Module
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/feedback-system" routerLinkActive="active" (click)="feedbacksystem()" class="nav-link text-white">
+                <i class="bi bi-chat-dots mr-2"></i> Feedback System
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/lesson-plan" routerLinkActive="active" (click)="lessonplan()" class="nav-link text-white">
+                <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
+                <i class="bi bi-easel mr-2"></i> Teaching Aids
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a routerLink="/personal-documents" routerLinkActive="active" (click)="personaldocuments()" class="nav-link text-white">
+                <i class="bi bi-folder mr-2"></i> Personal Documents
+              </a>
+            </li>
+            <li class="nav-item mb-3">
+              <a (click)="logout()" class="nav-link text-white">
+                <i class="bi bi-box-arrow-right mr-2"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+     
+      <main class="col-md-9 col-lg-10 px-4 pt-4">
+        <div class="text-center">
+          <h1>WELCOME TO STAFF MANAGEMENT</h1>
+           <!-- <button class="btn btn-primary" (click)="openregister()">Register Staff</button> -->
+           <button class="btn btn-primary" (click)="openregister()">Register Staff</button>
+
+        </div>
+      
+        
+        <!-- <div *ngIf="isModalOpen" class="modal">
+          <div class="modal-content">
+            <span class="close" (click)="closeModal()">&times;</span>
+            <h2>Staff Registration</h2>
+            <form (ngSubmit)="submitStaffForm()">
+              <div class="form-group">
+                <label for="staffName">Staff Name</label>
+                <input type="text" id="staffName" [(ngModel)]="staff.name" name="staffName" class="form-control" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" [(ngModel)]="staff.email" name="email" class="form-control" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" [(ngModel)]="staff.phone" name="phone" class="form-control" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" [(ngModel)]="staff.address" name="address" class="form-control" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="aadhar">Aadhar Number</label>
+                <input type="text" id="aadhar" [(ngModel)]="staff.aadhar" name="aadhar" class="form-control" required>
+              </div>
+      
+              <div class="form-group">
+                <label for="sslcMarks">SSLC Marks Card</label>
+                <input type="file" id="sslcMarks" (change)="onFileChange($event, 'sslc')" class="form-control">
+              </div>
+      
+              <div class="form-group">
+                <label for="beMarks">BE Marks Card</label>
+                <input type="file" id="beMarks" (change)="onFileChange($event, 'be')" class="form-control">
+              </div>
+      
+              <div class="form-group">
+                <label for="degreeCert">Degree Certificate</label>
+                <input type="file" id="degreeCert" (change)="onFileChange($event, 'degree')" class="form-control">
+              </div>
+      
+              <div class="form-group">
+                <label for="photo">Photo</label>
+                <input type="file" id="photo" (change)="onFileChange($event, 'photo')" class="form-control">
+              </div>
+      
+              <button type="submit" class="btn btn-success">Register</button>
+            </form>
+          </div> -->
+ 
+
+
+        <!-- </div> -->
+      </main>
+      
+    </div>
+  </div>
+  

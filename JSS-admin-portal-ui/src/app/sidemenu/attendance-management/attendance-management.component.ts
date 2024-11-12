@@ -43,9 +43,13 @@ export class AttendanceManagementComponent {
     personaldocuments(){
       this.router.navigate(['/sidemenu/personal-documents'])
     }
+    staffmanagement(){
+      this.router.navigate(['/sidemenu/staff-management'])
+    }
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');  
       this.router.navigate(['/auth/login']);
     }
+
 }

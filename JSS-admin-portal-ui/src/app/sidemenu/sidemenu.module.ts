@@ -12,6 +12,9 @@ import { StudentManagementComponent } from './student-management/student-managem
 import { TeachingAidsComponent } from './teaching-aids/teaching-aids.component';
 import { TimetableComponent } from './timetable/timetable.component';
 import { authGuard } from '../auth.guard';
+import { StaffmanagementComponent } from './staffmanagement/staffmanagement.component';
+import { StaffRegistrationComponent } from './staff-registration/staff-registration.component';
+// import { StaffRegistrationComponent } from './staffmanagement/staff-registration/staff-registration.component';
 
 const routes: Routes = [
   {path:'home',component: HomeComponent},
@@ -24,6 +27,12 @@ const routes: Routes = [
   {path:'students-management',component: StudentManagementComponent},
   {path:'teaching-aids',component: TeachingAidsComponent},
   {path:'time-table',component: TimetableComponent},
+  {path:'staff-management',component: StaffmanagementComponent},
+    // children: [
+      { path: 'staff-registration', component: StaffRegistrationComponent }
+  //   ]
+  // }
+  
 ];
 
 @NgModule({
@@ -35,7 +44,7 @@ const routes: Routes = [
     HomeComponent,IAModuleComponent,
     LessonPlanComponent,PersonalDocumentsComponent,
     QuestionBankComponent,StudentManagementComponent,
-    TeachingAidsComponent,TimetableComponent
+    TeachingAidsComponent,TimetableComponent,StaffmanagementComponent
   ],
   exports: [RouterModule]
 })

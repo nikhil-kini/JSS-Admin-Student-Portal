@@ -22,15 +22,22 @@ public class Student {
     private String username;
 
     private String email;
-    private String password;
-    private String dept;
-    private String semester;
+    private String password; // To store the password
+    private String address;
+    private String dept; // Department field
+    private String semester; // Semester field
 
-    @ManyToMany
-    @JoinTable(
-            name = "student_roles",
-            joinColumns = @JoinColumn(name = "stud_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    @Column(name = "phone_no")
+    private String phoneno; // Assuming this is a string for storing numbers
+
+    @Column(name = "mom_phone_no")
+    private String momphoneno;
+
+    @Column(name = "dad_phone_no")
+    private String dadphoneno;
+
+    @Column(name = "reg_no")
+    private String regno;
+
+
 }
