@@ -1,19 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StaffService } from '../staff.service';
 
+
+interface Staff {
+  staffName: string;
+  email: string;
+  password: string;
+  phoneno: string;
+  address: string;
+  adharno: string;
+  sslcMarksCard: File | null;
+  beMarksCard: File | null;
+  degreeCertificate: File | null;
+  photo: File | null;
+}
 @Component({
   selector: 'app-staff-registration',
   standalone: true,
-  imports: [FormsModule,CommonModule,ReactiveFormsModule ],
+  imports: [FormsModule,CommonModule ],
   templateUrl: './staff-registration.component.html',
   styleUrl: './staff-registration.component.css'
 })
 export class StaffRegistrationComponent {
 
-  // constructor(private router: Router,private http: HttpClient,private fb: FormBuilder) {}
+  constructor(private router: Router,private http: HttpClient,private staffService: StaffService) {}
 
   home(){
     this.router.navigate(['/sidemenu/home']);
@@ -58,37 +72,85 @@ export class StaffRegistrationComponent {
     }
 
 
-  registrationForm: FormGroup;
-  uploadedFiles: { [key: string]: File } = {};
+staff: Staff = {
+  staffName: '',
+  email: '',
+  password: '',
+  phoneno: '',
+  address: '',
+  adharno: '',
+  sslcMarksCard: null,
+  beMarksCard: null,
+  degreeCertificate: null,
+  photo: null
+};
 
-  constructor(private router: Router,private http: HttpClient,private fb: FormBuilder) {
-    this.registrationForm = this.fb.group({
-      staffName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['',[Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('^\\d{10}$')]],
-      address: ['', Validators.required],
-      adharNo: ['', [Validators.required, Validators.pattern('^\\d{12}$')]],
-      sslcMarksCard: [null, Validators.required],
-      beMarksCard: [null, Validators.required],
-      degreeCertificate: [null, Validators.required],
-      photo: [null, Validators.required]
+onSubmit() {
+  
+  const formData = new FormData();
+  formData.append('staffName', this.staff.staffName);
+  formData.append('email', this.staff.email);
+  formData.append('password', this.staff.password);
+  formData.append('phoneno', this.staff.phoneno);
+  formData.append('address', this.staff.address);
+  formData.append('adharno', this.staff.adharno);
+
+ 
+  if (this.staff.sslcMarksCard) formData.append('sslcMarksCard', this.staff.sslcMarksCard as Blob);
+  if (this.staff.beMarksCard) formData.append('beMarksCard', this.staff.beMarksCard as Blob);
+  if (this.staff.degreeCertificate) formData.append('degreeCertificate', this.staff.degreeCertificate as Blob);
+  if (this.staff.photo) formData.append('photo', this.staff.photo as Blob);
+
+  const headers = new HttpHeaders();
+
+  
+  this.http.post('http://localhost:8080/api/staff/register', formData,{ headers, responseType: 'text' })
+    .subscribe({
+      next: (response) => {
+        console.log('Staff registered successfully:', response);
+        alert('Registration successful!');
+        this.router.navigate(['/sidemenu/staff-management']);
+      },
+      error: (error) => {
+        console.error('Error during registration:', error);
+        alert('Registration failed!');
+      }
     });
-  }
+}
 
-  onFileChange(event: Event, controlName: string): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.uploadedFiles[controlName] = input.files[0];
-      this.registrationForm.patchValue({ [controlName]: input.files[0] });
-    }
-  }
 
-  onSubmit(): void {
-    if (this.registrationForm.valid) {
-      // Handle form submission logic (e.g., form data submission)
-      console.log('Form submitted:', this.registrationForm.value);
-      console.log('Uploaded files:', this.uploadedFiles);
-    }
+onFileSelectSSLC(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.staff.sslcMarksCard = file;
+    console.log('SSLC Marks Card selected:', file);
   }
+}
+
+
+onFileSelectBE(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.staff.beMarksCard = file;
+    console.log('BE Marks Card selected:', file);
+  }
+}
+
+
+onFileSelectDegree(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.staff.degreeCertificate = file;
+    console.log('Degree Certificate selected:', file);
+  }
+}
+
+
+onFileSelectPhoto(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.staff.photo = file;
+    console.log('Photo selected:', file);
+  }
+}
 }

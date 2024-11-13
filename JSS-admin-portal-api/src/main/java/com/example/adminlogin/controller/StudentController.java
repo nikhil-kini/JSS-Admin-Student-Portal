@@ -30,7 +30,6 @@ public class StudentController {
     private RoleRepo roleRepo;
 
 
-
     @PostMapping("/register-user/login")
     public ResponseEntity<Student> login(@RequestBody Student student) {
         Student dbUser = studentRepo.findByEmailAndPassword(student.getEmail(), student.getPassword());
@@ -39,7 +38,6 @@ public class StudentController {
         }
         return ResponseEntity.ok(dbUser);
     }
-
 
 
     @GetMapping("/get-all-users")
@@ -69,9 +67,6 @@ public class StudentController {
         Student savedUser = studentRepo.save(user);
         return ResponseEntity.ok(savedUser);
     }
-
-
-
 
 
     @PutMapping("/update-user")
@@ -129,7 +124,7 @@ public class StudentController {
 
             System.out.println("Photo file received: " + file.getOriginalFilename());
             saveFile(file, "C:/Users/nithya prashanth/Desktop/images/student/photo/");
-    return ResponseEntity.ok("Photo uploaded successfully");
+            return ResponseEntity.ok("Photo uploaded successfully");
 
         } catch (IOException e) {
             e.printStackTrace();  // Log the error
@@ -141,87 +136,4 @@ public class StudentController {
     }
 
 
-
-//    @PostMapping("/upload-marksCard")
-//    public ResponseEntity<String> uploadMarksCard(@RequestParam("marksCard") MultipartFile file) {
-//        try {
-//            // Save the file to the server or process it
-//            System.out.println("Marks Card file received: " + file.getOriginalFilename());
-//            // Save the file to disk or cloud storage as required
-//            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/uploads/marksCard/");
-//            return ResponseEntity.ok("Marks Card uploaded successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Failed to upload Marks Card");
-//        }
-//    }
-//
-//    @PostMapping("/upload-photo")
-//    public ResponseEntity<String> uploadPhoto(@RequestParam("photo") MultipartFile file) {
-//        try {
-//            // Save the file to the server or process it
-//            System.out.println("Photo file received: " + file.getOriginalFilename());
-//            // Save the file to disk or cloud storage as required
-//            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/uploads/photo/");
-//            return ResponseEntity.ok("Photo uploaded successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Failed to upload Photo");
-//        }
-//    }
-
-
-//    @PostMapping("/upload-files")
-//    public ResponseEntity<String> uploadFiles(
-//            @RequestParam("marksCard") MultipartFile marksCard,
-//            @RequestParam("photo") MultipartFile photo) {
-//        try {
-//            // Specify the directory where the files will be saved
-//            String targetDir = "C:/Users/nithya prashanth/Desktop/images/uploads"; // Adjust this path as needed
-//
-//            // Save the files
-//            saveFile(marksCard, targetDir);
-//            saveFile(photo, targetDir);
-//
-//            return ResponseEntity.ok("Files uploaded successfully.");
-//        } catch (IOException e) {
-//            return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
-//        }
-//    }
-//
-//    @PostMapping("/upload-marksCard")
-//    public ResponseEntity<String> uploadMarksCard(@RequestParam("marksCard") MultipartFile file) {
-//        try {
-//            // Save the file to the server or process it
-//            System.out.println("Marks Card file received: " + file.getOriginalFilename());
-//            // Save the file to disk or cloud storage as required
-//            return ResponseEntity.ok("Marks Card uploaded successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Failed to upload Marks Card");
-//        }
-//    }
-//
-//    @PostMapping("/upload-photo")
-//    public ResponseEntity<String> uploadPhoto(@RequestParam("photo") MultipartFile file) {
-//        try {
-//            // Save the file to the server or process it
-//            System.out.println("Photo file received: " + file.getOriginalFilename());
-//            // Save the file to disk or cloud storage as required
-//            return ResponseEntity.ok("Photo uploaded successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Failed to upload Photo");
-//        }
-//    }
-
-//    @GetMapping("/get-students-by-semester/{semester}")
-//    public List<Student> getStudentsBySemester(@PathVariable String semester) {
-//        return studentRepo.findBySemester(semester);  // Assuming you have this query in your StudentRepo
-//    }
-
-//    @GetMapping("/get-students-by-semester/{semester}")
-//    public ResponseEntity<List<Student>> getStudentsBySemester(@PathVariable String semester) {
-//        List<Student> students = studentRepo.findBySemester(semester);
-//        if (students.isEmpty()) {
-//            return ResponseEntity.status(404).body(null);  // No students found for the selected semester
-//        }
-//        return ResponseEntity.ok(students);
-//    }
 }

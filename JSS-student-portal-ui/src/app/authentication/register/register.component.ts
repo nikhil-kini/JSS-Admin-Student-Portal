@@ -45,28 +45,7 @@ private router = inject(Router);
 students: Student[] = [];
 
 
-// onSubmit(registerForm: NgForm) {
-//   if (registerForm.invalid) { // Check the validity directly on the form
-//     alert("Please fill all the fields correctly.");
-//     return;
-//   }
 
-//   console.log("Submitting form with data:", this.student);
-
-//   this.http.post('http://localhost:8080/register-user', this.student)
-//     .subscribe({
-//       next: (response) => {
-//         console.log('Success:', response);
-//         localStorage.setItem('loginUser', this.student.username);
-//         this.router.navigate(['/auth/login']);
-//         alert("Registration Successful");
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         console.error('Error:', error);
-//         alert("Registration Unsuccessful");
-//       }
-//     });
-// }
 
 onSubmit() {
   
@@ -105,14 +84,7 @@ onSubmit() {
 
 
 
-// ngAfterViewInit(): void {
-// window.addEventListener('load', function() {
-//   setTimeout(function() {
-//     // Your time-consuming task here
-//     console.log('Time-consuming task started after page load');
-//   }, 0);
-// });
-// }
+
 
 onFileSelect(event: Event, type: string): void {
 const input = event.target as HTMLInputElement;

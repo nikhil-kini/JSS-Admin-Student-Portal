@@ -28,10 +28,8 @@ const routes: Routes = [
   {path:'teaching-aids',component: TeachingAidsComponent},
   {path:'time-table',component: TimetableComponent},
   {path:'staff-management',component: StaffmanagementComponent},
-    // children: [
-      { path: 'staff-registration', component: StaffRegistrationComponent }
-  //   ]
-  // }
+    { path: 'staff-registration', component: StaffRegistrationComponent }
+  
   
 ];
 

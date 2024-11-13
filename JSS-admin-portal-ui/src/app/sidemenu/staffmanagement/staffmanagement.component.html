@@ -72,17 +72,77 @@
      
       <main class="col-md-9 col-lg-10 px-4 pt-4">
         <div class="text-center">
-          <h1>WELCOME TO STAFF MANAGEMENT</h1>
-           
-           <button class="btn btn-primary" (click)="openregister()">Add Staff</button>
-
+          <h1> STAFF MANAGEMENT</h1>
+          <button class="btn btn-primary" (click)="openregister()">ADD STAFF</button>
         </div>
       
+        <div class="container mt-4">
+          <div class="text-center">
+          <!-- <h3>Staff Details</h3> -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <!-- <th>SL.NO</th> -->
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let staff  of staffList; let i = index">
+                <td>{{ staff.id }}</td>
+                <!-- <td>{{ i + 1 }}</td>  -->
+                <td>{{ staff.staffName }}</td>
+                <td>{{staff.email}}</td>
+                <td>{{ staff.phoneno }}</td>
+                <td>{{ staff.address }}</td>
+               
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="editUser(staff)">Edit</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteUser(staff)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
         
-      
-
-       
+        
+        <div *ngIf="selectedUser" class="edit-form-container mt-4">
+          <h3 class="text-center mb-4">Edit Staff Details</h3>
+          <form (ngSubmit)="updateUser()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" class="form-control" [(ngModel)]="selectedUser.staffName" name="name" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" class="form-control" [(ngModel)]="selectedUser.email" name="email" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input id="phone" class="form-control" [(ngModel)]="selectedUser.phoneno" name="phone" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input id="address" class="form-control" [(ngModel)]="selectedUser.address" name="address" required>
+            </div>
+        
+            <div class="form-group text-center mt-4">
+              <button type="submit" class="btn btn-success btn-lg mr-3">Save Changes</button>
+              <button type="button" class="btn btn-secondary btn-lg" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
       </main>
+      
       
     </div>
   </div>

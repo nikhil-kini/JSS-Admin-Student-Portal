@@ -70,92 +70,100 @@
     </nav>
 
    
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
-      
-      <div class="container mt-5">
-        <div class="card shadow-sm">
-          <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Staff Registration Form</h4>
-          </div>
-          <div class="card-body">
-            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      
-      
-              <div class="row mb-3">
-                <div class="col-md-6">
-                <label for="staffName" class="form-label">Staff Name:</label>
-                <input type="text" id="staffName" formControlName="staffName" class="form-control" placeholder="Enter staff name" />
-              </div>
-      
-              <div class="col-md-6">
-                <label for="adharNo" class="form-label">Adhar No:</label>
-                <input type="text" id="adharNo" formControlName="adharNo" class="form-control" placeholder="Enter 12-digit Adhar number" />
-              </div>
-              </div>
-              
-              <div class="row mb-3">
-                <div class="col-md-6">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter email" />
-              </div>
-      
-              <div class="col-md-6">
-                <label for="password" class="form-label">Password:</label>
-                <input type="text" id="password" formControlName="password" class="form-control" placeholder="Enter password" />
-              </div>
-      
-            </div>
-              
-            <div class="form-group mb-3">
-                <label for="phone" class="form-label">Phone:</label>
-                <input type="tel" id="phone" formControlName="phone" class="form-control" placeholder="Enter phone number" />
-              </div>
-            
-              
-              
-              <div class="form-group mb-3">
-                <label for="address" class="form-label">Address:</label>
-                <textarea id="address" formControlName="address" class="form-control" rows="1" placeholder="Enter address"></textarea>
-              </div>
-              
-             
-      
-              <!-- Row for SSLC Marks Card and BE Marks Card -->
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <label for="sslcMarksCard" class="form-label">SSLC Marks Card:</label>
-                  <input type="file" id="sslcMarksCard" (change)="onFileChange($event, 'sslcMarksCard')" class="form-control" />
-                </div>
-      
-                <div class="col-md-6">
-                  <label for="beMarksCard" class="form-label">BE Marks Card:</label>
-                  <input type="file" id="beMarksCard" (change)="onFileChange($event, 'beMarksCard')" class="form-control" />
-                </div>
-              </div>
-      
-              <div class="row mb-3">
-                <div class="col-md-6">
-                <label for="degreeCertificate" class="form-label">Degree Certificate:</label>
-                <input type="file" id="degreeCertificate" (change)="onFileChange($event, 'degreeCertificate')" class="form-control" />
-              </div>
-      
-              <div class="col-md-6">
-                <label for="photo" class="form-label">Photo:</label>
-                <input type="file" id="photo" (change)="onFileChange($event, 'photo')" class="form-control" />
-              </div>
-              </div>
-      
-              <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="!registrationForm.valid">Register</button>
-            </form>
-          </div>
-        </div>
-      </div>
-      
-      
-    
 
-     
+    <main class="col-md-9 col-lg-10 px-4 pt-4">
+      <!-- <div class="text-center"> -->
+        <div class="registration-card">
+          <h2>STAFF REGISTER FORM</h2>
+          <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+            
+            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
+              <div class="form-group" style="flex: 1;">
+                <label for="staffName">Staff Name:</label>
+                <input type="text" id="staffName" name="staffName" [(ngModel)]="staff.staffName" class="form-control" required #staffName="ngModel">
+                <div *ngIf="staffName.invalid && (staffName.dirty || staffName.touched)" class="error">
+                  Staff Name is required.
+                </div>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="adharno">Adhar No:</label>
+                <input type="text" id="adharno" name="adharno" [(ngModel)]="staff.adharno" class="form-control" required #adharno="ngModel">
+                <div *ngIf="adharno.invalid && (adharno.dirty || adharno.touched)" class="error">
+                  Adhar No is required.
+                </div>
+              </div>
+            </div>
+    
+          
+            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
+              <div class="form-group" style="flex: 1;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" [(ngModel)]="staff.email" class="form-control" required #email="ngModel">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                  Email is required.
+                </div>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" [(ngModel)]="staff.password" required #password="ngModel" class="ng-dirty ng-valid ng-touched" autocomplete="current-password">
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+                    Password is required.
+                </div>
+            </div>
+          </div>
+
+          <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
+              <div class="form-group" style="flex: 1;">
+                <label for="phoneno">Phone No:</label>
+                <input type="text" id="phoneno" name="phoneno" [(ngModel)]="staff.phoneno" class="form-control" required #phoneno="ngModel">
+                <div *ngIf="phoneno.invalid && (phoneno.dirty || phoneno.touched)" class="error">
+                  Phone No is required.
+                </div>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" [(ngModel)]="staff.address" class="form-control" required #address="ngModel">
+                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
+                  Address is required.
+                </div>
+              </div>
+            </div>
+    
+            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
+              <div class="form-group" style="flex: 1;">
+                <label for="sslcMarksCard">Upload SSLC Marks Card:</label>
+                <input type="file" id="sslcMarksCard" name="sslcMarksCard" class="form-control" (change)="onFileSelectSSLC($event)" required>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="beMarksCard">Upload BE Marks Card:</label>
+                <input type="file" id="beMarksCard" name="beMarksCard" class="form-control" (change)="onFileSelectBE($event)" required>
+              </div>
+            </div>
+    
+            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
+              <div class="form-group" style="flex: 1;">
+                <label for="degreeCertificate">Upload Degree Certificate:</label>
+                <input type="file" id="degreeCertificate" name="degreeCertificate" class="form-control" (change)="onFileSelectDegree($event)" required>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="photo">Upload Photo:</label>
+                <input type="file" id="photo" name="photo" class="form-control" (change)="onFileSelectPhoto($event)" required>
+              </div>
+            </div>
+    
+           
+            <div class="form-row">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block" [disabled]="registerForm.invalid">Register</button>
+              </div>
+            </div>
+          </form>
+    
+          
+        <!-- </div> -->
+      </div>
     </main>
+    
     
   </div>
 </div>
