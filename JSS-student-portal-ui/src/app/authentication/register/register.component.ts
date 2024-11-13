@@ -25,7 +25,7 @@ interface Student {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements AfterViewInit  {
+export class RegisterComponent  {
 
 student: Student = {
   username: '',
@@ -43,26 +43,6 @@ student: Student = {
 private http = inject(HttpClient);
 private router = inject(Router);
 students: Student[] = [];
-// onSubmit() {
-// console.log("Welcome to jupiterking");
-// console.log("Submitting form with data:", this.student);
- 
-
-
-// this.http.post('http://localhost:8080/register-user', this.student)
-//   .subscribe({
-//     next: (response) => { 
-//       console.log('Success:', response);
-//       localStorage.setItem('loginUser', this.student.username)
-//       this.router.navigate(['/auth/login']);
-//       alert("Registration Successful");
-//     },
-//     error: (error: HttpErrorResponse) => {
-//       console.error('Error:', error);
-//       alert("Registration Unsuccessful");
-//     }
-//   });
-// }
 
 
 // onSubmit(registerForm: NgForm) {
@@ -89,7 +69,7 @@ students: Student[] = [];
 // }
 
 onSubmit() {
-  // Check if any required field is empty
+  
   if (
     !this.student.username ||
     !this.student.regno ||
@@ -125,14 +105,14 @@ onSubmit() {
 
 
 
-ngAfterViewInit(): void {
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    // Your time-consuming task here
-    console.log('Time-consuming task started after page load');
-  }, 0);
-});
-}
+// ngAfterViewInit(): void {
+// window.addEventListener('load', function() {
+//   setTimeout(function() {
+//     // Your time-consuming task here
+//     console.log('Time-consuming task started after page load');
+//   }, 0);
+// });
+// }
 
 onFileSelect(event: Event, type: string): void {
 const input = event.target as HTMLInputElement;
@@ -162,7 +142,7 @@ uploadMarksCard(file: File): void {
 const formData = new FormData();
 formData.append('marksCard', file, file.name);
 
-this.http.post('http://localhost:8080/upload-marksCard', formData)
+this.http.post('http://localhost:8080/upload-marksCard', formData, { responseType: 'text' })
   .subscribe({
     next: (response) => {
       console.log('Marks Card uploaded successfully:', response);
@@ -179,7 +159,7 @@ uploadPhoto(file: File): void {
 const formData = new FormData();
 formData.append('photo', file, file.name);
 
-this.http.post('http://localhost:8080/upload-photo', formData)
+this.http.post('http://localhost:8080/upload-photo', formData, { responseType: 'text' })
   .subscribe({
     next: (response) => {
       console.log('Photo uploaded successfully:', response);

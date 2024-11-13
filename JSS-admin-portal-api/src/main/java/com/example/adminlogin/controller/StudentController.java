@@ -1,6 +1,8 @@
 package com.example.adminlogin.controller;
 
+import com.example.adminlogin.model.Role;
 import com.example.adminlogin.model.Student;
+import com.example.adminlogin.repository.RoleRepo;
 import com.example.adminlogin.repository.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -24,6 +25,9 @@ public class StudentController {
 
     @Autowired
     private StudentRepo studentRepo;
+
+    @Autowired
+    private RoleRepo roleRepo;
 
 
 
@@ -49,11 +53,20 @@ public class StudentController {
         return register.orElse(null);
     }
 
+//    @PostMapping("/register-user")
+//    public ResponseEntity<Student> adduser(@RequestBody Student user) {
+//        System.out.println("Received user data: " + user);
+//        Student savedUser = studentRepo.save(user);
+//        System.out.println("Successfully Added");
+//        return ResponseEntity.ok(savedUser);
+//    }
+
     @PostMapping("/register-user")
-    public ResponseEntity<Student> adduser(@RequestBody Student user) {
-        System.out.println("Received user data: " + user);
+    public ResponseEntity<Student> addUser(@RequestBody Student user) {
+        // Link role_id 2 to the student
+        Role role = roleRepo.findById(2L).orElseThrow(() -> new RuntimeException("Role not found"));
+        user.setRole(role);  // Updated to use 'role' field
         Student savedUser = studentRepo.save(user);
-        System.out.println("Successfully Added");
         return ResponseEntity.ok(savedUser);
     }
 
@@ -95,7 +108,7 @@ public class StudentController {
             }
 
             System.out.println("Marks Card file received: " + file.getOriginalFilename());
-            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/uploads/marksCard/");
+            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/student/marksCard/");
             return ResponseEntity.ok("Marks Card uploaded successfully");
         } catch (IOException e) {
             e.printStackTrace();  // Log the error
@@ -108,14 +121,16 @@ public class StudentController {
 
     @PostMapping("/upload-photo")
     public ResponseEntity<String> uploadPhoto(@RequestParam("photo") MultipartFile file) {
+
         try {
             if (file.isEmpty()) {
                 return ResponseEntity.status(400).body("No file selected");
             }
 
             System.out.println("Photo file received: " + file.getOriginalFilename());
-            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/uploads/photo/");
-            return ResponseEntity.ok("Photo uploaded successfully");
+            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/student/photo/");
+    return ResponseEntity.ok("Photo uploaded successfully");
+
         } catch (IOException e) {
             e.printStackTrace();  // Log the error
             return ResponseEntity.status(500).body("Failed to upload Photo: " + e.getMessage());
