@@ -7,16 +7,22 @@ import { StaffService } from '../staff.service';
 
 
 interface Staff {
-  staffName: string;
+  userName: string;
   email: string;
   password: string;
   phoneno: string;
   address: string;
   adharno: string;
+  role:string;
   sslcMarksCard: File | null;
   beMarksCard: File | null;
   degreeCertificate: File | null;
   photo: File | null;
+ dept: string;
+ semester:string;
+ momphoneno:string;
+ dadphoneno:string;
+ regno:string;
 }
 @Component({
   selector: 'app-staff-registration',
@@ -73,7 +79,7 @@ export class StaffRegistrationComponent {
 
 
 staff: Staff = {
-  staffName: '',
+  userName: '',
   email: '',
   password: '',
   phoneno: '',
@@ -82,18 +88,30 @@ staff: Staff = {
   sslcMarksCard: null,
   beMarksCard: null,
   degreeCertificate: null,
-  photo: null
+  photo: null,
+  role:'Staff',
+  dept:'null',
+  semester:'null',
+  momphoneno:'null',
+  dadphoneno:'null',
+  regno:'null'
 };
 
 onSubmit() {
   
   const formData = new FormData();
-  formData.append('staffName', this.staff.staffName);
+  formData.append('userName', this.staff.userName);
   formData.append('email', this.staff.email);
   formData.append('password', this.staff.password);
   formData.append('phoneno', this.staff.phoneno);
   formData.append('address', this.staff.address);
   formData.append('adharno', this.staff.adharno);
+  formData.append('role',this.staff.role);
+  formData.append('dept', this.staff.dept);
+  formData.append('semester', this.staff.semester);
+  formData.append('momphoneno', this.staff.momphoneno);
+  formData.append('dadphoneno', this.staff.dadphoneno);
+  formData.append('regno', this.staff.regno);
 
  
   if (this.staff.sslcMarksCard) formData.append('sslcMarksCard', this.staff.sslcMarksCard as Blob);
@@ -104,7 +122,7 @@ onSubmit() {
   const headers = new HttpHeaders();
 
   
-  this.http.post('http://localhost:8080/api/staff/register', formData,{ headers, responseType: 'text' })
+  this.http.post('http://localhost:8080/users/register', formData,{ headers, responseType: 'text' })
     .subscribe({
       next: (response) => {
         console.log('Staff registered successfully:', response);

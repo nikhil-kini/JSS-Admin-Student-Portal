@@ -79,9 +79,9 @@
             
             <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
               <div class="form-group" style="flex: 1;">
-                <label for="staffName">Staff Name:</label>
-                <input type="text" id="staffName" name="staffName" [(ngModel)]="staff.staffName" class="form-control" required #staffName="ngModel">
-                <div *ngIf="staffName.invalid && (staffName.dirty || staffName.touched)" class="error">
+                <label for="userName">Staff Name:</label>
+                <input type="text" id="userName" name="userName" [(ngModel)]="staff.userName" class="form-control" required #userName="ngModel">
+                <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="error">
                   Staff Name is required.
                 </div>
               </div>

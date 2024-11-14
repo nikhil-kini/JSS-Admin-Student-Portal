@@ -82,8 +82,8 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>ID</th>
-                <!-- <th>SL.NO</th> -->
+                <!-- <th>ID</th> -->
+                <th>SL.NO</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -92,10 +92,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let staff  of staffList; let i = index">
-                <td>{{ staff.id }}</td>
-                <!-- <td>{{ i + 1 }}</td>  -->
-                <td>{{ staff.staffName }}</td>
+              <ng-container *ngFor="let staff  of staffList; let i = index" >
+              <tr *ngIf="staff.role === 'Staff'">
+                <!-- <td>{{ staff.id }}</td>  -->
+                <td>{{ i + 1 }}</td> 
+                <!-- <td>{{ staff.index }}</td> -->
+                <td>{{ staff.userName }}</td>
                 <td>{{staff.email}}</td>
                 <td>{{ staff.phoneno }}</td>
                 <td>{{ staff.address }}</td>
@@ -105,6 +107,21 @@
                   <button class="btn btn-danger btn-sm" (click)="deleteUser(staff)">Delete</button>
                 </td>
               </tr>
+            </ng-container>
+
+              <!-- <ng-container *ngFor="let staffMember of staffList; let i = index">
+                <tr *ngIf="staffMember.role === 'Staff'">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ staffMember.staffName }}</td>
+                  <td>{{ staffMember.email }}</td>
+                  <td>{{ staffMember.phoneno }}</td>
+                  <td>{{ staffMember.address }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="editUser(staffMember)">Edit</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteUser(staffMember)">Delete</button>
+                  </td>
+                </tr>
+              </ng-container> -->
             </tbody>
           </table>
         </div>
@@ -115,8 +132,8 @@
           <h3 class="text-center mb-4">Edit Staff Details</h3>
           <form (ngSubmit)="updateUser()">
             <div class="form-group">
-              <label for="name">Name</label>
-              <input id="name" class="form-control" [(ngModel)]="selectedUser.staffName" name="name" required>
+              <label for="userName">Name</label>
+              <input id="userName" class="form-control" [(ngModel)]="selectedUser.userName" name="userName" required>
             </div>
         
             <div class="form-group">
@@ -125,8 +142,8 @@
             </div>
         
             <div class="form-group">
-              <label for="phone">Phone</label>
-              <input id="phone" class="form-control" [(ngModel)]="selectedUser.phoneno" name="phone" required>
+              <label for="phoneno">Phone</label>
+              <input id="phoneno" class="form-control" [(ngModel)]="selectedUser.phoneno" name="phoneno" required>
             </div>
         
             <div class="form-group">

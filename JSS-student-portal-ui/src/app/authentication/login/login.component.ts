@@ -54,7 +54,7 @@ registrationForm: any;
 onSubmit() {
   console.log("Attempting to log in with:", this.student);
 
-  this.http.post<any>('http://localhost:8080/register-user/login', this.student, { responseType: 'json' })
+  this.http.post<any>('http://localhost:8080/users/login', this.student, { responseType: 'json' })
     .subscribe({
       next: (response) => {
         console.log('Login Success:', response);

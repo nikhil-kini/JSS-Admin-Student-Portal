@@ -28,6 +28,8 @@ public class Document {
 
     //    @Lob
 //    private byte[] fileData;
+
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private User user;

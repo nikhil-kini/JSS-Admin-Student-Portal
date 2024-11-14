@@ -18,7 +18,8 @@ export class LoginComponent {
 
 loginData = {
   email: '',
-  password: ''
+  password: '',
+  role:'Admin'
 };
 
 constructor(private http: HttpClient, private router: Router) {}

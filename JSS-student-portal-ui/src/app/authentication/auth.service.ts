@@ -9,7 +9,7 @@ export class AuthService {
 
   
   
-private baseUrl = 'http://localhost:8080/register-user';
+private baseUrl = 'http://localhost:8080/users/register1';
 
   constructor(private http: HttpClient) {}
 

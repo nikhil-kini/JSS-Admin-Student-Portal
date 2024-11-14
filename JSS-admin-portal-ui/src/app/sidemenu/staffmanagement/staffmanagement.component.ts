@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -9,12 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { StaffService } from '../staff.service';
 
 
-// interface Staff {
-//   name: string;
-//   email: string;
-//   phone: string; 
-//   address: string;
-// }
+
 @Component({
   selector: 'app-staffmanagement',
   standalone: true,
@@ -24,7 +19,7 @@ import { StaffService } from '../staff.service';
   templateUrl: './staffmanagement.component.html',
   styleUrl: './staffmanagement.component.css'
 })
-export class StaffmanagementComponent {
+export class StaffmanagementComponent implements OnInit{
   constructor(private router: Router,private http: HttpClient,private staffService: StaffService) {}
 
   home(){
@@ -75,8 +70,11 @@ export class StaffmanagementComponent {
     staffList: any[] = [];
     
 
+    
     ngOnInit(): void {
+      
       this.loadStaffData();
+      
     }
   
     loadStaffData(): void {
@@ -91,20 +89,7 @@ export class StaffmanagementComponent {
       );
     }
   
-    // editUser(staff: any): void {
-      
     
-    //   this.staffService.updateStaff(staff.id, staff).subscribe(
-    //     response => {
-    //       console.log('Update response:', response);
-          
-    //       this.loadStaffData(); 
-    //     },
-    //     error => {
-    //       console.error('Error updating staff:', error);
-    //     }
-    //   );
-    // }
 
     selectedUser: any; 
     editUser(user: any): void {
@@ -161,6 +146,7 @@ export class StaffmanagementComponent {
     cancelEdit(): void {
       this.selectedUser = null; // Clear the edit form
     }
+
     
     
   }
