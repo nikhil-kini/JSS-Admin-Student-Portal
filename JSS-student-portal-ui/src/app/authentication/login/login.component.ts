@@ -62,7 +62,7 @@ onSubmit() {
         // Assuming the backend returns a 'username' field along with other details
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('loginUser', this.student.email);  // Store email
-        localStorage.setItem('username', response.username);    // Store username
+        localStorage.setItem('username', response.userName);    // Store username
 
         console.log('Navigating to dashboard...');
         this.router.navigate(['/dashboard']);

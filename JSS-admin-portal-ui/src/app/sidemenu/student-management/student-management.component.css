@@ -37,44 +37,77 @@ body {
   color: #ffcc00;
 }
 
-/* Content area styling */
+
+
+
+/* Container for the staff management section */
 main {
-  margin-left: 250px; /* Space for the fixed sidebar */
+margin-left: 250px; 
   padding: 40px;
   background-color: #ecf0f1;
   min-height: 100vh;
 }
 
-main h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: left;
+
+
+/* Title styling */
+h1 {
+color: #343a40;
+font-size: 24px;
+margin-bottom: 20px;
 }
 
-main h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
+table th, table td {
+text-align: center;
+
 }
 
-main p {
-  font-size: 1.1rem;
-  color: #555;
-  line-height: 1.6;
+/* Center the form and add a border */
+.edit-form-container {
+max-width: 600px;  /* Set maximum width for the form */
+margin: 0 auto;    /* Center horizontally */
+padding: 20px;
+border: 1px solid #ccc; /* Border around the form */
+border-radius: 8px;  /* Rounded corners */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for a 3D effect */
+background-color: #fff;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .sidebar {
-    position: relative;
-    width: 100%;
-  }
+/* Smaller text fields */
+.edit-form-container .form-control {
+font-size: 0.875rem;  /* Smaller font size */
+padding: 8px;         /* Smaller padding for the text fields */
+}
 
-  main {
-    margin-left: 0;
-    padding: 20px;
-    text-align: center;
-  }
+/* Style for the form title */
+.edit-form-container h3 {
+font-size: 1.25rem; /* Adjust title size */
+color: #333;
+margin-bottom: 20px;
+}
+
+/* Add margin to buttons for proper spacing */
+.edit-form-container .btn {
+font-size: 0.875rem;
+padding: 10px 20px;
+}
+
+.edit-form-container .btn-lg {
+font-size: 1rem;  /* Larger text for save and cancel buttons */
+}
+
+/* Optional: Adjust button spacing */
+.edit-form-container .btn-success {
+margin-right: 10px;
+}
+
+
+.p-paginator {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.p-paginator .p-button {
+  margin-left: 5px;
 }

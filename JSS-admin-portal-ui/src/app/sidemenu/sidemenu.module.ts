@@ -14,6 +14,7 @@ import { TimetableComponent } from './timetable/timetable.component';
 import { authGuard } from '../auth.guard';
 import { StaffmanagementComponent } from './staffmanagement/staffmanagement.component';
 import { StaffRegistrationComponent } from './staff-registration/staff-registration.component';
+import { StudentRegistrationComponent } from './student-registration/student-registration.component';
 // import { StaffRegistrationComponent } from './staffmanagement/staff-registration/staff-registration.component';
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'personal-documents',component: PersonalDocumentsComponent},
   {path:'question-bank',component: QuestionBankComponent},
   {path:'students-management',component: StudentManagementComponent},
+  {path:'students-registration',component: StudentRegistrationComponent},
   {path:'teaching-aids',component: TeachingAidsComponent},
   {path:'time-table',component: TimetableComponent},
   {path:'staff-management',component: StaffmanagementComponent},

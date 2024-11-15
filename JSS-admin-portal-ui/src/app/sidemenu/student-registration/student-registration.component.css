@@ -1,0 +1,222 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: rgba(0, 213, 255, 1);
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 250px; /* Fixed width for the sidebar */
+    background-color: #222;
+    color: #fff;
+    padding-top: 20px;
+    transition: width 0.75s ease;
+    /* overflow-y: auto;  */
+  }
+  
+  .sidebar .nav-link {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar .nav-link i {
+    padding-right: 10px;
+  }
+  
+  .sidebar .nav-link:hover {
+    background-color: #444;
+    color: #ffcc00;
+  }
+  
+  /* Content area styling */
+  main {
+    margin-left: 250px; /* Space for the fixed sidebar */
+    padding: 40px;
+    background-color: #ecf0f1;
+    min-height: 100vh;
+    overflow-y:hidden;
+  }
+  
+  main h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  main h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  main p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .sidebar {
+      position: relative;
+      width: 100%;
+    }
+  
+    main {
+      margin-left: 0;
+      padding: 15px;
+      text-align: center;
+    }
+  }
+  
+  
+  
+  
+  
+  .registration-card p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: navy; 
+    font-size: 1.2rem;
+  }
+  
+  .registration-card h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: navy; 
+    font-size: 1.8rem;
+  }
+  
+  
+  
+  .registration-card label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: navy; 
+  }
+  
+   
+   
+  
+  
+  .registration-card input:focus {
+    border-color: navy;
+    box-shadow: 0 0 5px rgba(0, 0, 128, 0.5); 
+    outline: none; 
+  }
+  
+  
+  .registration-card input::placeholder {
+    color: #aaa; 
+    opacity: 1; 
+  }
+  
+  .registration-card button {
+    width: 100%;
+    padding: 12px;
+    background-color: navy;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .registration-card button:hover {
+    background-color: #004080; 
+  }
+  
+  .registration-card {
+    position:absolute;
+    top: 60%; 
+    right: 170px; 
+    transform: translateY(-60%);
+    background-color: rgb(180, 113, 113); 
+    padding: 20px; 
+    border-radius: 12px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); 
+    width: 800px; 
+    margin-right: 25px; 
+    max-height: 100vh; 
+    overflow-y: auto; 
+  }
+  
+  /* .registration-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    width: 800px; 
+    max-height: 100vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+  } */
+  
+  .registration-card h2 {
+    text-align: center;
+    margin-bottom: 15px; 
+    color: navy; 
+    font-size: 1.5rem; 
+  }
+  
+  
+  
+  .registration-card input {
+    width: 100%; 
+    padding: 8px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 0.9rem; 
+  }
+  
+  
+  .registration-card select {
+    width: 100%; 
+    padding: 8px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 0.9rem; 
+    background-color: #fff; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+  }
+  
+  
+  .registration-card select:focus {
+    border-color: navy;
+    box-shadow: 0 0 5px rgba(0, 0, 128, 0.5); 
+    outline: none; 
+  }
+  
+  
+  
+  
+  
+  .registration-card .error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+  
+  
+  .registration-card label {
+    font-weight: bold;
+    color: navy;
+    margin-bottom: 5px;
+  }
+  
+  

@@ -23,6 +23,7 @@ interface Staff {
  momphoneno:string;
  dadphoneno:string;
  regno:string;
+ 
 }
 @Component({
   selector: 'app-staff-registration',
