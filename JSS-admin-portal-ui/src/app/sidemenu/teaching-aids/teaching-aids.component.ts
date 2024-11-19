@@ -71,11 +71,12 @@ export class TeachingAidsComponent implements OnInit {
 
 
 
-    baseUrl = 'http://localhost:8080/api/files';
-    fileList: string[] = []; // Just filenames for display
+    baseUrl = 'http://localhost:8080/api/alldocuments';
+    fileList: string[] = []; 
     selectedFileName = '';
     selectedDocumentType = '';
-    selectedSemester: 'sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6' = 'sem1';  // Restrict to valid semester values
+    selectedSemester: 'Sem1' | 'Sem2' | 'Sem3' | 'Sem4' | 'Sem5' | 'Sem6' = 'Sem1';  
+    // selectedSemester: 'sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6' = 'sem1';
     uploadedFiles: string[] = [];
     textContent: string | null = null;
   
@@ -85,15 +86,15 @@ export class TeachingAidsComponent implements OnInit {
       this.getFileList();
     }
     getFileList() {
-      const semester = this.selectedSemester;  // Use the selected semester
+      const semester = this.selectedSemester;  
     
       this.http.get<string[]>(`${this.baseUrl}/list?semester=${semester}`).subscribe(
         (fileList: string[]) => {
-          this.fileList = fileList;  // Set the file list based on the selected semester
+          this.fileList = fileList;  
         },
         error => {
           console.error('Error fetching file list:', error);
-          alert('Error fetching file list: ' + error.message);  // Show error if the list fetch fails
+          alert('Error fetching file list: ' + error.message);  
         }
       );
     }
@@ -101,7 +102,7 @@ export class TeachingAidsComponent implements OnInit {
   
   
     
-    // Handle file selection and upload
+   
     onFileChange(event: any) {
       const file = event.target.files[0];
       if (file && this.selectedDocumentType && this.selectedSemester) {
@@ -109,7 +110,7 @@ export class TeachingAidsComponent implements OnInit {
         const documentName = file.name;
         const documentTypeMapping = this.getFileType(file);
   
-        // Determine the upload directory based on selected semester
+        
         const uploadDirectory = this.getUploadDirectory(this.selectedSemester);
   
         if (this.isFileTypeValid(documentType, documentTypeMapping)) {
@@ -122,12 +123,12 @@ export class TeachingAidsComponent implements OnInit {
                 }
                 alert('File uploaded successfully');
   
-                // Reset the semester and document type dropdowns
-                this.selectedSemester = 'sem1';  // Reset to null to show "Select Semester"
-                this.selectedDocumentType = '';  // Reset to no document type
+                
+                this.selectedSemester = 'Sem1';  
+                this.selectedDocumentType = '';  
   
-                // Refresh the file list
-                this.getFileList(); // Refresh the file list
+                
+                // this.getFileList(); 
               },
               error => {
                 if (error.status === 409) {
@@ -148,18 +149,20 @@ export class TeachingAidsComponent implements OnInit {
       }
     }
   
-    // Determine the upload directory based on the selected semester
-    getUploadDirectory(semester: 'sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6'): string {
-      const semesterDirectories: { [key in 'sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6']: string } = {
-        'sem1': 'C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem1/',
-        'sem2': 'C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem2/',
-        'sem3': 'C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem3/',
-        'sem4': 'C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem4/',
-        'sem5': 'C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem5/',
-        'sem6': 'C:/Users/nithya prashanth/Desktop/images/teachingaiddocupload/sem6/',
+   
+    getUploadDirectory(semester: 'Sem1' | 'Sem2' | 'Sem3' | 'Sem4' | 'Sem5' | 'Sem6'): string {
+      const semesterDirectories: { [key in 'Sem1' | 'Sem2' | 'Sem3' | 'Sem4' | 'Sem5' | 'Sem6']: string } = {
+        'Sem1': 'C:/Users/nithya prashanth/Desktop/images/alldocuments/sem1/',
+        'Sem2': 'C:/Users/nithya prashanth/Desktop/images/alldocuments/sem2/',
+        'Sem3': 'C:/Users/nithya prashanth/Desktop/images/alldocuments/sem3/',
+        'Sem4': 'C:/Users/nithya prashanth/Desktop/images/alldocuments/sem4/',
+        'Sem5': 'C:/Users/nithya prashanth/Desktop/images/alldocuments/sem5/',
+        'Sem6': 'C:/Users/nithya prashanth/Desktop/images/alldocuments/sem6/',
       };
       return semesterDirectories[semester];  // TypeScript will infer that this is always valid
     }
+
+   
   
     // Validate file type based on document type
     isFileTypeValid(selectedType: string, fileType: string | null): boolean {
@@ -191,7 +194,7 @@ export class TeachingAidsComponent implements OnInit {
         return this.http.post(`${this.baseUrl}/upload`, formData).pipe(
           tap(() => {
             // Update uploaded files list after upload
-            this.getFileList(); // Refresh the list of uploaded files
+            // this.getFileList(); // Refresh the list of uploaded files
           })
         );
       } else {
@@ -239,18 +242,18 @@ export class TeachingAidsComponent implements OnInit {
       }
     }
     
-    fetchFileList() {
-      // Replace 'semester' with the actual semester you're interested in
-      const semester = 'Fall2024';
-      this.http.get<string[]>(`${this.baseUrl}/list?semester=${semester}`).subscribe(
-        (files) => {
-          this.fileList = files;
-        },
-        (error) => {
-          console.error('Error fetching file list:', error);
-        }
-      );
-    }
+    // fetchFileList() {
+      
+    //   const semester = 'Fall2024';
+    //   this.http.get<string[]>(`${this.baseUrl}/list?semester=${semester}`).subscribe(
+    //     (files) => {
+    //       this.fileList = files;
+    //     },
+    //     (error) => {
+    //       console.error('Error fetching file list:', error);
+    //     }
+    //   );
+    // }
   
     onFileSelect() {
       console.log('Selected file:', this.selectedFileName);
@@ -262,7 +265,7 @@ export class TeachingAidsComponent implements OnInit {
   
   
   onSemesterChange() {
-    this.getFileList();  // Fetch the files for the selected semester
+    // this.getFileList(); 
   }
   
   

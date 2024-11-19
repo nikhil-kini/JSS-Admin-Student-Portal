@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { StaffService } from '../staff.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 
 
@@ -15,7 +17,7 @@ import { StaffService } from '../staff.service';
   standalone: true,
   imports: [FormsModule,CommonModule,
     TableModule,
-    ButtonModule],
+    ButtonModule,NgxPaginationModule],
   templateUrl: './staffmanagement.component.html',
   styleUrl: './staffmanagement.component.css'
 })
@@ -67,9 +69,12 @@ export class StaffmanagementComponent implements OnInit{
     openregister() {
       this.router.navigate(['/sidemenu/staff-registration']);
     }
-    staffList: any[] = [];
-    
 
+    staffList: any[] = [];
+     currentPage: number = 1;
+
+     searchTerm: string = ''; 
+     
     
     ngOnInit(): void {
       
@@ -77,14 +82,31 @@ export class StaffmanagementComponent implements OnInit{
       
     }
   
+    // loadStaffData(): void {
+    //   this.staffService.getStaffData().subscribe(
+    //     (data) => {
+    //       this.staffList = data; 
+    //       console.log(this.staffList);  
+    //     },
+    //     (error) => {
+    //       console.error('Error loading staff data', error);
+    //     }
+    //   );
+    // }
+
     loadStaffData(): void {
       this.staffService.getStaffData().subscribe(
         (data) => {
-          this.staffList = data; 
-          console.log(this.staffList);  
+          if (data && data.length > 0) {
+            this.staffList = data; // Ensure data is an array and properly assigned
+          } else {
+            this.staffList = []; // Handle cases where data might be undefined or null
+          }
+          console.log('Loaded staff list:', this.staffList);
         },
         (error) => {
-          console.error('Error loading staff data', error);
+          console.error('Error loading staff data:', error);
+          this.staffList = []; // Clear the list on error to avoid stale data
         }
       );
     }

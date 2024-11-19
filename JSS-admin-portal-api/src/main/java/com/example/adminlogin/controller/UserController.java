@@ -140,6 +140,23 @@ public class UserController {
 
 
 
+//    @PostMapping("/login")
+//    public ResponseEntity<User> login(@RequestBody User user) {
+//        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+//        User dbUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+//
+//        if (existingUser.isPresent()) {
+//            String storedPassword = existingUser.get().getPassword();
+//            String decodedPassword = new String(Base64.getDecoder().decode(storedPassword), StandardCharsets.UTF_8);
+//
+//            if (decodedPassword.equals(user.getPassword())) {
+//                User foundUser = existingUser.get();
+//                return ResponseEntity.ok(foundUser);
+//            }
+//        }
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//    }
+
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
@@ -151,11 +168,18 @@ public class UserController {
 
             if (decodedPassword.equals(user.getPassword())) {
                 User foundUser = existingUser.get();
+
+                // Optionally, log the userId for debugging purposes
+                System.out.println("Logged in User ID: " + foundUser.getId());  // Logs the userId
+
+                // Return the entire User object, including userId (id field)
                 return ResponseEntity.ok(foundUser);
             }
         }
+
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
+
 
 
 //@PostMapping("/register-user/login")
@@ -277,11 +301,7 @@ public ResponseEntity<String> deleteUser(@PathVariable Long id){
         }
     }
 
-//    private void saveFile(MultipartFile file, String targetDir) throws IOException {
-//        Path targetLocation = Paths.get(targetDir + file.getOriginalFilename());
-//        Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-//        System.out.println("File saved to: " + targetLocation.toString());
-//    }
+
 
     private String saveFile(MultipartFile file, String targetDir) throws Exception {
         if (file != null && !file.isEmpty()) {

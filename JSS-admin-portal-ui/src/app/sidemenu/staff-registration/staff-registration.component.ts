@@ -95,7 +95,8 @@ staff: Staff = {
   semester:'null',
   momphoneno:'null',
   dadphoneno:'null',
-  regno:'null'
+  regno:'null',
+  
 };
 
 onSubmit() {
@@ -113,6 +114,7 @@ onSubmit() {
   formData.append('momphoneno', this.staff.momphoneno);
   formData.append('dadphoneno', this.staff.dadphoneno);
   formData.append('regno', this.staff.regno);
+  
 
  
   if (this.staff.sslcMarksCard) formData.append('sslcMarksCard', this.staff.sslcMarksCard as Blob);

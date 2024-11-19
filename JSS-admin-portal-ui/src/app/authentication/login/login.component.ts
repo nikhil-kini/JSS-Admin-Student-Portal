@@ -27,22 +27,26 @@ constructor(private http: HttpClient, private router: Router) {}
 onLoginSubmit() {
   console.log('Logging in with:', this.loginData);
   this.http.post('http://localhost:8080/users/login', this.loginData).subscribe(
-      (response: any) => {
-          console.log('Login successful:', response);
-          localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem('loginUser', this.loginData.email),
-        
-          this.router.navigate(['/sidemenu/home']);
-      },
-      (error) => {
-          console.error('Login failed:', error);
-          if (error.status === 401) {
-              alert('Invalid credentials'); // Only alert for 401 errors
-          } else {
-              alert('An error occurred. Please try again later.');
-          }
+    (response: any) => {
+      console.log('Login successful:', response);
+
+      // Extract the userId from the response (id is the userId in your User entity)
+      const userId = response.id;  // The userId is the 'id' field in the response
+
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('loginUser', this.loginData.email);
+      localStorage.setItem('userId', userId.toString());  // Store userId in localStorage
+
+      this.router.navigate(['/sidemenu/home']);
+    },
+    (error) => {
+      console.error('Login failed:', error);
+      if (error.status === 401) {
+        alert('Invalid credentials');
+      } else {
+        alert('An error occurred. Please try again later.');
       }
+    }
   );
 }
 }
-

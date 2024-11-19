@@ -54,4 +54,7 @@ export class StaffService {
     formData.append('photo', file);
     return this.http.post(`${this.apiUrl}/upload-photo`, formData, { responseType: 'text' });
   }
+
+  // getDocumentsByCategory(category: string): Observable<Document[]> {
+  //   return this.http.get<Document[]>(`${this.apiUrl}/category/${category}`);
 }

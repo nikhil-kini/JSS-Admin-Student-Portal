@@ -68,12 +68,72 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
-      <div class="text-center">
-        <h1>WELCOME TO LESSON PLAN</h1>
-        
+    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
+      <h2 class="text-center">UPLOAD LESSON PLAN DOCUMENTS</h2>
+      <div class="form-group mb-4">
+        <label for="semester" class="d-block mb-2">Select Semester:</label>
+        <select [(ngModel)]="selectedSemester" name="semester" id="semester" class="form-control w-50 mx-auto mb-4">
+          <option value="" disabled selected>Select Semester</option>
+          <option *ngFor="let sem of semesters" [value]="sem">{{ sem }}</option>
+        </select>
       </div>
+    
+      <div class="form-group mb-4">
+        <label for="fileInput" class="d-block mb-2">Choose File:</label>
+        <input type="file" id="fileInput" (change)="onFileChange($event)" class="form-control w-50 mx-auto mb-4" />
+      </div>
+    
+      <button (click)="uploadFile()" class="btn btn-success mb-4">Upload Question Bank</button>
     </main>
+     -->
+
+     <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
+      <h2 class="text-center">UPLOAD LESSON PLAN DOCUMENTS</h2>
+    
+      <!-- Semester Selection -->
+      <div class="form-group mb-4">
+        <label for="semester" class="d-block mb-2">Select Semester:</label>
+        <select [(ngModel)]="selectedSemester" name="semester" id="semester" class="form-control w-50 mx-auto mb-4">
+          <option value="" disabled selected>Select Semester</option>
+          <option *ngFor="let sem of semesters" [value]="sem">{{ sem }}</option>
+        </select>
+      </div>
+    
+     
+
+      <div class="form-group row mb-4">
+        <label for="documentType" class="col-sm-5 col-form-label p-0 m-0">Document Type:</label>
+        <div class="col-sm-7 p-0">
+          <select [(ngModel)]="selectedDocumentType" class="form-control mb-3" id="documentType">
+            <option value="" disabled>Choose a Document...</option>
+            <option value="pdf">PDF</option>
+            <option value="excel">Excel</option>
+            <option value="word">Word</option>
+            <option value="image">Image</option>
+            <option value="ppt">PowerPoint</option>
+          </select>
+        </div>
+      </div>
+    
+      <!-- Document Category Selection -->
+      <div class="form-group mb-4">
+        <label for="documentCategory" class="d-block mb-2">Select Document Category:</label>
+        <select [(ngModel)]="selectedDocumentCategory" name="documentCategory" id="documentCategory" class="form-control w-50 mx-auto mb-4">
+          <option value="LessonPlan">Lesson Plan</option>
+          <option value="TeachingAids">Teaching Aids</option>
+          <option value="QuestionBank">Question Bank</option>
+        </select>
+      </div>
+    
+      <!-- File Input -->
+      <div class="form-group mb-4">
+        <label for="fileInput" class="d-block mb-2">Choose File:</label>
+        <input type="file" id="fileInput" (change)="onFileChange($event)" class="form-control w-50 mx-auto mb-4" />
+      </div>
+    
+      <!-- Upload Button -->
+      <button (click)="uploadFile()" class="btn btn-success mb-4">Upload Question Bank</button>
+    </main>
+    
   </div>
 </div>

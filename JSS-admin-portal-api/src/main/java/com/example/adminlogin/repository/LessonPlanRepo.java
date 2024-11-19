@@ -1,4 +1,7 @@
 package com.example.adminlogin.repository;
 
-public interface LessonPlanRepo {
+import com.example.adminlogin.model.LessonPlan;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LessonPlanRepo extends JpaRepository<LessonPlan,Long> {
 }
