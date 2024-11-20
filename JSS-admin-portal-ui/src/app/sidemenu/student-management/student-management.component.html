@@ -78,7 +78,7 @@
       <div class="container mt-4">
         <div class="text-center">
         <!-- <h3>Staff Details</h3> -->
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="border: 3px solid #000; border-collapse: collapse;">
           <thead>
             <tr>
               <!-- <th>ID</th> -->
@@ -102,7 +102,7 @@
               <td>{{ student.address }}</td>
              
               <td>
-                <button class="btn btn-primary btn-sm" (click)="editUser(student)">Edit</button>
+                <button class="btn btn-primary btn-sm me-2" (click)="editUser(student)">Edit</button>
                 <button class="btn btn-danger btn-sm" (click)="deleteUser(student)">Delete</button>
               </td>
             </tr>

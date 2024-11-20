@@ -171,17 +171,69 @@
                   </div>
               </div>
           </div>
-  
-         
 
-          <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
+          <div class="form-group-row" style="display: flex; gap: 10px;">
             <div class="form-group" style="flex: 1;">
-                <label for="marksCard">Upload Marks Card:</label>
-                <input type="file" id="marksCard" name="marksCard" (change)="onFileSelect($event, 'marksCard')" required>
+                  <label for="adharno">Adhar No:</label>
+                  <input type="text" id="adharno" name="adharno" [(ngModel)]="student.adharno" class="form-control" required #adharno="ngModel">
+                  <div *ngIf="adharno.invalid && (adharno.dirty || adharno.touched)" class="error">
+                    Adhar No is required.
+                  </div>
+      </div>
+                
+            <div class="form-group" style="flex: 1;">
+                <label for="adharCard">Upload adhar card:</label>
+                <input type="file" id="adharCard" name="adharCard" class="form-control" (change)="onFileSelectadharCard($event)" required>
+            </div>
+        </div>
+      
+  
+        <div class="form-group-row" style="display: flex; gap: 10px;">
+          <div class="form-group" style="flex: 1;">
+              <label for="studyCertificate">Upload Study Certificate:</label>
+              <input type="file" id="studyCertificate" name="studyCertificate" (change)="onFileSelectSC($event)" required>
+          </div>
+        
+          <div class="form-group" style="flex: 1;">
+              <label for="transferCertificate">Upload TC:</label>
+              <input type="file" id="transferCertificate" name="transferCertificate" (change)="onFileSelectTC($event)" required>
+          </div>
+      </div>
+
+      <div class="form-group-row" style="display: flex; gap: 10px;">
+        <div class="form-group" style="flex: 1;">
+            <label for="physicalFitness">Upload Physical Fitness Certificate:</label>
+            <input type="file" id="physicalFitness" name="physicalFitness" (change)="onFileSelectPF($event)" required>
+        </div>
+      
+        <div class="form-group" style="flex: 1;">
+            <label for="migrationCertificate">Upload Migration Certificate:</label>
+            <input type="file" id="migrationCertificate" name="migrationCertificate" (change)="onFileSelectMC($event)" required>
+        </div>
+    </div>
+
+
+    <div class="form-group-row" style="display: flex; gap: 10px;">
+      <div class="form-group" style="flex: 1;">
+          <label for="incomeCertificate">Upload Income Certificate:</label>
+          <input type="file" id="incomeCertificate" name="incomeCertificate" (change)="onFileSelectIC($event)" required>
+      </div>
+    
+      <div class="form-group" style="flex: 1;">
+          <label for="casteCertificate">Upload Caste Certificate:</label>
+          <input type="file" id="casteCertificate" name="casteCertificate" (change)="onFileSelectCC($event)" required>
+      </div>
+  </div>
+
+
+      <div class="form-group-row" style="display: flex; gap: 10px;">
+            <div class="form-group" style="flex: 1;">
+                <label for="studsslcmarksCard">Upload Marks Card:</label>
+                <input type="file" id="studsslcmarksCard" name="studsslcmarksCard" (change)="onFileSelectstudMarkscard($event)" required>
             </div>
             <div class="form-group" style="flex: 1;">
-                <label for="photo">Upload Photo:</label>
-                <input type="file" id="photo" name="photo" (change)="onFileSelect($event, 'photo')" required>
+                <label for="studphoto">Upload Photo:</label>
+                <input type="file" id="studphoto" name="studphoto" (change)="onFileSelectstudphoto($event)" required>
             </div>
         </div>
   

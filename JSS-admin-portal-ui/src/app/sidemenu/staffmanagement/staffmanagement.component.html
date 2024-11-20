@@ -164,7 +164,7 @@
             />
           </div>
         
-          <table class="table table-bordered">
+          <table class="table table-bordered" style="border: 3px solid #000; border-collapse: collapse;">
             <thead>
               <tr>
                 <th>SL.NO</th>
@@ -180,13 +180,13 @@
                 *ngFor="let staff of staffList | paginate: { itemsPerPage: 10, currentPage: currentPage }; let i = index"
               >
                 <tr *ngIf="staff.role === 'Staff' && staff.userName.toLowerCase().includes(searchTerm?.toLowerCase())">
-                  <td>{{ i + 1 + (currentPage - 1) * 10 }}</td>
+                  <td>{{ i + 1  }}</td>
                   <td>{{ staff.userName }}</td>
                   <td>{{ staff.email }}</td>
                   <td>{{ staff.phoneno }}</td>
                   <td>{{ staff.address }}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm" (click)="editUser(staff)">Edit</button>
+                    <button class="btn btn-primary btn-sm me-2" (click)="editUser(staff)">Edit</button>
                     <button class="btn btn-danger btn-sm" (click)="deleteUser(staff)">Delete</button>
                   </td>
                 </tr>

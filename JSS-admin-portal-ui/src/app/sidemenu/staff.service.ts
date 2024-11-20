@@ -42,18 +42,18 @@ export class StaffService {
   }
 
   // Method to upload marks card
-  uploadMarksCard(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('marksCard', file);
-    return this.http.post(`${this.apiUrl}/upload-marksCard`, formData, { responseType: 'text' });
-  }
+  // uploadMarksCard(file: File): Observable<any> {
+  //   const formData = new FormData();
+  //   formData.append('marksCard', file);
+  //   return this.http.post(`${this.apiUrl}/upload-marksCard`, formData, { responseType: 'text' });
+  // }
 
-  // Method to upload a photo
-  uploadPhoto(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('photo', file);
-    return this.http.post(`${this.apiUrl}/upload-photo`, formData, { responseType: 'text' });
-  }
+  // // Method to upload a photo
+  // uploadPhoto(file: File): Observable<any> {
+  //   const formData = new FormData();
+  //   formData.append('photo', file);
+  //   return this.http.post(`${this.apiUrl}/upload-photo`, formData, { responseType: 'text' });
+  // }
 
   // getDocumentsByCategory(category: string): Observable<Document[]> {
   //   return this.http.get<Document[]>(`${this.apiUrl}/category/${category}`);

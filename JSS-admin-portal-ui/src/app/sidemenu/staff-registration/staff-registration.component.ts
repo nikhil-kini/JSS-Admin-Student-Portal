@@ -23,6 +23,9 @@ interface Staff {
  momphoneno:string;
  dadphoneno:string;
  regno:string;
+ panCardNumber:string;
+ staffProfile: File | null;
+
  
 }
 @Component({
@@ -91,11 +94,15 @@ staff: Staff = {
   degreeCertificate: null,
   photo: null,
   role:'Staff',
-  dept:'null',
+  dept:'IS',
   semester:'null',
   momphoneno:'null',
   dadphoneno:'null',
   regno:'null',
+  staffProfile: null,
+  panCardNumber:''
+
+
   
 };
 
@@ -114,14 +121,14 @@ onSubmit() {
   formData.append('momphoneno', this.staff.momphoneno);
   formData.append('dadphoneno', this.staff.dadphoneno);
   formData.append('regno', this.staff.regno);
-  
+  formData.append('panCardNumber', this.staff.panCardNumber);
 
  
   if (this.staff.sslcMarksCard) formData.append('sslcMarksCard', this.staff.sslcMarksCard as Blob);
   if (this.staff.beMarksCard) formData.append('beMarksCard', this.staff.beMarksCard as Blob);
   if (this.staff.degreeCertificate) formData.append('degreeCertificate', this.staff.degreeCertificate as Blob);
   if (this.staff.photo) formData.append('photo', this.staff.photo as Blob);
-
+  if (this.staff.staffProfile) formData.append('staffProfile', this.staff.staffProfile as Blob);
   const headers = new HttpHeaders();
 
   
@@ -172,6 +179,14 @@ onFileSelectPhoto(event: any) {
   if (file) {
     this.staff.photo = file;
     console.log('Photo selected:', file);
+  }
+}
+
+onFileSelectStaffProfile(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.staff.staffProfile = file;
+    console.log('Staff Profile selected:', file);
   }
 }
 }

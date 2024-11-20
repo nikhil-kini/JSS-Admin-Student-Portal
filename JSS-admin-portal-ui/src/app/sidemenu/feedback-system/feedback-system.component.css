@@ -41,8 +41,9 @@ body {
 main {
   margin-left: 250px; /* Space for the fixed sidebar */
   padding: 40px;
-  background-color: #ecf0f1;
+  background-color: hsl(49, 42%, 50%);
   min-height: 100vh;
+  overflow-y: hidden;
 }
 
 main h1 {
@@ -74,15 +75,11 @@ main p {
 
   main {
     margin-left: 0;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
   }
 }
-/* main {
-  margin-left: 295px;
-  margin-top: 1.5em;
-  margin-right: 1.2em;
-} */
+
 
 #submit,
 #create-feedback-btn,

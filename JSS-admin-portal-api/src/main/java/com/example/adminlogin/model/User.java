@@ -27,14 +27,12 @@ public class User {
 
     @Column(name = "user_name")
     private String userName;
-
-
     private String address;
-    private String dept; // Department field
-    private String semester; // Semester field
+    private String dept;
+    private String semester;
 
     @Column(name = "phone_no")
-    private String phoneno; // Assuming this is a string for storing numbers
+    private String phoneno;
 
     @Column(name = "mom_phone_no")
     private String momphoneno;
@@ -44,11 +42,27 @@ public class User {
 
     @Column(name = "reg_no")
     private String regno;
+
     private String adharno;
+
+    private String panCardNumber;
+
     private String sslcMarksCardPath;
     private String beMarksCardPath;
     private String degreeCertificatePath;
     private String photoPath;
+    private String staffProfilePath;
+    private String adharCardPath;
+    private String studyCertificatePath;
+    private String transferCertificatePath;
+    private String physicalFitnessPath;
+    private String migrationCertificatePath;
+    private String incomeCertificatePath;
+    private String casteCertificatePath;
+    private String studsslcmarksCardPath;
+    private String studphotoPath;
+
+
 
 
 }
