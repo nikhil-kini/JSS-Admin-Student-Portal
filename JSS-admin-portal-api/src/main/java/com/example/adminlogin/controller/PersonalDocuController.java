@@ -32,7 +32,7 @@ import static org.hibernate.query.sqm.tree.SqmNode.log;
 public class PersonalDocuController {
 
 
-    private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/personaldocupload/1st year/";
+    private final String uploadDir = "C:/Users/nithya prashanth/Desktop/images/personaldocupload/";
 
     @Autowired
     private PdocuRepo pdocuRepo;

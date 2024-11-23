@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
 export interface Document {
   docId?: number;
   documentType: string;
@@ -10,9 +11,8 @@ export interface Document {
   fileType: string;
   uploadDate?: Date;
   semester: string;
-  documentCategory: string; // Add this if required
+  documentCategory: string; 
 }
-
 @Component({
   selector: 'app-question-bank',
   standalone: true,
@@ -66,81 +66,163 @@ export class QuestionBankComponent {
     }
 
     selectedSemester: string = '';
-  selectedDocumentType: string = '';
-  selectedDocumentCategory: string = 'LessonPlan';  
-  fileToUpload: File | null = null;
-  uploadDate: Date = new Date();  
-
-  semesters: string[] = ['Sem1', 'Sem2', 'Sem3', 'Sem4', 'Sem5', 'Sem6'];
-  documentTypes: string[] = ['LessonPlan', 'TeachingAids', 'QuestionBank']; 
-
-  // constructor(private http: HttpClient) {}
-
-  onFileChange(event: any) {
-    this.fileToUpload = event.target.files[0];
-  }
-
-  isFileTypeValid(selectedType: string, fileType: string | null): boolean {
-    if (!fileType) return false;
-    const validTypes: { [key: string]: string[] } = {
-      pdf: ['application/pdf'],
-      excel: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
-      word: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-      image: ['image/jpeg', 'image/png'],
-      ppt: ['application/vnd.openxmlformats-officedocument.presentationml.presentation']
-    };
-    return validTypes[selectedType]?.includes(fileType) ?? false;
-  }
-
-  uploadFile() {
-    if (this.fileToUpload && this.selectedSemester && this.selectedDocumentType) {
-      const formData = new FormData();
+    selectedDocumentCategory: string = 'QuestionBank';
+    selectedSemesterInModal: string = '';
+    fileToUpload: File | null = null;
+    showModal: boolean = false;
+    questionBankDocuments: any[] = [];
+    semesters: string[] = ['Sem1', 'Sem2', 'Sem3', 'Sem4', 'Sem5', 'Sem6'];
+    selectedDocumentType = '';
+    uploadDate: Date = new Date();  
+    
+    onFileChange(event: any) {
+      this.fileToUpload = event.target.files[0];
+    }
   
-      // Ensure uploadDate is always defined (use current date if undefined)
-      const uploadDate = this.uploadDate || new Date();  // Default to current date if undefined
+    uploadFile() {
+      if (this.fileToUpload && this.selectedSemester && this.selectedDocumentCategory && this.selectedDocumentType) {
+        const formData = new FormData();
+        const fileType = this.fileToUpload.name.split('.').pop()?.toLowerCase(); 
+        formData.append('file', this.fileToUpload);
+        formData.append('fileName', this.fileToUpload.name);
+        formData.append('semester', this.selectedSemester);
+        formData.append('documentCategory', this.selectedDocumentCategory);
+        formData.append('documentType', this.selectedDocumentType);
+        formData.append('fileType',  fileType || 'unknown');
+        formData.append('uploadDate', this.uploadDate.toISOString());
+        formData.append('userEmail', 'admin@example.com'); 
+        this.http.post<any>('http://localhost:8080/api/alldocuments/upload', formData)
+          .subscribe({
+            next: (response) => {
+              alert('File uploaded successfully');
+            },
+            error: (error) => {
+              alert('Error uploading file');
+            }
+          });
+      } else {
+        alert('Please select a file, semester, and document type');
+      }
+    }
+    
   
-      const documentData: Document = {
-        documentType: this.selectedDocumentType,
-        fileName: this.fileToUpload.name,
-        fileType: this.fileToUpload.type,
-        uploadDate: uploadDate,  // Ensures uploadDate is defined
-        semester: this.selectedSemester,
-        documentCategory: this.selectedDocumentCategory,
-      };
-  
-      // Send the user's email instead of userId
-      const userEmail = localStorage.getItem('loginUser');  // Get userEmail from localStorage
-  
-      // Check if userEmail is available
-      if (!userEmail) {
-        alert('User email is missing. Please log in again.');
+   
+    
+    openFile(doc: any) {
+      const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+      const fileType = doc.fileName.split('.').pop()?.toLowerCase();
+      const viewUrl = `http://localhost:8080/api/alldocuments/viewFile/${doc.semester}/${doc.fileName}`;
+    
+     
+      if (!isAuthenticated) {
+        
+        alert("You are not logged in. Please log in to access your files.");
         return;
       }
+    
+     
+      if (fileType === 'txt' || fileType === 'json' || fileType === 'pdf' || 
+          ['jpg', 'jpeg', 'png', 'gif'].includes(fileType)) {
+        window.open(viewUrl, '_blank');
+      } else if (['doc', 'docx'].includes(fileType)) {
+        
+        const officeOnlineUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(viewUrl)}`;
+        window.open(officeOnlineUrl, '_blank');
+      } else if (['xls', 'xlsx'].includes(fileType)) {
+        
+        const officeOnlineUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(viewUrl)}`;
+        window.open(officeOnlineUrl, '_blank');
+      } else if (['ppt', 'pptx'].includes(fileType)) {
+        
+        const officeOnlineUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(viewUrl)}`;
+        window.open(officeOnlineUrl, '_blank');
+      } else {
+       
+        alert("This file type is not supported for viewing.");
+      }
+    }
+    
+    
+
+    viewQuestionBank() {
+      this.showModal = true;
+    }
   
-      // Append the file and document data to the form data
-      formData.append('file', this.fileToUpload);
-      formData.append('semester', this.selectedSemester);
-      formData.append('documentType', documentData.documentType);
-      formData.append('fileName', documentData.fileName);
-      formData.append('fileType', documentData.fileType);
-      formData.append('uploadDate', uploadDate.toISOString());  // Convert to ISO string for safe transmission
-      formData.append('documentCategory', documentData.documentCategory);
-      formData.append('userEmail', userEmail);  // Add userEmail to the FormData
+    closeModal() {
+      this.showModal = false;
+      
+    }
   
-      // Post the form data to the backend API
-      this.http.post<any>('http://localhost:8080/api/alldocuments/upload', formData)
-        .subscribe({
-          next: (response) => {
-            console.log('Upload response:', response);
-            alert(response?.message || 'File uploaded successfully!');
-          },
-          error: (error) => {
-            console.error('Error uploading file:', error);
-            alert('Failed to upload file: ' + (error.error?.message || error.message));
-          }
-        });
-    } else {
-      alert('Please select a file, semester, and document type.');
+    getDocumentsBySemester() {
+      if (this.selectedSemesterInModal) {
+        this.http.get<any[]>(`http://localhost:8080/api/alldocuments/category/${this.selectedDocumentCategory}/${this.selectedSemesterInModal}`)
+          .subscribe({
+            next: (documents) => {
+              this.questionBankDocuments = documents;
+            },
+            error: (error) => {
+              alert('Error fetching documents');
+            }
+          });
+      }
+    }
+  
+  
+  
+
+
+  viewTextFile(doc: any) {
+      this.http.get(doc.downloadUrl, { responseType: 'text' })
+          .subscribe(content => {
+              const blob = new Blob([content], { type: 'text/plain' });
+              const url = URL.createObjectURL(blob);
+              window.open(url, '_blank');
+          });
+  }
+  
+ 
+  viewPdf(doc: any) {
+      window.open(doc.downloadUrl, '_blank');
+  }
+  
+  
+  viewImage(doc: any) {
+      window.open(doc.downloadUrl, '_blank');
+  }
+
+
+
+
+downloadFile(filename: string) {
+  const url = `http://localhost:8080/viewFile/sem1/${filename}`;  
+  const fileType = filename.split('.').pop()?.toLowerCase();  // Get file type
+  const headers = { 'Accept': fileType === 'pdf' ? 'application/pdf' : 'application/octet-stream' };
+
+  this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(response => {
+      const blob = new Blob([response], { type: `application/${fileType}` });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+  }, error => {
+      console.error('Download failed', error);
+  });
+}
+
+
+
+  
+    getDownloadLink(semester: string, fileName: string): string {
+      
+      return `http://localhost:8080/api/alldocuments/download/${semester}/${fileName}`;
+      
     }
   }
-}  
+
+
+
+
+
+
+
+

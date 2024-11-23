@@ -71,11 +71,11 @@
     
     
 
-     <div class="page-wrapper">
+    <div class="page-wrapper">
       <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
         <h2 class="text-center">UPLOAD QUESTION BANK DOCUMENTS</h2>
-    
-        <!-- Semester Selection -->
+        
+        <!-- Semester Selection Dropdown -->
         <div class="form-group">
           <label for="semester">Select Semester:</label>
           <select [(ngModel)]="selectedSemester" name="semester" id="semester" class="form-control">
@@ -83,12 +83,11 @@
             <option *ngFor="let sem of semesters" [value]="sem">{{ sem }}</option>
           </select>
         </div>
-    
-        <!-- Document Type Selection -->
-        <div class="form-group">
-          <label for="documentType">Document Type:</label>
-          <select [(ngModel)]="selectedDocumentType" name="documentType" id="documentType" class="form-control">
-            <option value="" disabled selected>Choose a Document...</option>
+
+        <div class="form-group mb-3">
+          <label for="documentType" class="form-label">Document Type:</label>
+          <select [(ngModel)]="selectedDocumentType" class="form-control" id="documentType">
+            <option value="" disabled>Choose a Document...</option>
             <option value="pdf">PDF</option>
             <option value="excel">Excel</option>
             <option value="word">Word</option>
@@ -97,7 +96,7 @@
           </select>
         </div>
     
-        <!-- Document Category Selection -->
+        <!-- Document Category Dropdown -->
         <div class="form-group">
           <label for="documentCategory">Select Document Category:</label>
           <select [(ngModel)]="selectedDocumentCategory" name="documentCategory" id="documentCategory" class="form-control">
@@ -114,7 +113,47 @@
         </div>
     
         <!-- Upload Button -->
-        <button (click)="uploadFile()" class="btn">Upload Question Bank</button>
+        <button (click)="uploadFile()" class="btn">Upload Document</button>
+    
+        <!-- View Documents Button -->
+        <button (click)="viewQuestionBank()" class="btn btn-primary">View Documents</button>
+    
+        <!-- Modal for Viewing Documents -->
+        <div *ngIf="showModal" class="modal">
+          <div class="modal-content">
+            <span (click)="closeModal()" class="close">&times;</span>
+            <h3>Question Bank Documents</h3>
+    
+            <!-- Semester Dropdown inside Modal -->
+            <div class="form-group">
+              <label for="semesterModal">Select Semester:</label>
+              <select [(ngModel)]="selectedSemesterInModal" name="semesterModal" id="semesterModal" class="form-control" (change)="getDocumentsBySemester()">
+                <option value="" disabled selected>Select Semester</option>
+                <option *ngFor="let sem of semesters" [value]="sem">{{ sem }}</option>
+              </select>
+            </div>
+    
+            <!-- Display Documents in Table -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Document Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let doc of questionBankDocuments">
+                  <td>{{ doc.fileName }}</td>
+                  <td>
+                    <a (click)="openFile(doc)" href="#">Open</a> | 
+                    <!-- <a [href]="getDownloadLink(doc.semester, doc.fileName)" target="_blank">Download</a>  -->
+                    <a [href]="getDownloadLink(doc.semester, doc.fileName)" download>Download</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </main>
     </div>
     

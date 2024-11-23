@@ -78,10 +78,10 @@
       <div class="container mt-4">
         <div class="text-center">
         <!-- <h3>Staff Details</h3> -->
-        <table class="table table-bordered" style="border: 3px solid #000; border-collapse: collapse;">
+        <!-- <table class="table table-bordered" style="border: 3px solid #000; border-collapse: collapse;">
           <thead>
             <tr>
-              <!-- <th>ID</th> -->
+             
               <th>SL.NO</th>
               <th>Name</th>
               <th>Email</th>
@@ -93,9 +93,9 @@
           <tbody>
             <ng-container *ngFor="let student  of studentList; let i = index" >
             <tr *ngIf="student.role === 'Student'">
-              <!-- <td>{{ staff.id }}</td>  -->
+              
               <td>{{ i + 1 }}</td> 
-              <!-- <td>{{ staff.index }}</td> -->
+              
               <td>{{ student.userName }}</td>
               <td>{{student.email}}</td>
               <td>{{ student.phoneno }}</td>
@@ -110,7 +110,51 @@
 
             
           </tbody>
+        </table> -->
+
+
+        <table class="table table-bordered" style="border: 3px solid #000; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th>SL.NO</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let student of pagedStudentList; let i = index">
+              <tr *ngIf="student.role === 'Student'">
+                <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                <td>{{ student.userName }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.phoneno }}</td>
+                <td>{{ student.address }}</td>
+                <td>
+                  <button class="btn btn-primary btn-sm me-2" (click)="editUser(student)">Edit</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteUser(student)">Delete</button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
         </table>
+    
+     
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="prevPage()">Previous</button>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(getTotalPages()); let i = index">
+              <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+              <button class="page-link" (click)="nextPage()">Next</button>
+            </li>
+          </ul>
+        </nav>
       </div>
       </div>
       

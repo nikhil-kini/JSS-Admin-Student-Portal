@@ -21,6 +21,8 @@ interface Student {
   photo: File | null;
   staffProfile: File | null;
 
+  
+
  dept: string;
  semester:string;
  momphoneno:string;
@@ -33,6 +35,8 @@ interface Student {
  degreeCertificatePath:string;
  photoPath:string;
  staffProfilePath:string;
+
+
  
  
  adharCard:File | null;
@@ -108,11 +112,8 @@ student: Student = {
   phoneno: '',
   address: '',
   adharno: '',
-  sslcMarksCard: null,
-  beMarksCard: null,
-  degreeCertificate: null,
-  photo: null,
-  staffProfile:null,
+
+  
 
   role:'Student',
   dept:'',
@@ -127,7 +128,12 @@ student: Student = {
  photoPath:'null',
  panCardNumber:'null',
  staffProfilePath:'null',
+sslcMarksCard: null,
+beMarksCard: null,
+degreeCertificate: null,
+photo: null,
 
+staffProfile: null,
  adharCard:null,
  studyCertificate:null,
  transferCertificate:null,
@@ -156,6 +162,9 @@ onSubmit() {
   formData.append('dadphoneno', this.student.dadphoneno);
   formData.append('regno', this.student.regno);
   formData.append('panCardNumber', this.student.panCardNumber);
+ 
+
+
 
  
   if (this.student.sslcMarksCard) formData.append('sslcMarksCard', this.student.sslcMarksCard as Blob);
@@ -197,6 +206,7 @@ onFileSelectadharCard(event: any) {
   if (file) {
     this.student.adharCard = file;
     console.log('Adhar card selected:', file);
+    event.target.value = '';
   } else {
     console.log('No file selected for Adhar card');
   }
@@ -209,6 +219,7 @@ onFileSelectSC(event: any) {
   if (file) {
     this.student.studyCertificate = file;
     console.log('Study Certificate selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -218,6 +229,7 @@ onFileSelectTC(event: any) {
   if (file) {
     this.student.transferCertificate = file;
     console.log('Transfer Certificate selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -227,6 +239,7 @@ onFileSelectPF(event: any) {
   if (file) {
     this.student.physicalFitness = file;
     console.log('Physical Fitness certificate selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -235,6 +248,7 @@ onFileSelectMC(event: any) {
   if (file) {
     this.student.migrationCertificate = file;
     console.log('Migration Certificate selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -244,6 +258,7 @@ onFileSelectIC(event: any) {
   if (file) {
     this.student.incomeCertificate = file;
     console.log('Income Certificate selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -252,6 +267,7 @@ onFileSelectCC(event: any) {
   if (file) {
     this.student.casteCertificate = file;
     console.log('Caste Certificate selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -260,6 +276,7 @@ onFileSelectstudMarkscard(event: any) {
   if (file) {
     this.student.studsslcmarksCard = file;
     console.log('Student SSLC Marks Card selected:', file);
+    event.target.value = '';
   }
 }
 
@@ -268,6 +285,7 @@ onFileSelectstudphoto(event: any) {
   if (file) {
     this.student.studphoto = file;
     console.log('Student Photo selected:', file);
+    event.target.value = '';
   }
 }
 }

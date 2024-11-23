@@ -98,10 +98,23 @@
             <div class="form-group-row" style="display: flex; gap: 10px;">
               <div class="form-group" style="flex: 1;">
                   <label for="phoneno">Phone No:</label>
-                  <input type="text" id="phoneno" name="phoneno" [(ngModel)]="student.phoneno" required #phoneno="ngModel">
+                  <!-- <input type="text" id="phoneno" name="phoneno" [(ngModel)]="student.phoneno" required #phoneno="ngModel">
                   <div *ngIf="phoneno.invalid && (phoneno.dirty || phoneno.touched)" class="error">
                       Phone No is required.
-                  </div>
+                  </div> -->
+                  <input
+                  type="text"
+                  id="phoneno"
+                  name="phoneno"
+                  [(ngModel)]="student.phoneno"
+                   required
+                   pattern="^[0-9]{10}$"
+                  #phoneno="ngModel"
+                     />
+                  <div *ngIf="phoneno.invalid && (phoneno.dirty || phoneno.touched)" class="error">
+                    Phone number must be 10 digits.
+                    </div>
+
               </div>
               <div class="form-group" style="flex: 1;">
                   <label for="address">Address:</label>
@@ -116,12 +129,21 @@
              
               <div class="form-group" style="flex: 1;">
                   <label for="email">Email:</label>
-                  <!-- <input type="email" id="email" name="email" [(ngModel)]="student.email" required #email="ngModel">
-                  <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                      Email is required.
-                  </div> -->
-                  <input type="email" id="email" name="email" [(ngModel)]="student.email" required class="ng-untouched ng-pristine ng-invalid" autocomplete="username">
-
+                  
+                  <!-- <input type="email" id="email" name="email" [(ngModel)]="student.email" required class="ng-untouched ng-pristine ng-invalid" autocomplete="username"> -->
+                  <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="student.email"
+                  required
+                  #email="ngModel"
+                  email
+                />
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                  Valid email is required.
+                </div>
+                
               </div>
               <div class="form-group" style="flex: 1;">
                   <label for="password">Password:</label>
@@ -158,14 +180,14 @@
           <div class="form-group-row" style="display: flex; gap: 10px;">
               <div class="form-group" style="flex: 1;">
                   <label for="momphoneno">Mother Phoneno:</label>
-                  <input type="text" id="momphoneno" name="momphoneno" [(ngModel)]="student.momphoneno" required #momphoneno="ngModel">
+                  <input type="text" id="momphoneno" name="momphoneno" [(ngModel)]="student.momphoneno" required pattern="^[0-9]{10}$" #momphoneno="ngModel">
                   <div *ngIf="momphoneno.invalid && (momphoneno.dirty || momphoneno.touched)" class="error">
                       Mother Phoneno is required.
                   </div>
               </div>
               <div class="form-group" style="flex: 1;">
                   <label for="dadphoneno">Father Phoneno:</label>
-                  <input type="text" id="dadphoneno" name="dadphoneno" [(ngModel)]="student.dadphoneno" required #dadphoneno="ngModel">
+                  <input type="text" id="dadphoneno" name="dadphoneno" [(ngModel)]="student.dadphoneno" required pattern="^[0-9]{10}$" #dadphoneno="ngModel">
                   <div *ngIf="dadphoneno.invalid && (dadphoneno.dirty || dadphoneno.touched)" class="error">
                       Father Phoneno is required.
                   </div>

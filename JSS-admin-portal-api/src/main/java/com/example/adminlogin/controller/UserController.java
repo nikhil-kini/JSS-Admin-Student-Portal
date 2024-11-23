@@ -26,6 +26,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/users")
@@ -38,7 +45,7 @@ public class UserController {
     private static final String DEGREE_CERTIFICATE_DIR = "C:/Users/nithya prashanth/Desktop/images/staff/degreeCertificate/";
     private static final String PHOTO_DIR = "C:/Users/nithya prashanth/Desktop/images/staff/photo/";
     private static final String STAFF_PROFILE_DIR = "C:/Users/nithya prashanth/Desktop/images/staff/staffprofile/";
-    private static final String ADHAR_CARD_DIR = "C:/Users/nithya prashanth/Desktop/images/staff/adharcard/";
+    private static final String ADHAR_CARD_DIR = "C:/Users/nithya prashanth/Desktop/images/student/adharcard/";
     private static final String CASTE_CERTIFICATE_DIR = "C:/Users/nithya prashanth/Desktop/images/student/castecertificate/";
     private static final String INCOME_CERTIFICATE_DIR = "C:/Users/nithya prashanth/Desktop/images/student/incomecertificate/";
     private static final String MARKS_CARD_DIR = "C:/Users/nithya prashanth/Desktop/images/student/marksCard/";
@@ -52,6 +59,9 @@ public class UserController {
     @Autowired
     private UserRepo userRepository;
 
+    public UserController(UserRepo userRepository) {
+        this.userRepository = userRepository;
+    }
 
 
     @GetMapping("/all")
@@ -82,6 +92,93 @@ public class UserController {
 //        user.setPassword(encodedPassword);
 //        userRepository.save(user);
 //        return ResponseEntity.ok("User registered successfully.");
+//    }
+
+
+//    @PostMapping("/register")
+//    public ResponseEntity<?> registerStudent(
+//            @RequestParam("userName") String userName,
+//            @RequestParam("email") String email,
+//            @RequestParam("password") String password,
+//            @RequestParam("phoneno") String phoneno,
+//            @RequestParam("address") String address,
+//            @RequestParam("adharno") String adharno,
+//            @RequestParam("role") String role,
+//            @RequestParam("dept") String dept,
+//            @RequestParam("semester") String semester,
+//            @RequestParam("momphoneno") String momphoneno,
+//            @RequestParam("dadphoneno") String dadphoneno,
+//            @RequestParam("regno") String regno,
+//            @RequestParam("panCardNumber") String panCardNumber,
+//            @RequestParam(value = "sslcMarksCard", required = false) MultipartFile sslcMarksCard,
+//            @RequestParam(value = "beMarksCard", required = false) MultipartFile beMarksCard,
+//            @RequestParam(value = "degreeCertificate", required = false) MultipartFile degreeCertificate,
+//            @RequestParam(value = "photo", required = false) MultipartFile photo,
+//            @RequestParam(value = "staffProfile", required = false) MultipartFile staffProfile,
+//            @RequestParam(value = "adharCard", required = false) MultipartFile adharCard,
+//            @RequestParam(value = "studyCertificate", required = false) MultipartFile studyCertificate,
+//            @RequestParam(value = "transferCertificate", required = false) MultipartFile transferCertificate,
+//            @RequestParam(value = "physicalFitness", required = false) MultipartFile physicalFitness,
+//            @RequestParam(value = "migrationCertificate", required = false) MultipartFile migrationCertificate,
+//            @RequestParam(value = "incomeCertificate", required = false) MultipartFile incomeCertificate,
+//            @RequestParam(value = "casteCertificate", required = false) MultipartFile casteCertificate,
+//            @RequestParam(value = "studsslcmarksCard", required = false) MultipartFile studsslcmarksCard,
+//            @RequestParam(value = "studphoto", required = false) MultipartFile studphoto
+//    ) {
+//        try {
+//            String sslcMarksCardPath = saveFile(sslcMarksCard, SSLC_MARKS_CARD_DIR);
+//            String beMarksCardPath = saveFile(beMarksCard, BE_MARKS_CARD_DIR);
+//            String degreeCertificatePath = saveFile(degreeCertificate, DEGREE_CERTIFICATE_DIR);
+//            String photoPath = saveFile(photo, PHOTO_DIR);
+//            String staffProfilePath = saveFile(staffProfile, STAFF_PROFILE_DIR );
+//            String adharCardPath = saveFile(adharCard, ADHAR_CARD_DIR );
+//            String studyCertificatePath = saveFile(studyCertificate, STUDY_CERTIFICATE_DIR );
+//            String transferCertificatePath = saveFile(transferCertificate, TRANSFER_CERTIFICATE_DIR  );
+//            String physicalFitnessPath = saveFile(physicalFitness, PHYSICAL_FITNESS_DIR );
+//            String migrationCertificatePath = saveFile(migrationCertificate, MIGRATION_CERTIFICATE_DIR );
+//            String incomeCertificatePath = saveFile(incomeCertificate, INCOME_CERTIFICATE_DIR);
+//            String casteCertificatePath = saveFile(casteCertificate, CASTE_CERTIFICATE_DIR );
+//            String studsslcmarksCardPath = saveFile(studsslcmarksCard, MARKS_CARD_DIR);
+//            String studphotoPath = saveFile(studphoto, STUDENT_PHOTO_DIR  );
+//
+//
+//            // Create a new Staff entity and set its fields
+//            User user = new User();
+//            user.setUserName(userName);
+//            user.setEmail(email);
+//            user.setPassword(password);
+//            user.setPhoneno(phoneno);
+//            user.setAddress(address);
+//            user.setAdharno(adharno);
+//            user.setDept(dept);
+//            user.setSemester(semester);
+//            user.setMomphoneno(momphoneno);
+//            user.setDadphoneno(dadphoneno);
+//            user.setRegno(regno);
+//            user.setRole(role);
+//            user.setPanCardNumber(panCardNumber);
+//            user.setSslcMarksCardPath(sslcMarksCardPath);  // Save the original filename
+//            user.setBeMarksCardPath(beMarksCardPath);
+//            user.setDegreeCertificatePath(degreeCertificatePath);
+//            user.setPhotoPath(photoPath);
+//            user.setStaffProfilePath(staffProfilePath);
+//            user.setAdharCardPath(adharCardPath);
+//            user.setCasteCertificatePath(casteCertificatePath);
+//            user.setIncomeCertificatePath(incomeCertificatePath);
+//            user.setMigrationCertificatePath(migrationCertificatePath);
+//            user.setPhysicalFitnessPath(physicalFitnessPath);
+//            user.setStudyCertificatePath(studyCertificatePath);
+//            user.setStudphotoPath(studphotoPath);
+//            user.setStudsslcmarksCardPath(studsslcmarksCardPath);
+//            user.setTransferCertificatePath(transferCertificatePath);
+//
+//            // Save the staff entity to the database
+//            userRepository.save(user);
+//
+//            return ResponseEntity.ok().body("Staff registration successful!");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Error uploading files or saving staff: " + e.getMessage());
+//        }
 //    }
 
 
@@ -116,23 +213,23 @@ public class UserController {
             @RequestParam(value = "studphoto", required = false) MultipartFile studphoto
     ) {
         try {
+            // Save files
             String sslcMarksCardPath = saveFile(sslcMarksCard, SSLC_MARKS_CARD_DIR);
             String beMarksCardPath = saveFile(beMarksCard, BE_MARKS_CARD_DIR);
             String degreeCertificatePath = saveFile(degreeCertificate, DEGREE_CERTIFICATE_DIR);
             String photoPath = saveFile(photo, PHOTO_DIR);
-            String staffProfilePath = saveFile(staffProfile, STAFF_PROFILE_DIR );
-            String adharCardPath = saveFile(adharCard, ADHAR_CARD_DIR );
-            String studyCertificatePath = saveFile(studyCertificate, STUDY_CERTIFICATE_DIR );
-            String transferCertificatePath = saveFile(transferCertificate, TRANSFER_CERTIFICATE_DIR  );
-            String physicalFitnessPath = saveFile(physicalFitness, PHYSICAL_FITNESS_DIR );
-            String migrationCertificatePath = saveFile(migrationCertificate, MIGRATION_CERTIFICATE_DIR );
+            String staffProfilePath = saveFile(staffProfile, STAFF_PROFILE_DIR);
+            String adharCardPath = saveFile(adharCard, ADHAR_CARD_DIR);
+            String studyCertificatePath = saveFile(studyCertificate, STUDY_CERTIFICATE_DIR);
+            String transferCertificatePath = saveFile(transferCertificate, TRANSFER_CERTIFICATE_DIR);
+            String physicalFitnessPath = saveFile(physicalFitness, PHYSICAL_FITNESS_DIR);
+            String migrationCertificatePath = saveFile(migrationCertificate, MIGRATION_CERTIFICATE_DIR);
             String incomeCertificatePath = saveFile(incomeCertificate, INCOME_CERTIFICATE_DIR);
-            String casteCertificatePath = saveFile(casteCertificate, CASTE_CERTIFICATE_DIR );
+            String casteCertificatePath = saveFile(casteCertificate, CASTE_CERTIFICATE_DIR);
             String studsslcmarksCardPath = saveFile(studsslcmarksCard, MARKS_CARD_DIR);
-            String studphotoPath = saveFile(studphoto, STUDENT_PHOTO_DIR  );
+            String studphotoPath = saveFile(studphoto, STUDENT_PHOTO_DIR);
 
-
-            // Create a new Staff entity and set its fields
+            // Create User entity
             User user = new User();
             user.setUserName(userName);
             user.setEmail(email);
@@ -147,7 +244,7 @@ public class UserController {
             user.setRegno(regno);
             user.setRole(role);
             user.setPanCardNumber(panCardNumber);
-            user.setSslcMarksCardPath(sslcMarksCardPath);  // Save the original filename
+            user.setSslcMarksCardPath(sslcMarksCardPath);
             user.setBeMarksCardPath(beMarksCardPath);
             user.setDegreeCertificatePath(degreeCertificatePath);
             user.setPhotoPath(photoPath);
@@ -162,13 +259,27 @@ public class UserController {
             user.setStudsslcmarksCardPath(studsslcmarksCardPath);
             user.setTransferCertificatePath(transferCertificatePath);
 
-            // Save the staff entity to the database
+            // Save to database
             userRepository.save(user);
 
             return ResponseEntity.ok().body("Staff registration successful!");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading files or saving staff: " + e.getMessage());
         }
+    }
+
+    private String saveFile(MultipartFile file, String directory) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            File dir = new File(directory);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            String filePath = directory + File.separator + file.getOriginalFilename();
+//            String filePath =file.getOriginalFilename();
+            file.transferTo(new File(filePath));
+            return filePath;
+        }
+        return null;
     }
 
 
@@ -348,18 +459,37 @@ public ResponseEntity<String> deleteUser(@PathVariable Long id){
 
 
 
-    private String saveFile(MultipartFile file, String targetDir) throws Exception {
-        if (file != null && !file.isEmpty()) {
-            String originalFilename = file.getOriginalFilename();
-            Path path = Paths.get(targetDir + "/" + originalFilename);
-            Files.createDirectories(path.getParent());  // Create the directory if it doesn't exist
-            Files.write(path, file.getBytes());  // Save the file
-            System.out.println("File saved at: " + path.toString());  // Log the file path
-            return originalFilename;  // Return the original filename to save in the database
-        } else {
-            throw new Exception("File is empty or missing.");
-        }
-    }
+//    private String saveFile(MultipartFile file, String targetDir) throws Exception {
+//        if (file != null && !file.isEmpty()) {
+//            String originalFilename = file.getOriginalFilename();
+//            Path path = Paths.get(targetDir + "/" + originalFilename);
+//            Files.createDirectories(path.getParent());  // Create the directory if it doesn't exist
+//            Files.write(path, file.getBytes());  // Save the file
+//            System.out.println("File saved at: " + path.toString());  // Log the file path
+//            return originalFilename;  // Return the original filename to save in the database
+//        } else {
+//            throw new Exception("File is empty or missing.");
+//        }
+//    }
+
+//    private String saveFile(MultipartFile file, String targetDir) throws Exception {
+//        if (file != null && !file.isEmpty()) {
+//            System.out.println("File Name: " + file.getOriginalFilename());  // Log the file name
+//            System.out.println("File Size: " + file.getSize());             // Log the file size
+//
+//            String originalFilename = file.getOriginalFilename();
+//            Path path = Paths.get(targetDir + "/" + originalFilename);
+//            Files.createDirectories(path.getParent());  // Create the directory if it doesn't exist
+//            Files.write(path, file.getBytes());  // Save the file
+//
+//            System.out.println("File saved at: " + path.toString());  // Log the file path
+//            return originalFilename;  // Return the original filename to save in the database
+//        } else {
+//            throw new Exception("File is empty or missing.");
+//        }
+//    }
+//
+
 
 //    @PostMapping("/upload-marksCard")
 //    public ResponseEntity<String> uploadMarksCard(@RequestParam("marksCard") MultipartFile file) {
