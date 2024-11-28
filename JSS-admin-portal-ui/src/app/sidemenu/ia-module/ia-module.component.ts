@@ -46,6 +46,7 @@ export class IAModuleComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
+    localStorage.removeItem('userId');
       this.router.navigate(['/auth/login']);
     }
     staffmanagement(){

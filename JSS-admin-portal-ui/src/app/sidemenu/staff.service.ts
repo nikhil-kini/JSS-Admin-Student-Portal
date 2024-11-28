@@ -11,9 +11,16 @@ export class StaffService {
 
   constructor(private http: HttpClient) {}
 
-  // Method to get all staff details
+  // // Method to get all staff details
+  // getStaffData(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}/getAll`);
+  // }
   getStaffData(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getAll`);
+    return this.http.get<any[]>(`${this.apiUrl}/staff`);
+  }
+
+  getStudentData(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/student`);
   }
 
   // Method to register a new staff member with multipart form data

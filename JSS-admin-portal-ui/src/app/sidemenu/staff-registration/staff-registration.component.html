@@ -71,8 +71,8 @@
 
    
 
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
-      <!-- <div class="text-center"> -->
+    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4">
+      
         <div class="registration-card">
           <h2>STAFF REGISTER FORM</h2>
           <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
@@ -181,10 +181,118 @@
           </form>
     
           
-        <!-- </div> -->
+       
       </div>
     </main>
+     -->
+     <main class="col-md-9 col-lg-10 px-4 pt-4">
+     <div class="registration-container">
+      <div class="registration-card">
+        <h2 class="header">Staff Registration Form</h2> 
+       
+        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+          
+          <!-- Row 1: Name and Profile -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="userName">Staff Name:</label>
+              <input type="text" id="userName" name="userName" [(ngModel)]="staff.userName" required #userName="ngModel" />
+              <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="error">
+                Staff Name is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="staffProfile">Upload Staff Profile:</label>
+              <input type="file" id="staffProfile" (change)="onFileSelectStaffProfile($event)" required />
+            </div>
+          </div>
     
+          <!-- Row 2: Email and Password -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" [(ngModel)]="staff.email" required #email="ngModel" />
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                Email is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" [(ngModel)]="staff.password" required #password="ngModel" />
+              <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+                Password is required.
+              </div>
+            </div>
+          </div>
+    
+          <!-- Row 3: Aadhar and PAN -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="adharno">Aadhar No:</label>
+              <input type="text" id="adharno" name="adharno" [(ngModel)]="staff.adharno" required #adharno="ngModel" />
+              <div *ngIf="adharno.invalid && (adharno.dirty || adharno.touched)" class="error">
+                Aadhar No is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="panCardNumber">PAN Card No:</label>
+              <input type="text" id="panCardNumber" name="panCardNumber" [(ngModel)]="staff.panCardNumber" required #panCardNumber="ngModel" />
+              <div *ngIf="panCardNumber.invalid && (panCardNumber.dirty || panCardNumber.touched)" class="error">
+                PAN Card No is required.
+              </div>
+            </div>
+          </div>
+    
+          <!-- Row 4: Phone and Address -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phoneno">Phone No:</label>
+              <input type="text" id="phoneno" name="phoneno" [(ngModel)]="staff.phoneno" required pattern="^[0-9]{10}$" #phoneno="ngModel" />
+              <div *ngIf="phoneno.invalid && (phoneno.dirty || phoneno.touched)" class="error">
+                Phone No is required.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" id="address" name="address" [(ngModel)]="staff.address" required #address="ngModel" />
+              <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
+                Address is required.
+              </div>
+            </div>
+          </div>
+    
+          <!-- Row 5: Upload SSLC and BE Marks Cards -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sslcMarksCard">Upload SSLC Marks Card:</label>
+              <input type="file" id="sslcMarksCard" name="sslcMarksCard" (change)="onFileSelectSSLC($event)" required />
+            </div>
+            <div class="form-group">
+              <label for="beMarksCard">Upload BE Marks Card:</label>
+              <input type="file" id="beMarksCard" name="beMarksCard" (change)="onFileSelectBE($event)" required />
+            </div>
+          </div>
+    
+          <!-- Row 6: Upload Degree Certificate and Photo -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="degreeCertificate">Upload Degree Certificate:</label>
+              <input type="file" id="degreeCertificate" name="degreeCertificate" (change)="onFileSelectDegree($event)" required />
+            </div>
+            <div class="form-group">
+              <label for="photo">Upload Photo:</label>
+              <input type="file" id="photo" name="photo" (change)="onFileSelectPhoto($event)" required />
+            </div>
+          </div>
+    
+          <!-- Submit Button -->
+          <div class="form-row">
+            <button type="submit" [disabled]="registerForm.invalid">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+   </main>
     
   </div>
 </div>

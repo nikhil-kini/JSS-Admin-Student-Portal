@@ -1,15 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StaffService } from '../staff.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router,private staffService: StaffService) {}
 
   home(){
     this.router.navigate(['/sidemenu/home']);
@@ -48,8 +51,24 @@ export class HomeComponent {
     }
     logout() {
       localStorage.removeItem('isAuthenticated');  
-    localStorage.removeItem('loginUser');  
+    localStorage.removeItem('loginUser'); 
+    localStorage.removeItem('userId'); 
       this.router.navigate(['/auth/login']);
     }
-  }
 
+    
+   
+    staffMembers: any[] = [];
+    
+    ngOnInit() {
+      this.staffService.getStaffData().subscribe(
+        (data: any) => {
+          this.staffMembers = data;
+        },
+        (error) => {
+          console.error('Error fetching staff data:', error);
+        }
+      );
+    }
+
+  }

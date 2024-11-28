@@ -92,6 +92,7 @@ export class StudentRegistrationComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
       localStorage.removeItem('loginUser');
+      localStorage.removeItem('userId');
         this.router.navigate(['/auth/login']);
     }
     personaldocuments(){
@@ -206,11 +207,13 @@ onFileSelectadharCard(event: any) {
   if (file) {
     this.student.adharCard = file;
     console.log('Adhar card selected:', file);
-    event.target.value = '';
+    
   } else {
     console.log('No file selected for Adhar card');
   }
 }
+
+
 
 
 
@@ -219,7 +222,7 @@ onFileSelectSC(event: any) {
   if (file) {
     this.student.studyCertificate = file;
     console.log('Study Certificate selected:', file);
-    event.target.value = '';
+   
   }
 }
 
@@ -229,7 +232,7 @@ onFileSelectTC(event: any) {
   if (file) {
     this.student.transferCertificate = file;
     console.log('Transfer Certificate selected:', file);
-    event.target.value = '';
+   
   }
 }
 
@@ -239,7 +242,7 @@ onFileSelectPF(event: any) {
   if (file) {
     this.student.physicalFitness = file;
     console.log('Physical Fitness certificate selected:', file);
-    event.target.value = '';
+   
   }
 }
 
@@ -248,7 +251,7 @@ onFileSelectMC(event: any) {
   if (file) {
     this.student.migrationCertificate = file;
     console.log('Migration Certificate selected:', file);
-    event.target.value = '';
+    
   }
 }
 
@@ -258,7 +261,7 @@ onFileSelectIC(event: any) {
   if (file) {
     this.student.incomeCertificate = file;
     console.log('Income Certificate selected:', file);
-    event.target.value = '';
+   
   }
 }
 
@@ -267,7 +270,7 @@ onFileSelectCC(event: any) {
   if (file) {
     this.student.casteCertificate = file;
     console.log('Caste Certificate selected:', file);
-    event.target.value = '';
+    
   }
 }
 
@@ -276,7 +279,7 @@ onFileSelectstudMarkscard(event: any) {
   if (file) {
     this.student.studsslcmarksCard = file;
     console.log('Student SSLC Marks Card selected:', file);
-    event.target.value = '';
+    
   }
 }
 
@@ -285,7 +288,7 @@ onFileSelectstudphoto(event: any) {
   if (file) {
     this.student.studphoto = file;
     console.log('Student Photo selected:', file);
-    event.target.value = '';
+   
   }
 }
 }

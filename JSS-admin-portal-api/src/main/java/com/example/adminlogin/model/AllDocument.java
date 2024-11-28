@@ -26,7 +26,10 @@ public class AllDocument {
     private String semester;
 
     @Column(name = "document_category")
-    private String documentCategory;  // LessonPlan, TeachingAids, QuestionBank
+    private String documentCategory;
+
+    @Column(name = "document_path")
+    private String documentPath;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)

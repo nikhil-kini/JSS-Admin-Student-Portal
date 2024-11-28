@@ -71,6 +71,7 @@ export class StaffRegistrationComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
       localStorage.removeItem('loginUser');
+      localStorage.removeItem('userId');
         this.router.navigate(['/auth/login']);
     }
     personaldocuments(){

@@ -46,22 +46,23 @@ main {
 }
 
 main h1 {
-  font-size: 2rem;
-  color: #333;
+  font-size: 2.5rem;
+  color: #0c0a0a;
   margin-bottom: 20px;
-  text-align: left;
+  text-align: center;
+  
 }
 
 main h2 {
   font-size: 2rem;
-  color: #333;
+  color: #0e0b0b;
   margin-bottom: 20px;
   text-align: center;
 }
 
 main p {
   font-size: 1.1rem;
-  color: #555;
+  color: #050505;
   line-height: 1.6;
 }
 
@@ -78,3 +79,9 @@ main p {
     text-align: center;
   }
 }
+
+
+
+
+
+

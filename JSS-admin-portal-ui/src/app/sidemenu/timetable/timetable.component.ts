@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -12,13 +12,13 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-timetable',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule],
   templateUrl: './timetable.component.html',
   styleUrl: './timetable.component.css'
 })
 export class TimetableComponent {
  
-  // constructor(private router: Router,private http: HttpClient) {}
+
    
 
   home(){
@@ -54,6 +54,7 @@ export class TimetableComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
+    localStorage.removeItem('userId');
       this.router.navigate(['/auth/login']);
     }
     personaldocuments(){
@@ -70,11 +71,12 @@ export class TimetableComponent {
       '9.00 TO 10.00 am', '10.00 TO 11.00 am', '11.00 TO 12.00 pm',
       '12.00 Tpm TO 1.00 pm', '1.00 to 2.00 PM', '2.00 to 3.00 PM', '3.00 tp 4.00 PM'
     ];
-    
+    showModal: boolean = false;
     selectedSemester: string = 'all';
     isTimetableVisible: boolean = true;
     selectedFile: File | null = null;
     filteredTimetable: any;
+    
     semesterTimetable: any = {
       1: {
               MONDAY: { '11.00 TO 12.00 pm': 'EM', '12.00 Tpm TO 1.00 pm': 'FOC', '2.00 to 3.00 PM': 'ES', '3.00 tp 4.00 PM': 'FEEE (THEORY)' },
@@ -146,107 +148,97 @@ export class TimetableComponent {
        
     };
     
-    constructor(private http: HttpClient, private router: Router) {}
-    
-    
-    
-    onSemesterChange(): void {
-      console.log('Selected Semester:', this.selectedSemester);
-      this.filteredTimetable = this.semesterTimetable[this.selectedSemester] || {};
+   
+    showPopup = false;
+  selectedSemester1: string = '';
+  fileToUpload: File | null = null;
+  documentType: string = 'Excel';
+  fileName: string = '';
+  fileType: string = 'xlsx';
+  uploadDate: Date = new Date(); 
+  userEmail: string = 'admin@example.com'; 
+  documentCategory: string = 'Time-Table';
+  documentPath: string='';
+
+  semesters1 = ['Sem1', 'Sem2', 'Sem3', 'Sem4', 'Sem5', 'Sem6'];
+
+  // Define API URL here
+  private apiUrl = 'http://localhost:8080/api/alldocuments/upload'; // Adjust URL as necessary
+
+  constructor(private http: HttpClient,private router: Router) {}
+
+  // Open the upload popup
+  openUploadPopup() {
+    this.showPopup = true;
+  }
+
+  // Close the upload popup
+  closePopup() {
+    this.showPopup = false;
+  }
+
+  // Handle file selection
+  onFileChange(event: any) {
+    this.fileToUpload = event.target.files[0];
+  }
+
+  // Upload timetable to backend
+  // uploadTimetable() {
+  //   if (this.fileToUpload) {
+  //     const formData = new FormData();
+  //     formData.append('file', this.fileToUpload);
+  //     formData.append('documentType', this.documentType);
+  //     formData.append('fileName', this.fileName);
+  //     formData.append('fileType', this.fileType);
+  //     formData.append('uploadDate', this.uploadDate.toISOString());
+  //     formData.append('userEmail', this.userEmail);
+  //     formData.append('semester', this.selectedSemester1);
+  //     formData.append('documentCategory', this.documentCategory);
+  //     formData.append('documentPath', this.documentPath);
+
+  //     this.http.post<any>(this.apiUrl, formData).subscribe(response => {
+  //       console.log('File uploaded successfully:', response);
+  //       alert('File uploaded successfully!');
+  //       this.closePopup(); // Close the popup after successful upload
+  //     }, error => {
+  //       console.error('Error uploading file:', error);
+  //       alert('File upload failed');
+  //     });
+  //   } else {
+  //     alert('Please select a file to upload.');
+  //   }
+  // }
+
+  uploadTimetable() {
+    if (this.fileToUpload) {
+      const formData = new FormData();
+      const filePath = `uploads/timetables/${this.selectedSemester1}/${this.fileToUpload.name}`; // Construct path
+  
+      formData.append('file', this.fileToUpload);
+      formData.append('documentType', this.documentType);
+      formData.append('fileName', this.fileToUpload.name);
+      formData.append('fileType', this.fileType);
+      formData.append('uploadDate', this.uploadDate.toISOString());
+      formData.append('userEmail', this.userEmail);
+      formData.append('semester', this.selectedSemester1);
+      formData.append('documentCategory', this.documentCategory);
+      formData.append('documentPath', filePath); // Include relative path for storing on server
+  
+      this.http.post<any>(this.apiUrl, formData).subscribe(response => {
+        console.log('File uploaded successfully:', response);
+        alert('File uploaded successfully!');
+        this.closePopup(); // Close the popup after successful upload
+      }, error => {
+        console.error('Error uploading file:', error);
+        alert('File upload failed');
+      });
+    } else {
+      alert('Please select a file to upload.');
     }
-    
-    onFileSelect(event: any): void {
-      this.selectedFile = event.target.files[0];
-      if (this.selectedFile && !this.selectedFile.name.endsWith('.xlsx')) {
-        alert('Please upload a valid Excel file');
-        this.selectedFile = null;
-      }
-    }
-    
-    uploadTimetable(): void {
-      if (this.selectedFile) {
-        // const formData = new FormData();
-        // formData.append('file', this.selectedFile);
-        // this.http.post('http://localhost:8080/api/timetables/upload-timetable', formData).subscribe({
-        //   next: response => {
-        //     console.log('File uploaded successfully', response);
-        //     alert('File uploaded successfully!');
-        //   },
-        //   error: error => {
-        //     console.error('Error uploading file', error);
-        //     alert('Failed to upload file.');
-        //   }
-      // });
-    
-        const formData = new FormData();
-    formData.append('file', this.selectedFile, this.selectedFile.name);
-    
-    this.http.post('http://localhost:8080/api/timetables/upload-timetable', formData).subscribe(response => {
-      console.log('Upload successful:', response);
-    }, error => {
-      console.error('Upload error:', error);
-    });
-        
-      } else {
-        console.error('No file selected');
-      }
-    }
-    
-    
-    
-    
-    // uploadTimetable(formData: FormData) {
-    //   const url = 'http://localhost:8080/api/timetables/upload-timetable';
-    //   return this.http.post(url, formData);
-    // }
-    
-    // updateTimetable(): void {
-    //   this.http.put('http://localhost:8080/api/timetables/upload-timetable', this.semesterTimetable)
-    //     .subscribe(
-    //       response => {
-    //         console.log('Timetable updated successfully:', response);
-    //         alert('Timetable updated successfully!');
-    //       },
-    //       error => {
-    //         console.error('Error updating timetable:', error);
-    //         alert('Failed to update timetable.');
-    //       }
-    //     );
-    // }
-    
-    
-    
-    // loadTimetable(): void {
-    //   this.http.get<any>('http://localhost:8080/api/timetables/upload-timetable')
-    //     .subscribe(
-    //       data => {
-    //         this.semesterTimetable = data;
-    //         console.log('Timetable loaded:', this.semesterTimetable);
-    //       },
-    //       error => {
-    //         console.error('Error loading timetable:', error);
-    //       }
-    //     );
-    // }
-    
-    // uploadTimetable(): void {
-    //   if (this.selectedFile) {
-    //     const formData = new FormData();
-    //     formData.append('file', this.selectedFile);
-        
-    //     // Ensure the request headers are set correctly
-    //     this.http.post('http://localhost:8080/api/timetables/upload-timetable', formData).subscribe({
-    //       next: response => {
-    //         console.log('File uploaded successfully', response);
-    //         alert('File uploaded successfully!');
-    //       },
-    //       error: error => {
-    //         console.error('Error uploading file', error);
-    //         alert('Failed to upload file.');
-    //       }
-    //     });
-    //   } else {
-    //     console.error('No file selected');
-    //   }
-    // }
-    }
+  }
+
+  onSemesterChange() {
+    this.filteredTimetable = this.semesterTimetable[this.selectedSemester] || {};
+  }
+}
+  

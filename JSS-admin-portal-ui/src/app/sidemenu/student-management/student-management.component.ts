@@ -52,6 +52,7 @@ export class StudentManagementComponent implements OnInit{
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
+    localStorage.removeItem('userId');
       this.router.navigate(['/auth/login']);
     }
     personaldocuments(){
@@ -66,40 +67,47 @@ export class StudentManagementComponent implements OnInit{
     }
 
     studentList: any[] = [];
-    currentPage: number = 1;  // Current page
-    itemsPerPage: number = 10; // Items per page
-    totalItems: number = 0;   // Total items to calculate total pages
-    pagedStudentList: any[] = [];  // Paginated list of students
-  
+    currentPage: number = 1;  
+    itemsPerPage: number = 10; 
+    totalItems: number = 0;   
+    pagedStudentList: any[] = [];  
+    filteredStudentList: any[] = [];
+    searchTerm: string = ''; 
     selectedUser: any;
-  
-    
+
     ngOnInit(): void {
       this.loadStaffData();
     }
   
     loadStaffData(): void {
-      this.staffService.getStaffData().subscribe(
+      this.staffService.getStudentData().subscribe(
         (data) => {
+         
           this.studentList = data;
-          this.totalItems = data.length;
-          this.updatePagedList();
-          console.log(this.studentList);
+          this.filteredStudentList = [...this.studentList];
+          this.totalItems = this.filteredStudentList.length;
+          this.updatePagedList(); 
         },
         (error) => {
           console.error('Error loading staff data', error);
         }
       );
     }
-  
-    // Method to update the paginated list
+   
+    filterStudentList(): void {
+      this.filteredStudentList = this.studentList.filter(student => 
+        student.userName.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      this.totalItems = this.filteredStudentList.length; 
+      this.updatePagedList(); 
+    }
+   
     updatePagedList(): void {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      this.pagedStudentList = this.studentList.slice(startIndex, endIndex);
+      this.pagedStudentList = this.filteredStudentList.slice(startIndex, endIndex);
     }
-  
-    // Pagination control: Move to the next page
+
     nextPage(): void {
       if (this.currentPage < this.getTotalPages()) {
         this.currentPage++;
@@ -107,7 +115,6 @@ export class StudentManagementComponent implements OnInit{
       }
     }
   
-    // Pagination control: Move to the previous page
     prevPage(): void {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -115,37 +122,17 @@ export class StudentManagementComponent implements OnInit{
       }
     }
   
-    // Update page based on selected page number
     goToPage(page: number): void {
       this.currentPage = page;
       this.updatePagedList();
     }
   
-    // Calculate total number of pages
     getTotalPages(): number {
       return Math.ceil(this.totalItems / this.itemsPerPage);
     }
-  
+
     editUser(user: any): void {
-      console.log('Editing user:', user);
       this.selectedUser = { ...user };
-    }
-  
-    deleteUser(staff: any): void {
-      if (confirm(`Are you sure you want to delete ${staff.staffName}?`)) {
-        this.staffService.deleteStaff(staff.id).subscribe(
-          response => {
-            console.log('Delete response:', response);
-            this.studentList = this.studentList.filter(item => item.id !== staff.id);
-            alert('Staff deleted successfully!');
-            this.updatePagedList();  // Update pagination list after deletion
-          },
-          (error: HttpErrorResponse) => {
-            console.error('Error deleting staff:', error);
-            alert(`Error deleting staff: ${error.message || 'Unknown error occurred'}`);
-          }
-        );
-      }
     }
   
     updateUser(): void {
@@ -153,107 +140,49 @@ export class StudentManagementComponent implements OnInit{
         this.staffService.updateStaff(this.selectedUser).subscribe(
           response => {
             console.log('Update response:', response);
-            alert('Staff updated successfully!');
+            alert('Student updated successfully!');
             const index = this.studentList.findIndex(student => student.id === this.selectedUser.id);
             if (index !== -1) {
               this.studentList[index] = { ...this.selectedUser };
             }
             this.selectedUser = null;
-            this.updatePagedList();  // Update pagination list after update
+            this.filterStudentList();  
           },
           error => {
-            console.error('Error updating staff:', error);
-            alert(`Error updating staff: ${error.message || 'Unknown error occurred'}`);
+            console.error('Error updating student:', error);
+            alert(`Error updating student: ${error.message || 'Unknown error occurred'}`);
+          }
+        );
+      }
+    }
+
+   
+  
+    cancelEdit(): void {
+      this.selectedUser = null;
+    }
+    
+    highlightText(text: string): string {
+      if (!this.searchTerm) return text;
+      const escapedSearchTerm = this.searchTerm.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
+      return text.replace(regex, '<mark>$1</mark>');
+    }
+  
+  
+    deleteUser(student: any): void {
+      if (confirm(`Are you sure you want to delete ${student.userName}?`)) {
+        this.staffService.deleteStaff(student.id).subscribe(
+          (response) => {
+            this.studentList = this.studentList.filter((item) => item.id !== student.id);
+            this.filterStudentList(); 
+          },
+          (error) => {
+            console.error('Error deleting staff:', error);
           }
         );
       }
     }
   
-    cancelEdit(): void {
-      this.selectedUser = null;
-    }
   }
     
-//     ngOnInit(): void {
-      
-//       this.loadStaffData();
-      
-//     }
-  
-//     loadStaffData(): void {
-//       this.staffService.getStaffData().subscribe(
-//         (data) => {
-//           this.studentList = data;
-//           // this.filteredStudents = data;  
-//           console.log(this.studentList);
-//         },
-//         (error) => {
-//           console.error('Error loading staff data', error);
-//         }
-//       );
-//     }
-  
-    
-    
-    
-
-//     selectedUser: any; 
-//     editUser(user: any): void {
-//       console.log('Editing user:', user);
-//       // Example: Populate an edit form with the user data
-//       this.selectedUser = { ...user }; // Use a separate variable to hold the data to be edited
-//     }
-    
-    
-//     deleteUser(staff: any): void {
-//       if (confirm(`Are you sure you want to delete ${staff.staffName}?`)) {
-//         this.staffService.deleteStaff(staff.id).subscribe(
-//           response => {
-//             // Check for a successful response status
-//             console.log('Delete response:', response);
-            
-//             // Update staffList by filtering out the deleted staff
-//             this.studentList = this.studentList.filter(item => item.id !== staff.id);
-            
-//             // Display a success message
-//             alert('Staff deleted successfully!');
-//           },
-//           (error: HttpErrorResponse) => {
-//             console.error('Error deleting staff:', error);
-//             alert(`Error deleting staff: ${error.message || 'Unknown error occurred'}`);
-//           }
-//         );
-//       }
-//     }
-    
-//     updateUser(): void {
-//       if (this.selectedUser) {
-//         this.staffService.updateStaff(this.selectedUser).subscribe(
-//           response => {
-//             console.log('Update response:', response);
-//             alert('Staff updated successfully!');
-    
-//             // Update the frontend list
-//             const index = this.studentList.findIndex(student => student.id === this.selectedUser.id);
-//             if (index !== -1) {
-//               this.studentList[index] = { ...this.selectedUser };
-//             }
-    
-//             this.selectedUser = null; // Clear the edit form
-//           },
-//           error => {
-//             console.error('Error updating staff:', error);
-//             alert(`Error updating staff: ${error.message || 'Unknown error occurred'}`);
-//           }
-//         );
-//       }
-//     }
-    
-//     cancelEdit(): void {
-//       this.selectedUser = null; // Clear the edit form
-//     }
-
-    
-    
-  
-// }

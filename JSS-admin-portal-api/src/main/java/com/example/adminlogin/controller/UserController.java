@@ -14,13 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +70,7 @@ public class UserController {
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllUser() {
         try {
-            // Fetch all staff records from the database
+
             List<User> staffList = userRepository.findAll();
             return ResponseEntity.ok().body(staffList);
         } catch (Exception e) {
@@ -82,104 +79,8 @@ public class UserController {
     }
 
 
-//    @PostMapping("/register1")
-//    public ResponseEntity<String> register(@RequestBody User user) {
-//        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-//            return ResponseEntity.status(400).body("Email is already in use.");
-//        }
-//        // Encode password before saving
-//        String encodedPassword = Base64.getEncoder().encodeToString(user.getPassword().getBytes(StandardCharsets.UTF_8));
-//        user.setPassword(encodedPassword);
-//        userRepository.save(user);
-//        return ResponseEntity.ok("User registered successfully.");
-//    }
 
 
-//    @PostMapping("/register")
-//    public ResponseEntity<?> registerStudent(
-//            @RequestParam("userName") String userName,
-//            @RequestParam("email") String email,
-//            @RequestParam("password") String password,
-//            @RequestParam("phoneno") String phoneno,
-//            @RequestParam("address") String address,
-//            @RequestParam("adharno") String adharno,
-//            @RequestParam("role") String role,
-//            @RequestParam("dept") String dept,
-//            @RequestParam("semester") String semester,
-//            @RequestParam("momphoneno") String momphoneno,
-//            @RequestParam("dadphoneno") String dadphoneno,
-//            @RequestParam("regno") String regno,
-//            @RequestParam("panCardNumber") String panCardNumber,
-//            @RequestParam(value = "sslcMarksCard", required = false) MultipartFile sslcMarksCard,
-//            @RequestParam(value = "beMarksCard", required = false) MultipartFile beMarksCard,
-//            @RequestParam(value = "degreeCertificate", required = false) MultipartFile degreeCertificate,
-//            @RequestParam(value = "photo", required = false) MultipartFile photo,
-//            @RequestParam(value = "staffProfile", required = false) MultipartFile staffProfile,
-//            @RequestParam(value = "adharCard", required = false) MultipartFile adharCard,
-//            @RequestParam(value = "studyCertificate", required = false) MultipartFile studyCertificate,
-//            @RequestParam(value = "transferCertificate", required = false) MultipartFile transferCertificate,
-//            @RequestParam(value = "physicalFitness", required = false) MultipartFile physicalFitness,
-//            @RequestParam(value = "migrationCertificate", required = false) MultipartFile migrationCertificate,
-//            @RequestParam(value = "incomeCertificate", required = false) MultipartFile incomeCertificate,
-//            @RequestParam(value = "casteCertificate", required = false) MultipartFile casteCertificate,
-//            @RequestParam(value = "studsslcmarksCard", required = false) MultipartFile studsslcmarksCard,
-//            @RequestParam(value = "studphoto", required = false) MultipartFile studphoto
-//    ) {
-//        try {
-//            String sslcMarksCardPath = saveFile(sslcMarksCard, SSLC_MARKS_CARD_DIR);
-//            String beMarksCardPath = saveFile(beMarksCard, BE_MARKS_CARD_DIR);
-//            String degreeCertificatePath = saveFile(degreeCertificate, DEGREE_CERTIFICATE_DIR);
-//            String photoPath = saveFile(photo, PHOTO_DIR);
-//            String staffProfilePath = saveFile(staffProfile, STAFF_PROFILE_DIR );
-//            String adharCardPath = saveFile(adharCard, ADHAR_CARD_DIR );
-//            String studyCertificatePath = saveFile(studyCertificate, STUDY_CERTIFICATE_DIR );
-//            String transferCertificatePath = saveFile(transferCertificate, TRANSFER_CERTIFICATE_DIR  );
-//            String physicalFitnessPath = saveFile(physicalFitness, PHYSICAL_FITNESS_DIR );
-//            String migrationCertificatePath = saveFile(migrationCertificate, MIGRATION_CERTIFICATE_DIR );
-//            String incomeCertificatePath = saveFile(incomeCertificate, INCOME_CERTIFICATE_DIR);
-//            String casteCertificatePath = saveFile(casteCertificate, CASTE_CERTIFICATE_DIR );
-//            String studsslcmarksCardPath = saveFile(studsslcmarksCard, MARKS_CARD_DIR);
-//            String studphotoPath = saveFile(studphoto, STUDENT_PHOTO_DIR  );
-//
-//
-//            // Create a new Staff entity and set its fields
-//            User user = new User();
-//            user.setUserName(userName);
-//            user.setEmail(email);
-//            user.setPassword(password);
-//            user.setPhoneno(phoneno);
-//            user.setAddress(address);
-//            user.setAdharno(adharno);
-//            user.setDept(dept);
-//            user.setSemester(semester);
-//            user.setMomphoneno(momphoneno);
-//            user.setDadphoneno(dadphoneno);
-//            user.setRegno(regno);
-//            user.setRole(role);
-//            user.setPanCardNumber(panCardNumber);
-//            user.setSslcMarksCardPath(sslcMarksCardPath);  // Save the original filename
-//            user.setBeMarksCardPath(beMarksCardPath);
-//            user.setDegreeCertificatePath(degreeCertificatePath);
-//            user.setPhotoPath(photoPath);
-//            user.setStaffProfilePath(staffProfilePath);
-//            user.setAdharCardPath(adharCardPath);
-//            user.setCasteCertificatePath(casteCertificatePath);
-//            user.setIncomeCertificatePath(incomeCertificatePath);
-//            user.setMigrationCertificatePath(migrationCertificatePath);
-//            user.setPhysicalFitnessPath(physicalFitnessPath);
-//            user.setStudyCertificatePath(studyCertificatePath);
-//            user.setStudphotoPath(studphotoPath);
-//            user.setStudsslcmarksCardPath(studsslcmarksCardPath);
-//            user.setTransferCertificatePath(transferCertificatePath);
-//
-//            // Save the staff entity to the database
-//            userRepository.save(user);
-//
-//            return ResponseEntity.ok().body("Staff registration successful!");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Error uploading files or saving staff: " + e.getMessage());
-//        }
-//    }
 
 
     @PostMapping("/register")
@@ -274,8 +175,8 @@ public class UserController {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            String filePath = directory + File.separator + file.getOriginalFilename();
-//            String filePath =file.getOriginalFilename();
+//            String filePath = directory + File.separator + file.getOriginalFilename();
+            String filePath =file.getOriginalFilename();
             file.transferTo(new File(filePath));
             return filePath;
         }
@@ -285,22 +186,7 @@ public class UserController {
 
 
 
-//    @PostMapping("/login")
-//    public ResponseEntity<User> login(@RequestBody User user) {
-//        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-//        User dbUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
-//
-//        if (existingUser.isPresent()) {
-//            String storedPassword = existingUser.get().getPassword();
-//            String decodedPassword = new String(Base64.getDecoder().decode(storedPassword), StandardCharsets.UTF_8);
-//
-//            if (decodedPassword.equals(user.getPassword())) {
-//                User foundUser = existingUser.get();
-//                return ResponseEntity.ok(foundUser);
-//            }
-//        }
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//    }
+
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
@@ -327,14 +213,7 @@ public class UserController {
 
 
 
-//@PostMapping("/register-user/login")
-//    public ResponseEntity<User> login(@RequestBody User user) {
-//        User dbUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
-//        if (dbUser == null) {
-//            return ResponseEntity.status(401).body(null); // Or return a custom error response
-//        }
-//        return ResponseEntity.ok(dbUser);
-//    }
+
 
 
     @PutMapping("/change-password")
@@ -404,40 +283,7 @@ public class UserController {
         }).orElse(ResponseEntity.status(404).body("Staff not found"));
     }
 
-//    @PutMapping("/update-user")
-//    public ResponseEntity<String> updateuser(@RequestBody Student user) {
-//        if (studentRepo.existsById(user.getStudId())) {
-//            studentRepo.save(user);
-//            return ResponseEntity.ok("User updated successfully");
-//        } else {
-//            return ResponseEntity.status(404).body("User not found");
-//        }
-//    }
 
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateUser (@PathVariable Long id, @RequestBody User updatedUser){
-//        Optional<User> existingUserOpt = userRepository.findById(id);
-//
-//        if (!existingUserOpt.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        User existingUser = existingUserOpt.get();
-//
-//        // Update only the fields that are provided in the request body
-//        if (updatedUser.getEmail() != null) {
-//            existingUser.setEmail(updatedUser.getEmail());
-//        }
-//        if (updatedUser.getPassword() != null) {
-//            // Encode the new password if it's provided
-//            String encodedPassword = Base64.getEncoder().encodeToString(updatedUser.getPassword().getBytes(StandardCharsets.UTF_8));
-//            existingUser.setPassword(encodedPassword);
-//        }
-//
-//        userRepository.save(existingUser);
-//        return ResponseEntity.ok(existingUser);
-//    }
 @DeleteMapping("/{id}")
 public ResponseEntity<String> deleteUser(@PathVariable Long id){
     if (!userRepository.existsById(id)) {
@@ -457,81 +303,24 @@ public ResponseEntity<String> deleteUser(@PathVariable Long id){
         }
     }
 
+    @GetMapping("/staff")
+    public ResponseEntity<List<User>> getAllStaff() {
+        List<User> staff = userRepository.findByRole("Staff");
+        if (staff.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+        return ResponseEntity.ok(staff);
+    }
+
+    @GetMapping("/student")
+    public ResponseEntity<List<User>> getAllStudent() {
+        List<User> student = userRepository.findByRole("Student");
+        if (student.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+        return ResponseEntity.ok(student);
+    }
 
 
-//    private String saveFile(MultipartFile file, String targetDir) throws Exception {
-//        if (file != null && !file.isEmpty()) {
-//            String originalFilename = file.getOriginalFilename();
-//            Path path = Paths.get(targetDir + "/" + originalFilename);
-//            Files.createDirectories(path.getParent());  // Create the directory if it doesn't exist
-//            Files.write(path, file.getBytes());  // Save the file
-//            System.out.println("File saved at: " + path.toString());  // Log the file path
-//            return originalFilename;  // Return the original filename to save in the database
-//        } else {
-//            throw new Exception("File is empty or missing.");
-//        }
-//    }
-
-//    private String saveFile(MultipartFile file, String targetDir) throws Exception {
-//        if (file != null && !file.isEmpty()) {
-//            System.out.println("File Name: " + file.getOriginalFilename());  // Log the file name
-//            System.out.println("File Size: " + file.getSize());             // Log the file size
-//
-//            String originalFilename = file.getOriginalFilename();
-//            Path path = Paths.get(targetDir + "/" + originalFilename);
-//            Files.createDirectories(path.getParent());  // Create the directory if it doesn't exist
-//            Files.write(path, file.getBytes());  // Save the file
-//
-//            System.out.println("File saved at: " + path.toString());  // Log the file path
-//            return originalFilename;  // Return the original filename to save in the database
-//        } else {
-//            throw new Exception("File is empty or missing.");
-//        }
-//    }
-//
-
-
-//    @PostMapping("/upload-marksCard")
-//    public ResponseEntity<String> uploadMarksCard(@RequestParam("marksCard") MultipartFile file) {
-//        try {
-//            if (file.isEmpty()) {
-//                return ResponseEntity.status(400).body("No file selected");
-//            }
-//
-//            System.out.println("Marks Card file received: " + file.getOriginalFilename());
-//            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/student/marksCard/");
-//            return ResponseEntity.ok("Marks Card uploaded successfully");
-//        } catch (IOException e) {
-//            e.printStackTrace();  // Log the error
-//            return ResponseEntity.status(500).body("Failed to upload Marks Card: " + e.getMessage());
-//        } catch (Exception e) {
-//            e.printStackTrace();  // Log the error
-//            return ResponseEntity.status(500).body("Unexpected error: " + e.getMessage());
-//        }
-//    }
-//
-//    @PostMapping("/upload-photo")
-//    public ResponseEntity<String> uploadPhoto(@RequestParam("photo") MultipartFile file) {
-//
-//        try {
-//            if (file.isEmpty()) {
-//                return ResponseEntity.status(400).body("No file selected");
-//            }
-//
-//            System.out.println("Photo file received: " + file.getOriginalFilename());
-//            saveFile(file, "C:/Users/nithya prashanth/Desktop/images/student/photo/");
-//            return ResponseEntity.ok("Photo uploaded successfully");
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();  // Log the error
-//            return ResponseEntity.status(500).body("Failed to upload Photo: " + e.getMessage());
-//        } catch (Exception e) {
-//            e.printStackTrace();  // Log the error
-//            return ResponseEntity.status(500).body("Unexpected error: " + e.getMessage());
-//        }
-//    }
-//
-//
-//
 
 }

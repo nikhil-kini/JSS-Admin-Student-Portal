@@ -68,12 +68,12 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
+    
+    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4">
       <h1 class="mb-2">WELCOME ADMIN</h1>
       <div class="container mt-5">
         <div class="row">
-          <!-- First Colored Block -->
+         
           <div class="col-12 col-md-6 mb-6">
             <div class="card text-white bg-info h-100">
               <div class="card-body">
@@ -85,7 +85,7 @@
             </div>
           </div>
         
-          <!-- Second Colored Block -->
+         
           <div class="col-12 col-md-6 mb-6">
             <div class="card text-white bg-success h-100">
               <div class="card-body">
@@ -95,9 +95,7 @@
               </div>
             </div>
           </div>
-    
-      
-          <!-- Second Colored Block -->
+   
       
           
         </div>
@@ -105,6 +103,123 @@
         
       </div>
       
-    </main>
+    </main> -->
+
+
+    <!-- Content Area -->
+<main class="col-md-9 col-lg-10 px-4 pt-4">
+  <h1 class="mb-2" >WELCOME ADMIN</h1>
+  <div class="container mt-5">
+    <div class="row g-4 align-items-stretch">
+      <!-- First Colored Block -->
+      <div class="col-12 col-md-6">
+        <div class="card text-white bg-info h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <b><i class="fas fa-university"></i> About JSS Polytechnic</b>
+            </h5>
+            <p class="card-text">
+              The JSS Polytechnic, Mysuru was established in the year 1986. The campus is situated on an
+              extensive elevated stretch of over 6 Hectares in the JSS Technical Institutions’ Campus
+              to the west of the University of Mysuru, Manasagangothri..
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Colored Block -->
+      <div class="col-12 col-md-6">
+        <div class="card text-white bg-success h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <b><i class="fas fa-lightbulb"></i> Our Vision</b>
+            </h5>
+            <p class="card-text">
+              Our vision is to foster an environment of academic excellence and innovation, empowering
+              students to achieve their full potential and contribute to the global community.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+
+     
+
+      
+    <div class="col-12"> 
+        <div class="card bg-warning h-100 shadow-sm">
+          <div class="card-body">
+            <div class="container mt-5">
+              <h3 class="text-center mb-4 text-white"> <b><i class="fas fa-users"></i> Reporting Staff Details</b></h3>
+      
+              <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                  <div class="card bg-light">
+                    <div class="card-body text-center">
+                      <h5 class="card-title">Head of Department</h5>
+                      <p class="card-text"><b>Thejaswini</b></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="row justify-content-center">
+                <div class="d-flex flex-wrap justify-content-center">
+                  <div class="card m-2" *ngFor="let staff of staffMembers | slice:0:8" >
+                    <div class="card-body text-center">
+                      <h5 class="card-title">{{ staff.userName }}</h5>
+                      <p class="card-text">Lecturer</p>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #noStaff>
+                  <p>No staff members available.</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+            
+          
+
+
+
+<!-- blocks colour
+        <div class="container mt-5">
+          <h3 class="text-center mb-4"><b><i class="fas fa-users"></i> Reporting Staff Details</b></h3>
+        
+         
+          <div class="row justify-content-center mb-4">
+            <div class="col-auto">
+              <div class="card bg-primary text-white"> 
+                <div class="card-body text-center">
+                  <h5 class="card-title">Head of Department</h5>
+                  <p class="card-text"><b>Thejaswini</b></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="row justify-content-center">
+            <div class="d-flex flex-wrap justify-content-center">
+              <div class="card m-2 bg-success text-white" *ngFor="let staff of staffMembers"> 
+                <div class="card-body text-center">
+                  <h5 class="card-title">{{ staff.userName }}</h5>
+                  <p class="card-text">Lecturer</p> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        
+        
+    </div>
+  </div>
+</main>
+
+
   </div>
 </div>

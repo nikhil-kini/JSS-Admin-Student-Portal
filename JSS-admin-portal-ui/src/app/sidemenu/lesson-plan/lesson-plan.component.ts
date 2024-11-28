@@ -12,6 +12,7 @@ export interface Document {
   uploadDate?: Date;
   semester: string;
   documentCategory: string; 
+  documentPath: string;
 }
 
 @Component({
@@ -56,6 +57,7 @@ export class LessonPlanComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
+    localStorage.removeItem('userId');
       this.router.navigate(['/auth/login']);
     }
     personaldocuments(){
@@ -92,6 +94,7 @@ export class LessonPlanComponent {
         formData.append('fileType',  fileType || 'unknown');
         formData.append('uploadDate', this.uploadDate.toISOString());
         formData.append('userEmail', 'admin@example.com'); 
+       
         this.http.post<any>('http://localhost:8080/api/alldocuments/upload', formData)
           .subscribe({
             next: (response) => {

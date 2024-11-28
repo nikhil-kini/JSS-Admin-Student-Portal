@@ -55,6 +55,7 @@ export class PersonalDocumentsComponent implements OnInit{
     logout() {
       localStorage.removeItem('isAuthenticated'); 
     localStorage.removeItem('loginUser');
+    localStorage.removeItem('userId');
       this.router.navigate(['/auth/login']);
     }
     personaldocuments(){

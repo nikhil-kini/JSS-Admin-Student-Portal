@@ -51,6 +51,71 @@ public class AllDocumentController {
     }
 
 
+//    @PostMapping("/upload")
+//    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
+//                                                          @RequestParam("documentType") String documentType,
+//                                                          @RequestParam("fileName") String fileName,
+//                                                          @RequestParam("fileType") String fileType,
+//                                                          @RequestParam("uploadDate") String uploadDate,
+//                                                          @RequestParam("userEmail") String userEmail,
+//                                                          @RequestParam("semester") String semester,
+//                                                          @RequestParam("documentCategory") String documentCategory) {
+//
+//        Map<String, String> response = new HashMap<>();
+//        if (file.isEmpty()) {
+//            response.put("message", "File upload failed: File is empty");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//        }
+//
+//        try {
+//            String uploadDir = getUploadDirectory(semester);
+//            String originalFilename = file.getOriginalFilename();
+//            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
+//            String semesterSpecificFilename = semester + "_" + sanitizedFilename;
+//            Path path = Paths.get(uploadDir + semesterSpecificFilename);
+//
+//            if (Files.exists(path)) {
+//                response.put("message", "File with the same name already exists in this semester");
+//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+//            }
+//
+//            Files.createDirectories(path.getParent());
+//            Files.copy(file.getInputStream(), path);
+//            response.put("message", "File uploaded successfully: " + semesterSpecificFilename);
+//            response.put("downloadUrl", "/files/" + semesterSpecificFilename);
+//
+//            AllDocument document = new AllDocument();
+//            document.setDocumentType(documentType);
+//            document.setFileName(semesterSpecificFilename);
+//            document.setUploadDate(uploadDate);
+//            document.setFileType(fileType);
+//            document.setSemester(semester);
+//            document.setDocumentCategory(documentCategory);
+//
+//            Optional<User> userOptional = userRepo.findByEmail(userEmail);
+//            if (userOptional.isPresent()) {
+//                document.setUser(userOptional.get());
+//            } else {
+//                response.put("message", "User not found");
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//            }
+//
+//            allDocumentRepo.save(document);
+//
+//            response.put("documentId", document.getDocId().toString());
+//            response.put("uploadDate", document.getUploadDate());
+//            response.put("documentType", document.getDocumentType());
+//            response.put("documentCategory", document.getDocumentCategory());
+//
+//            return ResponseEntity.ok(response);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            response.put("message", "File upload failed: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//        }
+//    }
+
+
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
                                                           @RequestParam("documentType") String documentType,
@@ -60,7 +125,6 @@ public class AllDocumentController {
                                                           @RequestParam("userEmail") String userEmail,
                                                           @RequestParam("semester") String semester,
                                                           @RequestParam("documentCategory") String documentCategory) {
-
         Map<String, String> response = new HashMap<>();
         if (file.isEmpty()) {
             response.put("message", "File upload failed: File is empty");
@@ -69,20 +133,19 @@ public class AllDocumentController {
 
         try {
             String uploadDir = getUploadDirectory(semester);
-            String originalFilename = file.getOriginalFilename();
-            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
+            String sanitizedFilename = fileName.replaceAll("[<>:\"/\\|?*]", "_");
             String semesterSpecificFilename = semester + "_" + sanitizedFilename;
-            Path path = Paths.get(uploadDir + semesterSpecificFilename);
+            Path filePath = Paths.get(uploadDir + semesterSpecificFilename);
 
-            if (Files.exists(path)) {
+            if (Files.exists(filePath)) {
                 response.put("message", "File with the same name already exists in this semester");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             }
 
-            Files.createDirectories(path.getParent());
-            Files.copy(file.getInputStream(), path);
-            response.put("message", "File uploaded successfully: " + semesterSpecificFilename);
-            response.put("downloadUrl", "/files/" + semesterSpecificFilename);
+            Files.createDirectories(filePath.getParent());
+            Files.copy(file.getInputStream(), filePath);
+
+            String documentPath = filePath.toString();
 
             AllDocument document = new AllDocument();
             document.setDocumentType(documentType);
@@ -91,6 +154,7 @@ public class AllDocumentController {
             document.setFileType(fileType);
             document.setSemester(semester);
             document.setDocumentCategory(documentCategory);
+            document.setDocumentPath(documentPath); // Set the document path
 
             Optional<User> userOptional = userRepo.findByEmail(userEmail);
             if (userOptional.isPresent()) {
@@ -106,6 +170,7 @@ public class AllDocumentController {
             response.put("uploadDate", document.getUploadDate());
             response.put("documentType", document.getDocumentType());
             response.put("documentCategory", document.getDocumentCategory());
+            response.put("documentPath", document.getDocumentPath()); // Include documentPath in response
 
             return ResponseEntity.ok(response);
         } catch (IOException e) {
@@ -115,11 +180,9 @@ public class AllDocumentController {
         }
     }
 
-//    @GetMapping("/category/Teaching-aids/{semester}")
-//    public ResponseEntity<List<AllDocument>> getDocumentsBySemester(@PathVariable String semester) {
-//        List<AllDocument> documents = allDocumentRepo.findBySemesterAndDocumentCategory(semester, "TeachingAids");
-//        return ResponseEntity.ok(documents);
-//    }
+
+
+
 
     @GetMapping("/category/{documentCategory}/{semester}")
     public ResponseEntity<List<AllDocument>> getDocumentsByCategoryAndSemester(
@@ -128,6 +191,7 @@ public class AllDocumentController {
         List<AllDocument> documents = allDocumentRepo.findBySemesterAndDocumentCategory(semester, documentCategory);
         return ResponseEntity.ok(documents);
     }
+
 
 
     @GetMapping("/user/{id}")
@@ -170,41 +234,6 @@ public class AllDocumentController {
         }
     }
 
-
-//    @GetMapping("/viewFile/{semester}/{filename:.+}")
-//    public ResponseEntity<?> viewFile(@PathVariable String semester, @PathVariable String filename) {
-//        try {
-//            String uploadDir = getUploadDirectory(semester);
-//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
-//
-//            if (!Files.exists(filePath)) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//            }
-//
-//            Resource resource = new UrlResource(filePath.toUri());
-//            if (!resource.exists()) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//            }
-//
-//            String mimeType = Files.probeContentType(filePath);
-//            if (mimeType == null) {
-//                mimeType = "application/octet-stream";
-//            }
-//
-//            // If the file is a text or image file, it should be viewed in the browser
-//            if (mimeType.startsWith("text/") || mimeType.startsWith("image/") || mimeType.equals("application/pdf")) {
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_TYPE, mimeType)
-//                        .body(resource);
-//            } else {
-//                // If it's a download, the user will be prompted to download it
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
 
 
     @GetMapping("/viewFile/{semester}/{filename:.+}")
@@ -296,203 +325,3 @@ public class AllDocumentController {
 
 
 
-//    @PostMapping("/upload")
-//    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file,
-//                                                          @RequestParam("documentType") String documentType,
-//                                                          @RequestParam("fileName") String fileName,
-//                                                          @RequestParam("fileType") String fileType,
-//                                                          @RequestParam("uploadDate") String uploadDate,
-//                                                          @RequestParam("userEmail") String userEmail,  // Change to userEmail
-//                                                          @RequestParam("semester") String semester,
-//                                                          @RequestParam("documentCategory") String documentCategory) {
-//
-//        Map<String, String> response = new HashMap<>();
-//        if (file.isEmpty()) {
-//            response.put("message", "File upload failed: File is empty");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//        }
-//
-//        try {
-//            String uploadDir = getUploadDirectory(semester);
-//            String originalFilename = file.getOriginalFilename();
-//            String sanitizedFilename = originalFilename.replaceAll("[<>:\"/\\|?*]", "_");
-//            String semesterSpecificFilename = semester + "_" + sanitizedFilename;
-//            Path path = Paths.get(uploadDir + semesterSpecificFilename);
-//
-//            if (Files.exists(path)) {
-//                response.put("message", "File with the same name already exists in this semester");
-//                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-//            }
-//
-//            Files.createDirectories(path.getParent());
-//            Files.copy(file.getInputStream(), path);
-//            response.put("message", "File uploaded successfully: " + semesterSpecificFilename);
-//            response.put("downloadUrl", "/files/" + semesterSpecificFilename);
-//
-//            AllDocument document = new AllDocument();
-//            document.setDocumentType(documentType);
-//            document.setFileName(semesterSpecificFilename);
-//            document.setUploadDate(uploadDate);
-//            document.setFileType(fileType);
-//            document.setSemester(semester);
-//            document.setDocumentCategory(documentCategory);  // Store the category (LessonPlan, TeachingAids, QuestionBank)
-//
-//            // Find the user by email instead of userId
-//            Optional<User> userOptional = userRepo.findByEmail(userEmail);  // Query by email
-//            if (userOptional.isPresent()) {
-//                document.setUser(userOptional.get());
-//            } else {
-//                response.put("message", "User not found");
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-//            }
-//
-//            allDocumentRepo.save(document);
-//
-//            response.put("documentId", document.getDocId().toString());
-//            response.put("uploadDate", document.getUploadDate());
-//            response.put("documentType", document.getDocumentType());
-//            response.put("documentCategory", document.getDocumentCategory());  // Include the document category in the response
-//
-//            return ResponseEntity.ok(response);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            response.put("message", "File upload failed: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-//        }
-//    }
-//
-////    @GetMapping("/category/{category}")
-////    public ResponseEntity<List<AllDocument>> getDocumentsByCategory(@PathVariable String category) {
-////        List<AllDocument> documents = allDocumentRepo.findByDocumentCategory(category);
-////        return ResponseEntity.ok(documents);
-////    }
-//
-//    @GetMapping("/category/TeachingAids/{semester}")
-//    public ResponseEntity<List<AllDocument>> getDocumentsBySemester(@PathVariable String semester) {
-//        List<AllDocument> documents = allDocumentRepo.findBySemesterAndDocumentCategory(semester, "TeachingAids");
-//        return ResponseEntity.ok(documents);
-//    }
-//
-//    @GetMapping("/user/{id}")
-//    public ResponseEntity<List<AllDocument>> getDocumentsByUserId(@PathVariable Long id) {
-//        List<AllDocument> documents = allDocumentRepo.findByUserId(id);
-//        return ResponseEntity.ok(documents);
-//    }
-//
-//    @GetMapping("/{documentId}")
-//    public ResponseEntity<AllDocument> getDocumentById(@PathVariable Long documentId) {
-//        Optional<AllDocument> documentOptional = allDocumentRepo.findById(documentId);
-//        return documentOptional.map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-//    }
-//
-//    @GetMapping("/list")
-//    public ResponseEntity<List<String>> listUploadedFiles(@RequestParam String semester) {
-//        try {
-//            String uploadDir = getUploadDirectory(semester);
-//            File folder = new File(uploadDir);
-//            if (!folder.exists() || !folder.isDirectory()) {
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                        .body(Collections.singletonList("Error: Directory not found"));
-//            }
-//
-//            File[] files = folder.listFiles();
-//            if (files != null && files.length > 0) {
-//                List<String> fileNames = Arrays.stream(files)
-//                        .filter(File::isFile)
-//                        .map(File::getName)
-//                        .collect(Collectors.toList());
-//                return ResponseEntity.ok(fileNames);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(Collections.singletonList("Error: Unable to fetch file list"));
-//        }
-//    }
-//
-//
-//    @GetMapping("/viewFile/{semester}/{filename:.+}")
-//    public ResponseEntity<?> viewFile(@PathVariable String semester, @PathVariable String filename) {
-//        try {
-//            String uploadDir = getUploadDirectory(semester);
-//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
-//
-//            if (!Files.exists(filePath)) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//            }
-//
-//            Resource resource = new UrlResource(filePath.toUri());
-//            if (!resource.exists()) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//            }
-//
-//            String mimeType = Files.probeContentType(filePath);
-//            if (mimeType == null) {
-//                mimeType = "application/octet-stream";  // Default binary type
-//            }
-//
-//            // For text-based files
-//            if (mimeType.startsWith("text/") || mimeType.equals("application/json")) {
-//                String content = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_TYPE, mimeType)
-//                        .body(content);  // Return content as String
-//            }
-//            // For images, PDFs, and other types
-//            else if (mimeType.startsWith("image/") || mimeType.equals("application/pdf")) {
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_TYPE, mimeType)
-//                        .body(resource);  // Return the binary resource (image or PDF)
-//            }
-//            else {
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-//
-//    @GetMapping("/viewDocuments/TeachingAids")
-//    public ResponseEntity<List<AllDocument>> getTeachingAidsDocuments() {
-//        List<AllDocument> documents = allDocumentRepo.findByDocumentCategory("TeachingAids");
-//        return ResponseEntity.ok(documents);
-//    }
-//
-//    @GetMapping("/download/{semester}/{filename:.+}")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable String semester, @PathVariable String filename) {
-//        try {
-//            String uploadDir = getUploadDirectory(semester);
-//            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
-//
-//            if (!Files.exists(filePath)) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//            }
-//
-//            Resource resource = new UrlResource(filePath.toUri());
-//            if (!resource.exists()) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//            }
-//
-//            String mimeType = Files.probeContentType(filePath);
-//            if (mimeType == null) {
-//                mimeType = "application/octet-stream";
-//            }
-//
-//            return ResponseEntity.ok()
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//                    .header(HttpHeaders.CONTENT_TYPE, mimeType)
-//                    .body(resource);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-//
-//
-//}

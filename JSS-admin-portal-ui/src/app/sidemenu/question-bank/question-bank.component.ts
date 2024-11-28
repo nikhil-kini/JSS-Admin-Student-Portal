@@ -12,6 +12,7 @@ export interface Document {
   uploadDate?: Date;
   semester: string;
   documentCategory: string; 
+  documentPath: string;
 }
 @Component({
   selector: 'app-question-bank',
@@ -55,6 +56,7 @@ export class QuestionBankComponent {
     logout() {
       localStorage.removeItem('isAuthenticated'); 
       localStorage.removeItem('loginUser');
+      localStorage.removeItem('userId');
         this.router.navigate(['/auth/login']);
     }
     personaldocuments(){
