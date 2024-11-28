@@ -144,6 +144,8 @@ export class QuestionBankComponent {
       }
     }
     
+
+  
     
 
     viewQuestionBank() {

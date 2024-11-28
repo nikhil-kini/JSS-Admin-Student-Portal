@@ -1,24 +1,120 @@
-<div class="container org-chart">
-  <!-- HOD Section -->
-  <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <div class="node">HOD</div>
-    </div>
+<!-- <div class="text-center">
+  <input class="form-control" type="file" 
+          (change)="onChange($event)">
+
+  <button (click)="onUpload()" 
+      class="btn btn-success">
+      Upload
+  </button>
+</div>
+
+
+<div class="container text-center jumbotron"
+  *ngIf="shortLink">
+  <h2> Visit Here</h2>
+  <a href="{{shortLink}}">{{shortLink}}</a>
+</div>
+
+
+<div class="container" *ngIf="loading">
+  <h3>Loading ...</h3>
+</div> -->
+
+
+
+<!-- <div class="row">
+  <div class="col-8">
+    <label class="btn btn-default p-0">
+      <input type="file" (change)="selectFile($event)" />
+    </label>
   </div>
 
-  <!-- Line connecting HOD to staff -->
-  <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <div class="line-horizontal"></div>
-    </div>
-  </div>
-
-  <!-- 6 Staff under HOD in the Same Row -->
-  <div class="row justify-content-center">
-    <div *ngFor="let member of staff" class="col-2">
-      <div class="line-vertical"></div>
-      <div class="node">{{ member }}</div>
-      <div class="line-vertical"></div>
-    </div>
+  <div class="col-4">
+    <button class="btn btn-success btn-sm" [disabled]="!currentFile" (click)="upload()">
+      Upload
+    </button>
   </div>
 </div>
+
+
+<div *ngIf="message">
+  <div class="alert alert-secondary" role="alert">{{ message }}</div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">List of Files</div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" *ngFor="let file of fileInfos">
+     
+      <a *ngIf="file.endsWith('.docx')" 
+         [href]="'https://docs.google.com/gview?url=http://localhost:8080/updown/files/' + file + '&embedded=true'" 
+         target="_blank">
+        {{ file }}
+      </a>
+
+     
+      <a *ngIf="!file.endsWith('.docx')" 
+         [href]="'http://localhost:8080/updown/files/' + file" 
+         target="_blank">
+        {{ file }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<ng-template #loading>
+  <p>Loading files...</p>
+</ng-template>
+
+<div *ngFor="let file of fileInfos">
+  <a [href]="'http://localhost:8080/updown/files/' + file" target="_blank">{{ file }}</a>
+</div>
+ -->
+
+
+ <div class="row">
+  <div class="col-8">
+    <label class="btn btn-default p-0">
+      <input type="file" (change)="selectFile($event)" />
+    </label>
+  </div>
+
+  <div class="col-4">
+    <button
+      class="btn btn-success btn-sm"
+      [disabled]="!selectedFiles"
+      (click)="upload()"
+    >
+      Upload
+    </button>
+  </div>
+</div>
+
+<div *ngIf="currentFile" class="progress my-3">
+  <div
+    class="progress-bar progress-bar-info"
+    role="progressbar"
+    attr.aria-valuenow="{{ progress }}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [ngStyle]="{ width: progress + '%' }"
+  >
+    {{ progress }}%
+  </div>
+</div>
+
+<div *ngIf="message" class="alert alert-secondary" role="alert">
+  {{ message }}
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">List of Files</div>
+  <ul class="list-group list-group-flush">
+    <li *ngFor="let file of fileInfos | async" class="list-group-item">
+      <!-- Link to open the file in the browser -->
+      <a [href]="file.url" target="_blank">{{ file.name }}</a>
+    </li>
+  </ul>
+</div>
+

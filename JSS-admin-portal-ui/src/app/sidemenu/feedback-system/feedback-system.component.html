@@ -85,7 +85,7 @@
               />
             </div>
         
-            <!-- Button Toolbar -->
+           
             <div class="btn-toolbar mb-4 d-flex justify-content-center" role="toolbar">
               <button type="button" class="btn btn-primary me-2" (click)="displayManageFeedbacks()">Manage Feedbacks</button>
               <div class="btn-group me-2" role="group" id="create-feedback-btn-group" *ngIf="!isUserRole(5)">
@@ -95,7 +95,7 @@
               </div>
             </div>
         
-            <!-- Table Display -->
+          
             <table id="DisplayFeedbackList" class="table table-striped table-hover" *ngIf="showTable">
               <thead class="thead-dark">
                 <tr>
@@ -107,7 +107,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let feedback of paginatedFeedbacks; let i = index" 
-                    [ngClass]="{'table-warning': highlightedFeedbacks.includes(feedback)}">
+                 [ngClass]="{'table-warning': highlightedFeedbacks.includes(feedback)}">
                   <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
                   <td>{{ feedback.question }}</td>
                   <td>{{ feedback.answer }}</td>
@@ -115,14 +115,14 @@
                 </tr>
               </tbody>
             </table>
-            <!-- Pagination Controls -->
+            
             <div class="pagination-controls d-flex justify-content-center mt-4" *ngIf="showTable">
               <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
               <span>Page {{ currentPage }} of {{ totalPages }}</span>
               <button class="btn btn-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
             </div>
         
-            <!-- Add Feedback Form -->
+            
             <div id="AddFeedbackForm" *ngIf="showAddForm" class="d-flex justify-content-center mt-4">
               <div class="w-100 p-4" style="max-width: 600px; border: 1px solid #ccc; border-radius: 8px;">
                 <h3 class="text-center">Add Feedback</h3>
@@ -149,7 +149,6 @@
               </div>
             </div>
         
-            <!-- Modal for Creating Feedback Question -->
             <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">

@@ -172,11 +172,7 @@ export class FeedbackSystemComponent {
   }
   
 
-  updatePagination(): void {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.paginatedFeedbacks = this.feedbacks.slice(startIndex, endIndex);
-  }
+ 
   
   goToPage(page: number): void {
     if (page > 0 && page <= this.totalPages) {
@@ -185,6 +181,44 @@ export class FeedbackSystemComponent {
     }
   }
   
+  
+
+  
+
+ 
+
+
+  performSearch(): void {
+    const searchTermLower = this.searchTerm.trim().toLowerCase();
+  
+    if (searchTermLower === '') {
+      
+      this.highlightedFeedbacks = [];
+      this.updatePagination(); 
+      return;
+    }
+  
+    
+    this.highlightedFeedbacks = this.feedbacks.filter(feedback =>
+      feedback.question.toLowerCase().includes(searchTermLower)
+    );
+  
+    
+    this.currentPage = 1; 
+    this.paginatedFeedbacks = this.highlightedFeedbacks.slice(0, this.pageSize);
+    this.totalPages = Math.ceil(this.highlightedFeedbacks.length / this.pageSize);
+  }
+  
+  
+
+  updatePagination(): void {
+    const source = this.highlightedFeedbacks.length > 0 ? this.highlightedFeedbacks : this.feedbacks;
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedFeedbacks = source.slice(startIndex, endIndex);
+  }
+  
+
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -196,26 +230,6 @@ export class FeedbackSystemComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.updatePagination();
-    }
-  }
-  
-
-  
-
-  performSearch(): void {
-    if (this.searchTerm.trim() === '') {
-      this.updatePagination(); // Reset to show all feedbacks if the search term is empty
-      this.highlightedFeedbacks = [];
-    } else {
-      // Find feedbacks that match the complete question
-      this.highlightedFeedbacks = this.feedbacks.filter(feedback =>
-        feedback.question.toLowerCase() === this.searchTerm.toLowerCase()
-      );
-  
-      // Only display the matched feedbacks
-      this.paginatedFeedbacks = this.highlightedFeedbacks;
-      this.totalPages = Math.ceil(this.paginatedFeedbacks.length / this.pageSize);
-      this.goToPage(1); // Reset to the first page of the filtered results
     }
   }
   
