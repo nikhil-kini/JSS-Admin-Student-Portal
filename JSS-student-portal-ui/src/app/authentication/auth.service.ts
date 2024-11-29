@@ -9,29 +9,42 @@ export class AuthService {
 
   
   
-private baseUrl = 'http://localhost:8080/users/register1';
+  private apiUrl = 'http://localhost:8080/users';  
 
   constructor(private http: HttpClient) {}
 
-  // Encrypt using Base64
-  private encrypt(data: string): string {
-    return btoa(data); // Base64 encode
+  
+  login(credentials: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials);
   }
 
-  // Decrypt using Base64 (if needed later)
-  private decrypt(data: string): string {
-    return atob(data); // Base64 decode
+  getStudentData(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/student`);
   }
 
-  login(userData: any): Observable<any> {
-    console.log('Calling backend API');
-    userData.password = this.encrypt(userData.password); // Encrypt password
-    return this.http.post<any>(`${this.baseUrl}/login`, userData);
+  // Method to register a new staff member with multipart form data
+  registerStaff(staffData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, staffData, { responseType: 'text' });
   }
 
-  registerUser(userData: any): Observable<any> {
-    console.log("Making registerUser http call", userData);
-    userData.password = this.encrypt(userData.password); // Encrypt password
-    return this.http.post(this.baseUrl, userData);
+  // Method to login a user
+  loginUser(credentials: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials);
   }
+
+  // Method to update staff details
+  updateStaff(staff: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update/${staff.id}`, staff, { responseType: 'text' });
+  }
+
+  // Method to change password
+  changePassword(passwordData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/change-password`, passwordData, { responseType: 'text' });
+  }
+
+  // Method to delete a staff member
+  deleteStaff(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${id}`, { responseType: 'text' });
+  }
+
 }

@@ -4,7 +4,7 @@
       <div class="circle"></div>
       <h1>Student Register</h1>
     
-       <img src="/student.jpg"> 
+       <!-- <img src="/student.jpg">  -->
   </div>
 
   
@@ -12,126 +12,209 @@
 
 
                       <div class="registration-card">
-                        <h2>STUDENT REGISTER FORM</h2>
+                        <h1><b>STUDENT REGISTER FORM</b></h1>
                         <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-                    
+              
+                            <div class="form-group-row" style="display: flex; gap: 10px;">
+                              <div class="form-group" style="flex: 1;">
+                                  <label for="userName">Student Name:</label>
+                                  <input type="text" id="userName" name="userName" [(ngModel)]="student.userName" required #userName="ngModel">
+                                  <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="error">
+                                      User name is required.
+                                  </div>
+                              </div>
+
+                              <div class="form-group" style="flex: 1;">
+                                <label for="regno">Register No:</label>
+                                <input type="text" id="regno" name="regno" [(ngModel)]="student.regno" required #regno="ngModel">
+                                <div *ngIf="regno.invalid && (regno.dirty || regno.touched)" class="error">
+                                    Register No is required.
+                                </div>
+                            </div>
+
+
                             
-
-                            <div class="form-group-row" style="display: flex; gap: 10px;">
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="userName">Student Name:</label>
-                                    <input type="text" id="userName" name="userName" [(ngModel)]="student.userName" required #userName="ngModel">
-                                    <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="error">
-                                        User name is required.
-                                    </div>
-                                </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="regno">Register No:</label>
-                                    <input type="text" id="regno" name="regno" [(ngModel)]="student.regno" required #regno="ngModel">
-                                    <div *ngIf="regno.invalid && (regno.dirty || regno.touched)" class="error">
-                                        Register No is required.
-                                    </div>
-                                </div>
+                              
                             </div>
-                    
+                  
+                          
+                          <div class="form-group-row" style="display: flex; gap: 10px;">
                            
-                            <div class="form-group-row" style="display: flex; gap: 10px;">
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="phoneno">Phone No:</label>
-                                    <input type="text" id="phoneno" name="phoneno" [(ngModel)]="student.phoneno" required #phoneno="ngModel">
-                                    <div *ngIf="phoneno.invalid && (phoneno.dirty || phoneno.touched)" class="error">
-                                        Phone No is required.
-                                    </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="adharno">Adhar No:</label>
+                                <input type="text" id="adharno" name="adharno" [(ngModel)]="student.adharno" class="form-control" required #adharno="ngModel">
+                                <div *ngIf="adharno.invalid && (adharno.dirty || adharno.touched)" class="error">
+                                  Adhar No is required.
                                 </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="address">Address:</label>
-                                    <input type="text" id="address" name="address" [(ngModel)]="student.address" required #address="ngModel">
-                                    <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
-                                        Address is required.
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address" [(ngModel)]="student.address" required #address="ngModel">
+                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
+                            Address is required.
+                        </div>
+                    </div>  
 
-                            <div class="form-group-row" style="display: flex; gap: 10px;">
-                               
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="email">Email:</label>
-                                    <!-- <input type="email" id="email" name="email" [(ngModel)]="student.email" required #email="ngModel">
-                                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                                        Email is required.
-                                    </div> -->
-                                    <input type="email" id="email" name="email" [(ngModel)]="student.email" required class="ng-untouched ng-pristine ng-invalid" autocomplete="username">
-
-                                </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="password">Password:</label>
-                                    <input type="password" id="password" name="password" [(ngModel)]="student.password" required #password="ngModel" class="ng-dirty ng-valid ng-touched" autocomplete="current-password">
-                                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
-                                        Password is required.
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="form-group-row" style="display: flex; gap: 10px;">
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="dept">Department:</label>
-                                    <input type="text" id="dept" name="dept" [(ngModel)]="student.dept" required #dept="ngModel">
-                                    <div *ngIf="dept.invalid && (dept.dirty || dept.touched)" class="error">
-                                    Department is required.
-                                </div>
-                                </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="semester">Semester:</label>
-                                    <select id="semester" name="semester" [(ngModel)]="student.semester" required #semester="ngModel">
-                                  <option value="" disabled selected>Select Semester</option>
-                                   <option *ngFor="let sem of [1, 2, 3, 4, 5, 6]" [value]="sem">Semester {{ sem }}</option>
-                                  </select>
-                                  <div *ngIf="semester.invalid && (semester.dirty || semester.touched)" class="error">
-                                   Semester is required.
-                                  </div>
-                                  </div>
-                                </div>
-
+                           
+                              
+                        </div>
+              
+                        <div class="form-group-row" style="display: flex; gap: 10px;">
+                           
+                            <div class="form-group" style="flex: 1;">
+                                <label for="email">Email:</label>
                                 
-                    
-                           
-                            <div class="form-group-row" style="display: flex; gap: 10px;">
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="momphoneno">Mother Phoneno:</label>
-                                    <input type="text" id="momphoneno" name="momphoneno" [(ngModel)]="student.momphoneno" required #momphoneno="ngModel">
-                                    <div *ngIf="momphoneno.invalid && (momphoneno.dirty || momphoneno.touched)" class="error">
-                                        Mother Phoneno is required.
-                                    </div>
-                                </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label for="dadphoneno">Father Phoneno:</label>
-                                    <input type="text" id="dadphoneno" name="dadphoneno" [(ngModel)]="student.dadphoneno" required #dadphoneno="ngModel">
-                                    <div *ngIf="dadphoneno.invalid && (dadphoneno.dirty || dadphoneno.touched)" class="error">
-                                        Father Phoneno is required.
-                                    </div>
+                               
+                                <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                [(ngModel)]="student.email"
+                                required
+                                #email="ngModel"
+                                email
+                              />
+                              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                                Valid email is required.
+                              </div>
+                              
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" [(ngModel)]="student.password" required #password="ngModel" class="ng-dirty ng-valid ng-touched" autocomplete="current-password">
+                                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+                                    Password is required.
                                 </div>
                             </div>
-                    
-                           
+                        </div>
+                
+                        <div class="form-group-row" style="display: flex; gap: 10px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="dept">Department:</label>
+                                <input type="text" id="dept" name="dept" [(ngModel)]="student.dept" required #dept="ngModel">
+                                <div *ngIf="dept.invalid && (dept.dirty || dept.touched)" class="error">
+                                Department is required.
+                            </div>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="semester">Semester:</label>
+                                <select id="semester" name="semester" [(ngModel)]="student.semester" required #semester="ngModel">
+                              <option value="" disabled selected>Select Semester</option>
+                               <option *ngFor="let sem of [1, 2, 3, 4, 5, 6]" [value]="sem">Semester {{ sem }}</option>
+                              </select>
+                              <div *ngIf="semester.invalid && (semester.dirty || semester.touched)" class="error">
+                               Semester is required.
+                              </div>
+                              </div>
 
-                            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-                              <div class="form-group" style="flex: 1;">
-                                  <label for="marksCard">Upload Marks Card:</label>
-                                  <input type="file" id="marksCard" name="marksCard" (change)="onFileSelect($event, 'marksCard')" required>
-                              </div>
-                              <div class="form-group" style="flex: 1;">
-                                  <label for="photo">Upload Photo:</label>
-                                  <input type="file" id="photo" name="photo" (change)="onFileSelect($event, 'photo')" required>
-                              </div>
-                          </div>
-                    
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+                             
+                            </div>
+              
+                            
+                
+                       
+                        <div class="form-group-row" style="display: flex; gap: 10px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="phoneno">Student Phoneno:</label>
+                                  
+                                  <input
+                                  type="text"
+                                  id="phoneno"
+                                  name="phoneno"
+                                  [(ngModel)]="student.phoneno"
+                                   required
+                                   pattern="^[0-9]{10}$"
+                                  #phoneno="ngModel"
+                                     />
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="momphoneno">Mother Phoneno:</label>
+                                <input type="text" id="momphoneno" name="momphoneno" [(ngModel)]="student.momphoneno" required pattern="^[0-9]{10}$" #momphoneno="ngModel">
+                                <div *ngIf="momphoneno.invalid && (momphoneno.dirty || momphoneno.touched)" class="error">
+                                    Mother Phoneno is required.
                                 </div>
                             </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="dadphoneno">Father Phoneno:</label>
+                                <input type="text" id="dadphoneno" name="dadphoneno" [(ngModel)]="student.dadphoneno" required pattern="^[0-9]{10}$" #dadphoneno="ngModel">
+                                <div *ngIf="dadphoneno.invalid && (dadphoneno.dirty || dadphoneno.touched)" class="error">
+                                    Father Phoneno is required.
+                                </div>
+                            </div>
+                        </div>
+              
+                        <div class="form-group-row" style="display: flex; gap: 10px;">
+                         
+                         
+                      </div>
                     
-                        </form>
+                
+                      <div class="form-group-row" style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="studyCertificate">Upload Study Certificate:</label>
+                            <input type="file" id="studyCertificate" name="studyCertificate" (change)="onFileSelectSC($event)" required>
+                        </div>
+
+                        <div class="form-group" style="flex: 1;">
+                            <label for="adharCard">Upload adhar card:</label>
+                            <input type="file" id="adharCard" name="adharCard" class="form-control" (change)="onFileSelectadharCard($event)" required>
+                        </div>
+                      
+                        <div class="form-group" style="flex: 1;">
+                            <label for="transferCertificate">Upload TC:</label>
+                            <input type="file" id="transferCertificate" name="transferCertificate" (change)="onFileSelectTC($event)" required>
+                        </div>
+                    </div>
+              
+                    <div class="form-group-row" style="display: flex; gap: 10px;">
+                     
+                     
+                  </div>
+              
+              
+                  <div class="form-group-row" style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="incomeCertificate">Upload Income Certificate:</label>
+                        <input type="file" id="incomeCertificate" name="incomeCertificate" (change)="onFileSelectIC($event)" required>
+                    </div>
+                  
+                    <div class="form-group" style="flex: 1;">
+                        <label for="casteCertificate">Upload Caste Certificate:</label>
+                        <input type="file" id="casteCertificate" name="casteCertificate" (change)="onFileSelectCC($event)" required>
+                    </div>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label for="migrationCertificate">Upload Migration Certificate:</label>
+                        <input type="file" id="migrationCertificate" name="migrationCertificate" (change)="onFileSelectMC($event)" required>
+                    </div>
+                </div>
+              
+              
+                    <div class="form-group-row" style="display: flex; gap: 10px;">
+                          <div class="form-group" style="flex: 1;">
+                              <label for="studsslcmarksCard">Upload Marks Card:</label>
+                              <input type="file" id="studsslcmarksCard" name="studsslcmarksCard" (change)="onFileSelectstudMarkscard($event)" required>
+                          </div>
+                          <div class="form-group" style="flex: 1;">
+                              <label for="studphoto">Upload Photo:</label>
+                              <input type="file" id="studphoto" name="studphoto" (change)="onFileSelectstudphoto($event)" required>
+                          </div>
+
+                          <div class="form-group" style="flex: 1;">
+                            <label for="physicalFitness">Upload Physical Fitness Certificate:</label>
+                            <input type="file" id="physicalFitness" name="physicalFitness" (change)="onFileSelectPF($event)" required>
+                        </div>
+                      
+                      </div>
+                
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <button type="submit" [disabled]="registerForm.invalid">Register</button>
+                            </div>
+                        </div>
+                
+                    </form>
+              
                     
                         <div class="login-link">
                             <p>Already have an account? <a routerLink="/auth/login">Login here</a></p>

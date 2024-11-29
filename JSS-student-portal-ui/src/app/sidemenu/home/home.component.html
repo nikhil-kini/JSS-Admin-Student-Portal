@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row no-gutters">
-    <!-- Sidebar -->
+    
     <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
       <div class="position-sticky">
         <ul class="nav flex-column">
@@ -12,6 +12,11 @@
           <li class="nav-item mb-3">
             <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
               <i class="bi bi-calendar3 mr-2"></i> Time Table
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a routerLink="/staff-management" routerLinkActive="active" (click)="staffmanagement()" class="nav-link text-white">
+              <i class="bi bi-person-fill mr-2"></i> Staff Management
             </a>
           </li>
           <li class="nav-item mb-3">
@@ -63,61 +68,162 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
+    
+   
     <main class="col-md-9 col-lg-10 px-4 pt-4">
-      <div class="text-center">
-        <h1>Welcome {{ username }}</h1>
-        <p>
-          The JSS Polytechnic, Mysuru was established in the year 1986. The campus is situated on an
-          extensive elevated stretch of over 6 Hectares in the JSS Technical Institutions’ 
-          Campus to the west of the University of Mysuru, Manasagangothri.
-        </p>
-        
-        <h2>Our Vision</h2>
-        <p>
-          Our vision is to foster an environment of academic excellence and innovation, empowering students to 
-          achieve their full potential and contribute to the global community.
-        </p>
-    
-        <h2>Programs and Courses Offered</h2>
-        <p>
-          JSS Polytechnic offers a diverse range of diploma programs designed to equip students with practical skills 
-          and knowledge across various fields. Some of our core programs include:
-        </p>
-        <ul class="text-left">
-          <li>Computer Science and Engineering</li>
-          <li>Electronics and Communication Engineering</li>
-          <li>Mechanical Engineering</li>
-          <li>Civil Engineering</li>
-          <li>Information Science and Engineering</li>
-        </ul>
-    
-        <h2>Key Features of Our Campus</h2>
-        <p>
-          JSS Polytechnic is well-equipped with state-of-the-art facilities that cater to the academic and 
-          extracurricular needs of students. Key features include:
-        </p>
-        <ul class="text-left">
-          <li>Modern classrooms and labs</li>
-          <li>Experienced faculty and staff</li>
-          <li>Comprehensive library with digital access</li>
-          <li>On-campus hostel and cafeteria</li>
-          <li>Well-maintained sports facilities</li>
-        </ul>
-    
-        <h2>Reporting Staff Details</h2>
-        <p>
-          Our dedicated staff members work tirelessly to ensure the smooth functioning of the institution. 
-          They are committed to providing an enriching learning experience and supporting students throughout their 
-          academic journey.
-        </p>
-    
-        <h2>Contact Us</h2>
-        <p>
-          For more information, feel free to reach out to our administration office. We are here 
-          to answer any questions you may have about our programs, campus facilities, and admission process.
-        </p>
+     <h1 class="mb-2" >Welcome {{ username }}</h1>
+    <div class="container mt-5">
+    <div class="row g-4 align-items-stretch">
+     
+      <div class="col-12 col-md-6">
+        <div class="card text-white bg-warning h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <b><i class="fas fa-university"></i> About JSS Polytechnic</b>
+            </h5>
+            <p class="card-text">
+              The JSS Polytechnic, Mysuru was established in the year 1986. The campus is situated on an
+              extensive elevated stretch of over 6 Hectares in the JSS Technical Institutions’ Campus
+              to the west of the University of Mysuru, Manasagangothri..
+            </p>
+          </div>
+        </div>
       </div>
-    </main>
+
+     
+      <div class="col-12 col-md-6">
+        <div class="card text-white bg-success h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <b><i class="fas fa-lightbulb"></i> Our Vision</b>
+            </h5>
+            <p class="card-text">
+              Our vision is to foster an environment of academic excellence and innovation, empowering
+              students to achieve their full potential and contribute to the global community.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+      <!-- <div class="col-12"> 
+        <div class="card bg-warning h-100 shadow-sm">
+          <div class="card-body">
+            <div class="container mt-5">
+              <h3 class="text-center mb-4 text-white"> <b><i class="fas fa-users"></i> Loggedin Student Details</b></h3>
+      
+              <div *ngIf="loggedInStudent; else loading">
+                <p>Username: {{ loggedInStudent.userName }}</p>
+                <p>Email: {{ loggedInStudent.email }}</p>
+                <p>Contact No: {{ loggedInStudent.phoneno }}</p>
+                <p>Address: {{ loggedInStudent.address }}</p>
+                <p>Department: {{ loggedInStudent.dept }}</p>
+                <p>Semester: {{ loggedInStudent.semester }}</p>
+
+                 <div *ngIf="studentPhotoPath">
+                  <img [src]="'http://localhost:8080/users/student1/photo/' + studentPhotoPath" alt="Student Photo" width="100" height="100">
+                </div> 
+
+                
+ 
+              </div>
+                
+              
+              
+              <ng-template #loading>
+                <p>Loading student data...</p>
+              </ng-template>
+              
+              
+              
+      
+            
+          
+
+
+
+
+      
+        </div>
+
+     
+    </div>
+    </div>
+    
+      </div>
+    </div>
+      </div>
+      
+  </main> -->
+
+
+  <!-- <div class="container text-center">
+    <div class="logo"></div>
+    <h1> Saifuddin Syed </h1>
+    <h3> CSE Grad | Enthusiast </h3>
+    <p class="bio">
+      I think of myself as possessing a critical, dynamic, and perpetual intelligence which I intend to allow it to operate.
+    </p>
+    <p class="social">
+      <a title="Facebook" target="_blank" href="https://www.facebook.com/100006665290943">
+        <i class="s-btn fab fa-facebook-f"></i></a>
+      <a title="Instagram" target="_blank" href="https://www.instagram.com/saifylovezyou">
+        <i class="s-btn fab fa-instagram"></i></a>
+      <a title="Twitter" target="_blank" href="https://twitter.com/saifylovezyou">
+        <i class="s-btn fab fa-twitter"></i></a>
+      <a title="Codepen" target="_blank" href="https://codepen.io/saify/">
+        <i class="s-btn fab fa-codepen"></i></a>
+      <a title="Linkedin" target="_blank" href="https://www.linkedin.com/in/saifuddins/">
+        <i class="s-btn fab fa-linkedin-in"></i></a>
+    </p>
+  </div> -->
+  
+<div class="col-12"></div>
+  <div class="col-12 container-fluid col-md-6"> 
+    <div class="card bg-dark h-100 shadow-sm">
+      <!-- <div class="card"> -->
+        <!-- <div class="container mt-5"> -->
+          <!-- <h4 class="text-center mb-4 text-black"> <b><i class="fas fa-users"></i>  Loggedin Student Details</b></h4> -->
+          <h4 class="text-center mb-4 text-white" style="padding-top: 15px;"> 
+            <b><i class="fas fa-users"></i> Loggedin Student Details</b>
+        </h4>
+        
+          <div class="card-body bg-primary" style="padding-top: 5px; padding-bottom: 5px;">
+            <div *ngIf="loggedInStudent; else loading" class="text-dark" >
+             
+              <!-- <div class="mb-3"> -->
+                <div class="logo"></div>
+                <p><strong class="text-white">Username:</strong> {{ loggedInStudent.userName }}</p>
+                <p><strong class="text-white">Student ID:</strong> {{ loggedInStudent.regno }}</p>
+                <p><strong class="text-white">Email:</strong> {{ loggedInStudent.email }}</p>
+                <p><strong class="text-white">Contact No:</strong> {{ loggedInStudent.phoneno }}</p>
+                <p><strong class="text-white">Address:</strong> {{ loggedInStudent.address }}</p>
+                <p><strong class="text-white">Department:</strong> {{ loggedInStudent.dept }}</p>
+                <p><strong class="text-white">Semester:</strong> {{ loggedInStudent.semester }}</p>
+
+                
+  
+                <!-- Uncomment to show student photo if path exists -->
+                <!-- <div *ngIf="studentPhotoPath" class="text-center mt-3">
+                  <img [src]="'http://localhost:8080/users/student1/photo/' + studentPhotoPath" alt="Student Photo" class="img-thumbnail rounded-circle" width="100">
+                </div> -->
+              <!-- </div> -->
+            </div>
+  
+            <!-- Loading template -->
+            <ng-template #loading>
+              <div class="text-center">
+                <p>Loading student data...</p>
+              </div>
+            </ng-template>
+          </div>
+        <!-- </div> -->
+      <!-- </div> -->
+     </div>
+    </div>
+   </div>
   </div>
+     </main>
+  
+
+  
 </div>

@@ -5,7 +5,7 @@ DELETE FROM users WHERE role='Admin' AND email LIKE 'oldadmin@%';
 
 -- Insert new Admin users only if they don't already exist
 INSERT INTO users (id, email, password, role)
-SELECT 1, 'admin@example.com', 'YWRtaW4xMjM=', 'Admin'
+SELECT 1, 'admin@example.com', 'admin123', 'Admin'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'admin@example.com');
 
 --INSERT INTO users (id, email, password, role)

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient, HttpClientModule, HttpErrorResponse} from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -13,32 +14,37 @@ import { HttpClient, HttpClientModule, HttpErrorResponse} from '@angular/common/
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  student = {
+//   student = {
     
-    password: '',
-    email: '',
+//     password: '',
+//     email: '',
     
-  };
+//   };
 
-  private http = inject(HttpClient);
-  private router = inject(Router);
-registrationForm: any;
+  
+
+//   constructor(private router: Router,private http: HttpClient,private authservice: AuthService) {}
+// registrationForm: any;
 
  
+
+
 
 // onSubmit() {
 //   console.log("Attempting to log in with:", this.student);
- 
-//   this.http.post('http://localhost:8080/register-user/login', this.student, { responseType: 'text' })
+
+//   this.http.post<any>('http://localhost:8080/users/login', this.student, { responseType: 'json' })
 //     .subscribe({
-//       next: (response) => { 
+//       next: (response) => {
 //         console.log('Login Success:', response);
-//         localStorage.setItem('isAuthenticated', 'true'); 
-//         localStorage.setItem('loginUser', this.student.email);
+
         
+//         localStorage.setItem('isAuthenticated', 'true');
+//         localStorage.setItem('loginUser', this.student.email);  
+//         localStorage.setItem('username', response.userName);    
 
 //         console.log('Navigating to dashboard...');
-//         this.router.navigate(['/dashboard']);
+//         this.router.navigate(['/sidemenu/home']);
 //         alert("Login Successful");
 //       },
 //       error: (error: HttpErrorResponse) => {
@@ -47,31 +53,33 @@ registrationForm: any;
 //       }
 //     });
 // }
-
 // }
 
-
+student = {
+  email: '',
+  password: '',
+};
+constructor(private router: Router,private http: HttpClient,private authservice: AuthService) {}
 onSubmit() {
-  console.log("Attempting to log in with:", this.student);
+  console.log('Attempting to log in with:', this.student);
 
-  this.http.post<any>('http://localhost:8080/users/login', this.student, { responseType: 'json' })
-    .subscribe({
-      next: (response) => {
-        console.log('Login Success:', response);
+  this.http.post<any>('http://localhost:8080/users/login', this.student).subscribe({
+    next: (response) => {
+      console.log('Login Success:', response);
 
-        // Assuming the backend returns a 'username' field along with other details
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('loginUser', this.student.email);  // Store email
-        localStorage.setItem('username', response.userName);    // Store username
+      // Store authentication info in local storage
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('loginUser', response.email);
+      localStorage.setItem('username', response.userName);
 
-        console.log('Navigating to dashboard...');
-        this.router.navigate(['/dashboard']);
-        alert("Login Successful");
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error('Login Error:', error);
-        alert("Login Unsuccessful");
-      }
-    });
+      // Navigate to the home page
+      this.router.navigate(['/sidemenu/home']);
+      alert('Login Successful');
+    },
+    error: (error: HttpErrorResponse) => {
+      console.error('Login Error:', error);
+      alert('Login Unsuccessful. Please check your credentials.');
+    },
+  });
 }
 }
