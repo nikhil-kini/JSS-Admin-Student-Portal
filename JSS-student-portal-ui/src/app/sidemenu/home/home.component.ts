@@ -59,6 +59,8 @@ export class HomeComponent implements OnInit{
       localStorage.removeItem('isAuthenticated');  
     localStorage.removeItem('loginUser'); 
     localStorage.removeItem('userId'); 
+    localStorage.removeItem('username');
+    localStorage.removeItem('Semester');
       this.router.navigate(['/auth/login']);
     }
     constructor(private router: Router,private http:HttpClient) {}

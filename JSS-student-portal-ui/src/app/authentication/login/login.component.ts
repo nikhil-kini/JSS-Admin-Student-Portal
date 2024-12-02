@@ -71,7 +71,10 @@ onSubmit() {
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('loginUser', response.email);
       localStorage.setItem('username', response.userName);
+      // localStorage.setItem('Semester',response.semester);
 
+      const formattedSemester = `Sem${response.semester}`;
+        localStorage.setItem('Semester', formattedSemester);
       // Navigate to the home page
       this.router.navigate(['/sidemenu/home']);
       alert('Login Successful');

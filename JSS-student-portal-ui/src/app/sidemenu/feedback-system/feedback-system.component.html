@@ -84,20 +84,14 @@
             />
           </div>
 
+
           
           <div class="btn-toolbar mb-4 d-flex justify-content-center" role="toolbar">
             <button type="button" class="btn btn-primary me-2" (click)="displayManageFeedbacks()">Manage Feedbacks</button>
             <button type="button" class="btn btn-outline-primary me-2" (click)="displayAddFeedbackForm()">Add Feedback</button>
           </div>
         
-          <!-- <div class="input-group mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by Feedback Name" [(ngModel)]="searchTerm" (input)="performSearch()">
-          </div>
-         -->
-
          
-        
-        <!-- Table Display -->
 <table id="DisplayFeedbackList" class="table table-striped table-hover" *ngIf="showTable">
   <thead class="thead-dark">
     <tr>
@@ -118,13 +112,35 @@
   </tbody>
 </table>
 
+<!-- <table id="DisplayFeedbackList" class="table table-striped table-hover" *ngIf="showTable">
+  <thead class="thead-dark">
+    <tr>
+      <th>S.No</th>
+      <th>Feedback Question</th>
+      <th>Feedback Answer</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let feedback of paginatedFeedbacks; let i = index"
+        [ngClass]="{'table-warning': highlightedFeedbacks.includes(feedback)}">
+      <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+      <td>{{ feedback.question }}</td>
+      <td>{{ feedback.answer }}</td>
+      <td>{{ feedback.username || 'Admin' }}</td> 
+    </tr>
+  </tbody>
+</table>
+ -->
+
         
         
-        <div class="pagination-controls d-flex justify-content-center mt-4" *ngIf="showTable">
-          <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-          <span>Page {{ currentPage }} of {{ totalPages }}</span>
-          <button class="btn btn-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-        </div>
+<div class="pagination-controls d-flex justify-content-center mt-4" *ngIf="showTable">
+  <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button class="btn btn-secondary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+</div>
+
         
          
         

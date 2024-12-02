@@ -6,6 +6,7 @@ import com.example.adminlogin.repository.AllDocumentRepo;
 
 import com.example.adminlogin.repository.UserRepo;
 import jakarta.annotation.PostConstruct;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.UrlResource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.core.io.Resource;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/alldocuments")
 public class AllDocumentController {
@@ -232,13 +234,36 @@ public class AllDocumentController {
 //    }
 //
 
+//    @GetMapping("/category/{documentCategory}/{semester}")
+//    public ResponseEntity<List<AllDocument>> getDocumentsByCategoryAndSemester(
+//            @PathVariable("documentCategory") String documentCategory,
+//            @PathVariable("semester") String semester) {
+//        List<AllDocument> documents = allDocumentRepo.findBySemesterAndDocumentCategory(semester, documentCategory);
+//        return ResponseEntity.ok(documents);
+//    }
+
     @GetMapping("/category/{documentCategory}/{semester}")
     public ResponseEntity<List<AllDocument>> getDocumentsByCategoryAndSemester(
             @PathVariable("documentCategory") String documentCategory,
             @PathVariable("semester") String semester) {
+
+        // Log the received parameters
+        System.out.println("Fetching documents for Category: " + documentCategory + " and Semester: " + semester);
+
+        // Query the database
         List<AllDocument> documents = allDocumentRepo.findBySemesterAndDocumentCategory(semester, documentCategory);
+
+        // Log the fetched documents
+        if (documents.isEmpty()) {
+            System.out.println("No documents found for Category: " + documentCategory + " and Semester: " + semester);
+        } else {
+            System.out.println("Found " + documents.size() + " documents.");
+        }
+
         return ResponseEntity.ok(documents);
     }
+
+
 
 
     @GetMapping("/user/{id}")
@@ -369,6 +394,29 @@ public class AllDocumentController {
 
 
     }
+
+//    @GetMapping("/category/{documentCategory}/{semester}")
+//    public ResponseEntity<List<AllDocument>> getDocumentsByCategoryAndSemester1(
+//            @PathVariable("documentCategory") String documentCategory,
+//            @PathVariable("semester") String semester) {
+//        List<AllDocument> documents = allDocumentRepo.findBySemesterAndDocumentCategory(semester, documentCategory);
+//        return ResponseEntity.ok(documents);
+//    }
+
+//    @GetMapping("/category/{category}/{semester}")
+//    public ResponseEntity<Resource> downloadTimetable(
+//            @PathVariable String category,
+//            @PathVariable String semester) throws IOException {
+//        // Generate or retrieve the timetable file (Example: CSV file)
+//        String filename = semester + "_timetable.csv";
+//        Path filePath = Paths.get("path/to/generated/files/" + filename);
+//        Resource resource = new FileSystemResource(filePath);
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .body(resource);
+//    }
 
 }
 
