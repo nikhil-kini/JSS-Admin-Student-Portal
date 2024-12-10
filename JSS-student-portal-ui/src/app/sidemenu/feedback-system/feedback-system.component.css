@@ -41,8 +41,12 @@ body {
 main {
   margin-left: 250px; /* Space for the fixed sidebar */
   padding: 40px;
-  background-color: #ecf0f1;
+  background-color: #a4bd4a;
   min-height: 100vh;
+  /* background-image:  url('/pic1.jpg');; */
+  background-position: center;
+  background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat;
 }
 
 main h1 {
@@ -79,10 +83,10 @@ main p {
   }
 }
 
-#FeedbackSystemTitle {
+/* #FeedbackSystemTitle {
   font-size: 2rem;
   color: #343a40;
-}
+} */
 
 .table-striped {
   border: 1px solid #dee2e6;

@@ -15,6 +15,9 @@ import { TeachingAidsComponent } from './sidemenu/teaching-aids/teaching-aids.co
 
 // import { StudentregComponent } from './studentreg/studentreg.component';
 import { PersonalDocumentsComponent } from './sidemenu/personal-documents/personal-documents.component';
+import { Login1Component } from './login1/login1.component';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { SettingsComponent } from './dashboard/settings/settings.component';
 // import { ChangedPasswordComponent } from './changed-password/changed-password.component';
 
 
@@ -33,12 +36,29 @@ export const routes: Routes = [
     loadChildren: () => import('./sidemenu/sidemenu.module').then(m => m.SidemenuModule) 
   },
 
+  // lazyloading
+  {
+    path: 'lazyload', 
+    loadChildren: () => import('./lazyloadmodule/lazyloadmodule.module').then(m => m.LazyloadmoduleModule) 
+  },
  
-  
+  // child routes
   {
     path:"dashboard",
     component:DashboardComponent,
-    // canActivate: [authGuard]
+    children: [
+      { path: 'profile', component: ProfileComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'login1', component: Login1Component },
+    ],
+  
+    
+  },
+
+  {
+    path:"login1",
+    component:Login1Component,
+   
   },
   
   

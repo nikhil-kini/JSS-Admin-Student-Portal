@@ -43,6 +43,10 @@ main {
   padding: 40px;
   background-color: #a4bd4a;
   min-height: 100vh;
+  background-image:  url('/docu1.jpg');;
+  background-position: center;
+  background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat;
 }
 
 main h1 {
@@ -78,3 +82,17 @@ main p {
     text-align: center;
   }
 }
+
+
+.sidebar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	border-bottom: 1px solid #444;
+  }
+  
+  .sidebar-header .btn {
+	color: #fff;
+	border-color: #fff;
+  }

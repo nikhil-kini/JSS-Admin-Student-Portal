@@ -28,9 +28,9 @@ export class HomeComponent implements OnInit{
     this.router.navigate(['/sidemenu/time-table']);
 
   }
-  studentsmanagement(){
-    this.router.navigate(['/sidemenu/students-management']);
-  }
+  // studentsmanagement(){
+  //   this.router.navigate(['/sidemenu/students-management']);
+  // }
   attendancemanagement(){
     this.router.navigate(['/sidemenu/attendance-management']);
   }
@@ -49,12 +49,12 @@ export class HomeComponent implements OnInit{
     teachingaids(){
       this.router.navigate(['/sidemenu/teaching-aids']);
     }
-    personaldocuments(){
-      this.router.navigate(['/sidemenu/personal-documents'])
-    }
-    staffmanagement(){
-      this.router.navigate(['/sidemenu/staff-management'])
-    }
+    // personaldocuments(){
+    //   this.router.navigate(['/sidemenu/personal-documents'])
+    // }
+    // staffmanagement(){
+    //   this.router.navigate(['/sidemenu/staff-management'])
+    // }
     logout() {
       localStorage.removeItem('isAuthenticated');  
     localStorage.removeItem('loginUser'); 

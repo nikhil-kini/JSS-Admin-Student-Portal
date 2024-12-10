@@ -17,6 +17,7 @@ body {
     height: 100vh; /* Full viewport height */
     margin: 0; /* Remove default margin */
     background-image: url('/jsscollege.avif');
+    /* background-image: url('/docu2.jpg'); */
   }
 
 .brand-logo {

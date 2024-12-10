@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row no-gutters">
    
     <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
@@ -101,7 +101,7 @@
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <!-- <th class="text-center">Download Timetable</th> -->
+                 
                 </tr>
               </thead>
               <tbody>
@@ -124,4 +124,63 @@
     
     
       </div>
-    </div>
+    </div> -->
+
+<p>From dashboard</p>
+<!-- Interpolation -->
+{{name + num}}
+<br>
+
+<!-- Property binding -->
+<img [src]="imageSrc" alt="Example Image">
+<br>
+
+<!-- Event binding -->
+<button (click)="increment()">Increment</button>
+<p>Count: {{ count }}</p>
+
+<!-- two way data binding -->
+<input [(ngModel)]="userName" placeholder="Enter your name">
+<p>Hello, {{ userName }}!</p>
+
+<p>Don't have an account? <a routerLink="/login1">Login</a></p>
+
+<h1>Dashboard</h1>
+<nav>
+  <ul>
+    <li><a routerLink="profile" routerLinkActive="active">Profile</a></li>
+    <li><a routerLink="settings" routerLinkActive="active">Settings</a></li>
+    <li><a routerLink="login1" routerLinkActive="active">Login1</a></li>
+  </ul>
+</nav>
+<router-outlet></router-outlet>
+
+<!-- <body>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form>
+           <label for="email">Email:</label>
+          <input type="email" placeholder="Email" required>
+           <label for="password">Password:</label>
+          <input type="password" placeholder="Password" required>
+          <button type="submit" (click)="onLogin()">Login</button>
+         
+      </form>
+  </div>
+</body> -->
+
+
+<!-- Interpolation -->
+<!-- {{name + num}}
+<br>
+
+Property binding
+<img [src]="imageSrc" alt="Example Image">
+<br>
+
+Event binding
+<button (click)="increment()">Increment</button>
+<p>Count: {{ count }}</p>
+
+<input [(ngModel)]="userName" placeholder="Enter your name">
+<p>Hello, {{ userName }}!</p> -->

@@ -21,9 +21,9 @@ export class QuestionBankComponent {
     this.router.navigate(['/sidemenu/time-table']);
 
   }
-  studentsmanagement(){
-    this.router.navigate(['/sidemenu/students-management']);
-  }
+  // studentsmanagement(){
+  //   this.router.navigate(['/sidemenu/students-management']);
+  // }
   attendancemanagement(){
     this.router.navigate(['/sidemenu/attendance-management']);
   }
@@ -43,14 +43,17 @@ export class QuestionBankComponent {
       this.router.navigate(['/sidemenu/teaching-aids']);
     }
     logout() {
-      localStorage.removeItem('isAuthenticated'); 
-      localStorage.removeItem('loginUser');
-        this.router.navigate(['/auth/login']);
+      localStorage.removeItem('isAuthenticated');  
+    localStorage.removeItem('loginUser'); 
+    localStorage.removeItem('userId'); 
+    localStorage.removeItem('username');
+    localStorage.removeItem('Semester');
+      this.router.navigate(['/auth/login']);
     }
-    personaldocuments(){
+    // personaldocuments(){
       
-      this.router.navigate(['/sidemenu/personal-documents'])
-    }
+    //   this.router.navigate(['/sidemenu/personal-documents'])
+    // }
 
     lessonplandocuments: any[] = []; 
     selectedDocumentCategory: string = 'QuestionBank'; 

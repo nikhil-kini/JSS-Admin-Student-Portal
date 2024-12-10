@@ -1,4 +1,7 @@
-body {
+
+
+   
+   body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Arial', sans-serif;
@@ -36,12 +39,15 @@ body {
 	color: #ffcc00;
   }
   
-  /* Content area styling */
   main {
-	margin-left: 250px; /* Space for the fixed sidebar */
+	margin-left: 130px; 
 	padding: 40px;
-	background-color: #ecf0f1;
+	background-color: #a4bd4a;
 	min-height: 100vh;
+	background-image:  url('/pic1.jpg');;
+	background-position: center;
+	background-size: cover; 
+	  background-repeat: no-repeat;
   }
   
   main h1 {
@@ -64,7 +70,7 @@ body {
 	line-height: 1.6;
   }
   
-  /* Responsive adjustments */
+  
   @media (max-width: 768px) {
 	.sidebar {
 	  position: relative;
@@ -78,77 +84,18 @@ body {
 	}
   }
   
-  /* Center-align the header text and adjust margins */
-  .header-container {
-	background-color: #195998; /* Light background for the header */
-	border: 3px solid #0a0909;    /* Light border for definition */
-	border-radius: 8px;        /* Rounded corners */
-	padding: 18px;             /* Padding around header content */
-	margin-bottom: 15px; 
-		 
+
+  .sidebar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	border-bottom: 1px solid #444;
   }
   
-  /* Styling for the Select Semester label */
-  .header-container .form-label {
-	font-weight: 700;
-	margin-bottom: 0;
-	font-size: 1 rem; 
+  .sidebar-header .btn {
+	color: #fff;
+	border-color: #fff;
   }
+
   
-  /* Align button vertically in line with the dropdown */
-  .header-container .btn {
-	margin-top: auto;
-	margin-bottom: auto;
-	padding: 4px 12px;            /* Reduced button padding */
-	font-size: 1 rem;
-  }
-  
-  /* Center the main header title */
-  .header-title {
-	margin: 0;
-	font-size: 2 rem;
-	font-weight: 700;
-	color: #333;
-  }
-  
-  /* Table styling for a cleaner look */
-  .table-bordered th,
-  .table-bordered td {
-	text-align: center;
-	vertical-align: middle;
-	border-radius: 8px;
-  }
-  .form-select-sm {
-	max-width: 150px; /* Set the desired width here */
-  }
-  .small-dropdown {
-	width: 120px;         /* Adjust the width as desired */
-	padding: 0.25rem 0.5rem; /* Reduced padding for a smaller look */
-	font-size: 0.875rem;  /* Smaller font size */
-  }
-  
-  .btn-green {
-	background-color: #28a745; /* Custom green shade */
-	color: white;
-	border: none;
-  }
-  
-  .btn-green:hover {
-	background-color: #218838; /* Darker green for hover effect */
-  }
-  .btn-upload {
-	padding: 12px 30px;         /* Increase padding for larger button */
-	font-size: 1.25rem;         /* Larger font size */
-	border-radius: 8px;         /* Optional: maintain rounded corners */
-  }
-  
-  main {
-	border: 2px solid black;   
-	border-radius: 5px;         
-	padding: 12px;             
-  }
-  
-  body, html {
-	height: 100%;               
-	margin: 0;
-  }

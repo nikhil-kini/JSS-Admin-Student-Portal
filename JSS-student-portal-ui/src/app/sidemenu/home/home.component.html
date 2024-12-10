@@ -19,11 +19,11 @@
               <i class="bi bi-person-fill mr-2"></i> Staff Management
             </a>
           </li> -->
-          <li class="nav-item mb-3">
+          <!-- <li class="nav-item mb-3">
             <a routerLink="/students-management" routerLinkActive="active" (click)="studentsmanagement()" class="nav-link text-white">
               <i class="bi bi-person-workspace mr-2"></i> Students Management
             </a>
-          </li>
+          </li> -->
           <li class="nav-item mb-3">
             <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
               <i class="bi bi-check-square mr-2"></i> Attendance Management
@@ -54,11 +54,11 @@
               <i class="bi bi-easel mr-2"></i> Teaching Aids
             </a>
           </li>
-          <li class="nav-item mb-3">
+          <!-- <li class="nav-item mb-3">
             <a routerLink="/personal-documents" routerLinkActive="active" (click)="personaldocuments()" class="nav-link text-white">
               <i class="bi bi-folder mr-2"></i> Personal Documents
             </a>
-          </li>
+          </li> -->
           <li class="nav-item mb-3">
             <a (click)="logout()" class="nav-link text-white">
               <i class="bi bi-box-arrow-right mr-2"></i> Logout
@@ -71,7 +71,11 @@
     
    
     <main class="col-md-9 col-lg-10 px-4 pt-4">
+      <div class="col-12 container-fluid col-md-5"> 
+      <div class="card text-white bg-white h-10 shadow-sm">
      <h1 class="mb-2" >Welcome {{ username }}</h1>
+    </div>
+  </div>
     <div class="container mt-5">
     <div class="row g-4 align-items-stretch">
      
@@ -105,78 +109,7 @@
         </div>
       </div>
     
-      <!-- <div class="col-12"> 
-        <div class="card bg-warning h-100 shadow-sm">
-          <div class="card-body">
-            <div class="container mt-5">
-              <h3 class="text-center mb-4 text-white"> <b><i class="fas fa-users"></i> Loggedin Student Details</b></h3>
       
-              <div *ngIf="loggedInStudent; else loading">
-                <p>Username: {{ loggedInStudent.userName }}</p>
-                <p>Email: {{ loggedInStudent.email }}</p>
-                <p>Contact No: {{ loggedInStudent.phoneno }}</p>
-                <p>Address: {{ loggedInStudent.address }}</p>
-                <p>Department: {{ loggedInStudent.dept }}</p>
-                <p>Semester: {{ loggedInStudent.semester }}</p>
-
-                 <div *ngIf="studentPhotoPath">
-                  <img [src]="'http://localhost:8080/users/student1/photo/' + studentPhotoPath" alt="Student Photo" width="100" height="100">
-                </div> 
-
-                
- 
-              </div>
-                
-              
-              
-              <ng-template #loading>
-                <p>Loading student data...</p>
-              </ng-template>
-              
-              
-              
-      
-            
-          
-
-
-
-
-      
-        </div>
-
-     
-    </div>
-    </div>
-    
-      </div>
-    </div>
-      </div>
-      
-  </main> -->
-
-
-  <!-- <div class="container text-center">
-    <div class="logo"></div>
-    <h1> Saifuddin Syed </h1>
-    <h3> CSE Grad | Enthusiast </h3>
-    <p class="bio">
-      I think of myself as possessing a critical, dynamic, and perpetual intelligence which I intend to allow it to operate.
-    </p>
-    <p class="social">
-      <a title="Facebook" target="_blank" href="https://www.facebook.com/100006665290943">
-        <i class="s-btn fab fa-facebook-f"></i></a>
-      <a title="Instagram" target="_blank" href="https://www.instagram.com/saifylovezyou">
-        <i class="s-btn fab fa-instagram"></i></a>
-      <a title="Twitter" target="_blank" href="https://twitter.com/saifylovezyou">
-        <i class="s-btn fab fa-twitter"></i></a>
-      <a title="Codepen" target="_blank" href="https://codepen.io/saify/">
-        <i class="s-btn fab fa-codepen"></i></a>
-      <a title="Linkedin" target="_blank" href="https://www.linkedin.com/in/saifuddins/">
-        <i class="s-btn fab fa-linkedin-in"></i></a>
-    </p>
-  </div> -->
-  
 <div class="col-12"></div>
   <div class="col-12 container-fluid col-md-6"> 
     <div class="card bg-dark h-100 shadow-sm">

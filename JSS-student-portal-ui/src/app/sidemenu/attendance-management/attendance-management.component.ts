@@ -19,9 +19,9 @@ export class AttendanceManagementComponent {
     this.router.navigate(['/sidemenu/time-table']);
 
   }
-  studentsmanagement(){
-    this.router.navigate(['/sidemenu/students-management']);
-  }
+  // studentsmanagement(){
+  //   this.router.navigate(['/sidemenu/students-management']);
+  // }
   attendancemanagement(){
     this.router.navigate(['/sidemenu/attendance-management']);
   }
@@ -40,12 +40,15 @@ export class AttendanceManagementComponent {
     teachingaids(){
       this.router.navigate(['/sidemenu/teaching-aids']);
     }
-    personaldocuments(){
-      this.router.navigate(['/sidemenu/personal-documents'])
-    }
+    // personaldocuments(){
+    //   this.router.navigate(['/sidemenu/personal-documents'])
+    // }
     logout() {
-      localStorage.removeItem('isAuthenticated'); 
-    localStorage.removeItem('loginUser');  
+      localStorage.removeItem('isAuthenticated');  
+    localStorage.removeItem('loginUser'); 
+    localStorage.removeItem('userId'); 
+    localStorage.removeItem('username');
+    localStorage.removeItem('Semester');
       this.router.navigate(['/auth/login']);
     }
 }
