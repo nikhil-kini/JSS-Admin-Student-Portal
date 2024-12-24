@@ -51,6 +51,11 @@
             </a>
           </li>
           <li class="nav-item mb-3">
+            <a routerLink="/subject-management" routerLinkActive="active" (click)="subjectmanagement()" class="nav-link text-white">
+              <i class="bi bi-journal mr-2"></i> Subject Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
             <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
               <i class="bi bi-easel mr-2"></i> Teaching Aids
             </a>
@@ -69,124 +74,13 @@
       </div>
     </nav>
 
-   
-
-    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4">
-      
-        <div class="registration-card">
-          <h2>STAFF REGISTER FORM</h2>
-          <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-            
-            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-              <div class="form-group" style="flex: 1;">
-                <label for="userName">Staff Name:</label>
-                <input type="text" id="userName" name="userName" [(ngModel)]="staff.userName" class="form-control" required #userName="ngModel">
-                <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="error">
-                  Staff Name is required.
-                </div>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                
-                  <label for="staffProfile">Upload Staff Profile:</label>
-                  <input type="file" id="staffProfile" name="staffProfile" class="form-control"(change)="onFileSelectStaffProfile($event)" required />
-             
-                
-              </div>
-            </div>
-    
-          
-            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-              <div class="form-group" style="flex: 1;">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" [(ngModel)]="staff.email" class="form-control" required #email="ngModel">
-                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                  Email is required.
-                </div>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" [(ngModel)]="staff.password" required #password="ngModel" class="ng-dirty ng-valid ng-touched" autocomplete="current-password">
-                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
-                    Password is required.
-                </div>
-            </div>
-          </div>
-
-          <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-            <div class="form-group" style="flex: 1;">
-              <label for="adharno">Adhar No:</label>
-              <input type="text" id="adharno" name="adharno" [(ngModel)]="staff.adharno" class="form-control" required #adharno="ngModel">
-              <div *ngIf="adharno.invalid && (adharno.dirty || adharno.touched)" class="error">
-                Adhar No is required.
-              </div>
-            </div>
-            <div class="form-group" style="flex: 1;">
-                <label for="panCardNumber">PAN Card No:</label>
-                <input type="text" id="panCardNumber" name="panCardNumber" [(ngModel)]="staff.panCardNumber" class="form-control" required #panCardNumber="ngModel">
-              <div *ngIf="panCardNumber.invalid && (panCardNumber.dirty || panCardNumber.touched)" class="error">
-                Pancard number is required.
-              </div>
-          </div>
-        </div>
-
-          <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-              <div class="form-group" style="flex: 1;">
-                <label for="phoneno">Phone No:</label>
-                <input type="text" id="phoneno" name="phoneno" [(ngModel)]="staff.phoneno" class="form-control" required #phoneno="ngModel">
-                <div *ngIf="phoneno.invalid && (phoneno.dirty || phoneno.touched)" class="error">
-                  Phone No is required.
-                </div>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" [(ngModel)]="staff.address" class="form-control" required #address="ngModel">
-                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
-                  Address is required.
-                </div>
-              </div>
-            </div>
-
-            
-          
-            
-    
-            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-              <div class="form-group" style="flex: 1;">
-                <label for="sslcMarksCard">Upload SSLC Marks Card:</label>
-                <input type="file" id="sslcMarksCard" name="sslcMarksCard" class="form-control" (change)="onFileSelectSSLC($event)" required>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label for="beMarksCard">Upload BE Marks Card:</label>
-                <input type="file" id="beMarksCard" name="beMarksCard" class="form-control" (change)="onFileSelectBE($event)" required>
-              </div>
-            </div>
-    
-            <div class="form-group-row" style="display: flex; gap: 10px; align-items: center;">
-              <div class="form-group" style="flex: 1;">
-                <label for="degreeCertificate">Upload Degree Certificate:</label>
-                <input type="file" id="degreeCertificate" name="degreeCertificate" class="form-control" (change)="onFileSelectDegree($event)" required>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label for="photo">Upload Photo:</label>
-                <input type="file" id="photo" name="photo" class="form-control" (change)="onFileSelectPhoto($event)" required>
-              </div>
-            </div>
-    
-           
-            <div class="form-row">
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block" [disabled]="registerForm.invalid">Register</button>
-              </div>
-            </div>
-          </form>
-    
-          
-       
-      </div>
-    </main>
-     -->
+ 
      <main class="col-md-9 col-lg-10 px-4 pt-4">
+      <div class="back-button-container">
+        <button class="back-button" (click)="Goback()">Back</button>
+      </div>
      <div class="registration-container">
+      
       <div class="registration-card">
         <h2 class="header">Staff Registration Form</h2> 
        
@@ -292,6 +186,7 @@
         </form>
       </div>
     </div>
+    
    </main>
     
   </div>

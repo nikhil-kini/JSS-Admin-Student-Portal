@@ -103,7 +103,13 @@ export class StudentRegistrationComponent {
       this.router.navigate(['/sidemenu/staff-management'])
     }
 
-    
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
+
+    Goback(){
+      this.router.navigate(['/sidemenu/students-management'])
+    }
 
 
 student: Student = {

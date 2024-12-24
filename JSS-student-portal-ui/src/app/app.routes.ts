@@ -18,6 +18,7 @@ import { PersonalDocumentsComponent } from './sidemenu/personal-documents/person
 import { Login1Component } from './login1/login1.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 // import { ChangedPasswordComponent } from './changed-password/changed-password.component';
 
 
@@ -60,6 +61,7 @@ export const routes: Routes = [
     component:Login1Component,
    
   },
+  { path: '**', component: PageNotFoundComponent }
   
   
   

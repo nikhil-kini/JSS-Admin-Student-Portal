@@ -62,6 +62,9 @@ export class StudentManagementComponent implements OnInit{
       this.router.navigate(['/sidemenu/staff-management'])
     }
 
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
     openregister() {
       this.router.navigate(['/sidemenu/students-registration']);
     }

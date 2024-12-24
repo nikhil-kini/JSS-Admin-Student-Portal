@@ -82,6 +82,10 @@ export class TeachingAidsComponent  {
       this.router.navigate(['/sidemenu/staff-management'])
     }
 
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
+
 
     selectedSemester: string = '';
     selectedDocumentCategory: string = 'TeachingAids';

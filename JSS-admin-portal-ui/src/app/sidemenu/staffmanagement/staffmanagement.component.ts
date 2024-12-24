@@ -67,6 +67,10 @@ export class StaffmanagementComponent implements OnInit{
       this.router.navigate(['/sidemenu/staff-management'])
     }
 
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
+
     openregister() {
       this.router.navigate(['/sidemenu/staff-registration']);
     }
@@ -213,7 +217,7 @@ export class StaffmanagementComponent implements OnInit{
   // constructor(private router: Router, private http: HttpClient, private staffService: StaffService) {}
 
   currentPage: number = 1;  
-  itemsPerPage: number = 10; 
+  itemsPerPage: number = 8; 
   totalItems: number = 0;   
   pagedStaffList: any[] = [];  
   staffList: any[] = [];

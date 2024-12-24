@@ -52,5 +52,8 @@ export class AttendanceManagementComponent {
     localStorage.removeItem('userId');
       this.router.navigate(['/auth/login']);
     }
-
+    
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
 }

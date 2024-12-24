@@ -159,6 +159,7 @@ name: string = 'Hello, Angular!';
 num:number=124;
 
 // Property binding 
+ isdisabled=true;
 imageSrc: string = 'https://example.com/image.jpg';
 
 // Event binding
@@ -167,7 +168,40 @@ increment() {
   this.count++;
 }
 
+
+open(){
+  
+  alert('Welcome to jupiter king technologies');
+  console.log('Welcome to jupiter king technologies');
+}
+
 userName: string = '';
+
+//  ngif directive
+isVisible = true;
+
+toggle() {
+  this.isVisible = !this.isVisible;
+}
+
+// ngfor directive
+items = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
+
+// ngclass
+isHighlighted = true;
+
+  toggle1() {
+    this.isHighlighted = !this.isHighlighted;
+  }
+
+// ngstyle
+  textColor = 'blue';
+  fontSize = '16px';
+
+  toggle2() {
+    this.textColor = this.textColor === 'blue' ? 'red' : 'blue';
+    this.fontSize = this.fontSize === '16px' ? '20px' : '16px';
+  }
 
 // email: string = '';
 // password: string = '';

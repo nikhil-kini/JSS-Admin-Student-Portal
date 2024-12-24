@@ -51,6 +51,11 @@
               </a>
             </li>
             <li class="nav-item mb-3">
+              <a routerLink="/subject-management" routerLinkActive="active" (click)="subjectmanagement()" class="nav-link text-white">
+                <i class="bi bi-journal mr-2"></i> Subject Management
+              </a>
+            </li>
+            <li class="nav-item mb-3">
               <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
                 <i class="bi bi-easel mr-2"></i> Teaching Aids
               </a>
@@ -73,7 +78,7 @@
      
        <main class="col-md-9 col-lg-10 px-4 pt-4">
         <div class="text-center">
-          <h1> STAFF MANAGEMENT</h1>
+          <h3> STAFF MANAGEMENT</h3>
           <button class="btn btn-primary" (click)="openregister()">ADD STAFF</button>
         </div>
 
@@ -81,7 +86,7 @@
 
         <div class="container mt-4">
           <div class="text-center">
-            <h3>Staff Details</h3>
+            <h1>Staff Details</h1>
             <div class="mb-3">
               <input
                 type="text"

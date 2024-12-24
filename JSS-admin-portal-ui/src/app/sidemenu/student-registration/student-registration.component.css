@@ -219,4 +219,35 @@ body {
     margin-bottom: 5px;
   }
   
+  /* Container for the button to ensure proper alignment */
+.back-button-container {
+  position: absolute; /* Position relative to the page */
+  top: 20px;          /* Adjust vertical position */
+  left: 300px;         /* Adjust horizontal position */
+}
+
+/* Back button styling */
+.back-button {
+  background-color: #007bff; /* Blue background */
+  color: white;             /* White text */
+  border: none;             /* No border */
+  border-radius: 5px;       /* Slightly rounded corners */
+  padding: 5px 10px;        /* Smaller padding for reduced size */
+  font-size: 0.8rem;        /* Smaller font size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.back-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);    /* Slight zoom effect */
+}
+
+.back-button:active {
+  background-color: #004080; /* Even darker blue on click */
+  transform: scale(0.95);    /* Subtle shrink effect on click */
+}
+
+
   

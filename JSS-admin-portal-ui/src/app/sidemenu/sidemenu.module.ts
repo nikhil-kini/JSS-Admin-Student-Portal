@@ -16,6 +16,7 @@ import { StaffmanagementComponent } from './staffmanagement/staffmanagement.comp
 import { StaffRegistrationComponent } from './staff-registration/staff-registration.component';
 import { StudentRegistrationComponent } from './student-registration/student-registration.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SubjectManagementComponent } from './subject-management/subject-management.component';
 // import { StaffRegistrationComponent } from './staffmanagement/staff-registration/staff-registration.component';
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path:'teaching-aids',component: TeachingAidsComponent,canActivate: [authGuard]},
   {path:'time-table',component: TimetableComponent,canActivate: [authGuard]},
   {path:'staff-management',component: StaffmanagementComponent,canActivate: [authGuard]},
-    { path: 'staff-registration', component: StaffRegistrationComponent,canActivate: [authGuard] }
+    { path: 'staff-registration', component: StaffRegistrationComponent,canActivate: [authGuard] },
+    { path: 'subject-management', component: SubjectManagementComponent,canActivate: [authGuard] }
   
   
 ];
@@ -45,7 +47,7 @@ const routes: Routes = [
     HomeComponent,IAModuleComponent,
     LessonPlanComponent,PersonalDocumentsComponent,
     QuestionBankComponent,StudentManagementComponent,
-    TeachingAidsComponent,TimetableComponent,StaffmanagementComponent,NgxPaginationModule 
+    TeachingAidsComponent,TimetableComponent,StaffmanagementComponent,NgxPaginationModule,SubjectManagementComponent
   ],
   exports: [RouterModule]
 })

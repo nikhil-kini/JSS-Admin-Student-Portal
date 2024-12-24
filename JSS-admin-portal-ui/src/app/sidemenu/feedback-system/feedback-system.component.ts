@@ -60,7 +60,9 @@ export class FeedbackSystemComponent {
       this.router.navigate(['/sidemenu/staff-management'])
     }
    
- 
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
 
   feedbacks: any[] = [];
   feedbackQuestions: any[] = [];

@@ -128,27 +128,72 @@
 
 <p>From dashboard</p>
 <!-- Interpolation -->
+ <p><b>Interpolation</b></p>
 {{name + num}}
 <br>
 
 <!-- Property binding -->
+ <p><b>Property binding</b></p>
+<input  type="text" value="nithya">
+<input [disabled]="isdisabled" type="text" value="nithya">
+
+<br>
 <img [src]="imageSrc" alt="Example Image">
 <br>
 
 <!-- Event binding -->
+ <p><b>Event binding</b></p>
 <button (click)="increment()">Increment</button>
 <p>Count: {{ count }}</p>
 
+<button (click)="open()">Click</button>
+<br>
+
+
 <!-- two way data binding -->
+ <p><b>two way data binding</b></p>
 <input [(ngModel)]="userName" placeholder="Enter your name">
 <p>Hello, {{ userName }}!</p>
 
 <p>Don't have an account? <a routerLink="/login1">Login</a></p>
 
+
+<!-- ngif directive -->
+ <p><b>ngif directive</b></p>
+ 
+<button (click)="toggle()">Toggle Paragraph</button>
+
+<p *ngIf="isVisible">This paragraph is visible.</p>
+
+<!-- ngfor directive -->
+ <p><b>ngfor directive</b></p>
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+
+<!-- ngclass dire -->
+ <p><b>ngclass directive</b></p>
+<button (click)="toggle1()">Toggle Class</button>
+
+<p [ngClass]="{'highlight': isHighlighted, 'error': !isHighlighted}">
+  This paragraph's style changes based on the condition.
+</p>
+
+<!-- ngstyle dire -->
+ <p><b>ngstyle directive</b></p>
+<button (click)="toggle2()">Toggle Styles</button>
+
+<p [ngStyle]="{'color': textColor, 'font-size': fontSize}">
+  This paragraph's style changes dynamically.
+</p>
+
+
+<!-- child routes -->
+ <p><b>child routes</b></p>
 <h1>Dashboard</h1>
 <nav>
   <ul>
-    <li><a routerLink="profile" routerLinkActive="active">Profile</a></li>
+    <li><a routerLink="profile" >Profile</a></li>
     <li><a routerLink="settings" routerLinkActive="active">Settings</a></li>
     <li><a routerLink="login1" routerLinkActive="active">Login1</a></li>
   </ul>

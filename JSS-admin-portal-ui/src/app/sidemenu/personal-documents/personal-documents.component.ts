@@ -66,7 +66,9 @@ export class PersonalDocumentsComponent implements OnInit{
     staffmanagement(){
       this.router.navigate(['/sidemenu/staff-management'])
     }
-
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
 
 
     baseUrl = 'http://localhost:8080/api/pdocu';

@@ -64,6 +64,10 @@ export class TimetableComponent {
       this.router.navigate(['/sidemenu/staff-management'])
     }
 
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
+
 
     semesters = [1, 2, 3, 4, 5, 6];
     days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];

@@ -50,6 +50,11 @@
             </a>
           </li>
           <li class="nav-item mb-3">
+            <a routerLink="/subject-management" routerLinkActive="active" (click)="subjectmanagement()" class="nav-link text-white">
+              <i class="bi bi-journal mr-2"></i> Subject Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
             <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
               <i class="bi bi-easel mr-2"></i> Teaching Aids
             </a>
@@ -68,12 +73,205 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
+   
+    <!-- <main class="col-md-9 col-lg-10 px-4 pt-4">
       <div class="text-center">
-        <h1>WELCOME TO IA-MODULE</h1>
+
+
+        <div class="container mt-4">
+          <div class="card main-card">
+            <div class="card-body">
+              <h2 class="text-center mb-4">Upload IA Marks</h2>
+              
+              <form (ngSubmit)="onSubmit()" #iaForm="ngForm" class="w-75 mx-auto">
+               
+                <div class="form-group mb-3">
+                  <label class="form-label">Semester</label>
+                  <select 
+                    [(ngModel)]="selectedSemester" 
+                    name="semester" 
+                    class="form-select"
+                    (change)="onSemesterChange()"
+                    required
+                    [disabled]="loadingSemesters"
+                  >
+                    <option value="">Select Semester</option>
+                    <option *ngFor="let sem of semesters" [value]="sem">
+                      {{sem}}
+                    </option>
+                  </select>
+                </div>
+    
+               
+                <div class="form-group mb-3">
+                  <label class="form-label">Subject</label>
+                  <select 
+                    [(ngModel)]="selectedSubject" 
+                    name="subject" 
+                    class="form-select"
+                    required
+                    [disabled]="!selectedSemester || loadingSubjects"
+                  >
+                    <option value="">Select Subject</option>
+                    <option *ngFor="let subject of subjects" [value]="subject.id">
+                      {{subject.subject}} ({{subject.subjectCode}})
+                    </option>
+                  </select>
+                </div>
+    
+                
+                <div class="form-group mb-4">
+                  <label class="form-label">Upload IA Marks Document</label>
+                  
+
+                  <input 
+                    type="file" 
+                    class="form-control" 
+                    (change)="onFileSelect($event)"
+                    required
+                  >
+                  
+                </div>
+    
+               
+                <div class="progress mb-3" *ngIf="uploadProgress > 0">
+                  <div class="progress-bar" role="progressbar"
+                       [style.width.%]="uploadProgress"
+                       [attr.aria-valuenow]="uploadProgress"
+                       aria-valuemin="0"
+                       aria-valuemax="100">
+                    {{uploadProgress}}%
+                  </div>
+                </div>
+    
+                
+                <div class="text-center">
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary"
+                    [disabled]="!iaForm.valid || !selectedFile || submitting"
+                  >
+                    <span *ngIf="!submitting">Upload IA Marks</span>
+                    <span *ngIf="submitting">Uploading...</span>
+                  </button>
+                </div>
+              </form>
+    
+              
+              <div class="alert alert-success mt-3" *ngIf="uploadSuccess">
+                File uploaded successfully!
+              </div>
+    
+             
+              <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+                {{errorMessage}}
+              </div>
+            </div>
+          </div>
+        
+        </div>
         
       </div>
+    </main> -->
+
+    <main class="col-md-9 col-lg-10 px-4 pt-4">
+      <div class="text-center">
+        <div class="container mt-4">
+          <!-- Outer Border for IA Module -->
+          <div class="card main-card shadow-sm p-3">
+            <div class="card-body bg-light p-3 rounded border border-secondary">
+              <h2 class="text-center mb-4 text-primary">UPLOAD IA MARKS </h2>
+    
+              <form (ngSubmit)="onSubmit()" #iaForm="ngForm" class="w-75 mx-auto">
+                <!-- Semester Selection -->
+                <div class="form-group mb-3">
+                  <label class="form-label custom-label"><b>Semester</b></label>
+                  <select
+                    [(ngModel)]="selectedSemester"
+                    name="semester"
+                    class="form-select custom-input small-input"
+                    (change)="onSemesterChange()"
+                    required
+                    [disabled]="loadingSemesters"
+                  >
+                    <option value="" disabled>Select Semester</option>
+                    <option *ngFor="let sem of semesters" [value]="sem">
+                      {{ sem }}
+                    </option>
+                  </select>
+                </div>
+    
+                <!-- Subject Selection -->
+                <div class="form-group mb-3">
+                  <label class="form-label custom-label"><b>Subject</b></label>
+                  <select
+                    [(ngModel)]="selectedSubject"
+                    name="subject"
+                    class="form-select custom-input small-input"
+                    required
+                    [disabled]="!selectedSemester || loadingSubjects"
+                  >
+                    <option value="" disabled>Select Subject</option>
+                    <option *ngFor="let subject of subjects" [value]="subject.id">
+                      {{ subject.subject }} ({{ subject.subjectCode }})
+                    </option>
+                  </select>
+                </div>
+    
+                <!-- File Upload -->
+                <div class="form-group mb-3">
+                  <label class="form-label custom-label"><b>Upload IA Marks Document</b></label>
+                  <input
+                    type="file"
+                    class="form-control custom-input small-input"
+                    (change)="onFileSelect($event)"
+                    required
+                  >
+                  <!-- <small class="text-muted d-block mt-1">Accepted formats: .xlsx, .xls, .csv, .pdf</small> -->
+                </div>
+    
+                <!-- Upload Progress -->
+                <div class="progress mb-3" *ngIf="uploadProgress > 0">
+                  <div
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                    role="progressbar"
+                    [style.width.%]="uploadProgress"
+                    [attr.aria-valuenow]="uploadProgress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    {{ uploadProgress }}%
+                  </div>
+                </div>
+    
+                <!-- Submit Button -->
+                <div class="text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-sm w-100"
+                    [disabled]="!iaForm.valid || !selectedFile || submitting"
+                  >
+                    <span *ngIf="!submitting">Upload IA Marks</span>
+                    <span *ngIf="submitting">Uploading...</span>
+                  </button>
+                </div>
+              </form>
+    
+              <!-- Success Message -->
+              <div class="alert alert-success mt-3" *ngIf="uploadSuccess">
+                File uploaded successfully!
+              </div>
+    
+              <!-- Error Message -->
+              <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+                {{ errorMessage }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
+    
+
   </div>
 </div>

@@ -51,6 +51,11 @@
               </a>
             </li>
             <li class="nav-item mb-3">
+              <a routerLink="/subject-management" routerLinkActive="active" (click)="subjectmanagement()" class="nav-link text-white">
+                <i class="bi bi-journal mr-2"></i> Subject Management
+              </a>
+            </li>
+            <li class="nav-item mb-3">
               <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
                 <i class="bi bi-easel mr-2"></i> Teaching Aids
               </a>
@@ -72,7 +77,9 @@
      
   
       <main class="col-md-9 col-lg-10 px-4 pt-4">
-        <!-- <div class="text-center"> -->
+        <div class="back-button-container">
+          <button class="back-button" (click)="Goback()">Back</button>
+        </div>
           <div class="registration-card">
             <h2>STUDENT REGISTER FORM</h2>
             <form (ngSubmit)="onSubmit()" #registerForm="ngForm">

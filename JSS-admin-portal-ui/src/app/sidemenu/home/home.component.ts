@@ -55,8 +55,9 @@ export class HomeComponent {
     localStorage.removeItem('userId'); 
       this.router.navigate(['/auth/login']);
     }
-
-    
+    subjectmanagement(){
+      this.router.navigate(['/sidemenu/subject-management'])
+    }
    
     staffMembers: any[] = [];
     

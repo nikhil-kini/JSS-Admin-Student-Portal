@@ -191,131 +191,33 @@ button:disabled {
 
 
 
-
-
-/* 
-.registration-card p {
-  text-align: center;
-  margin-bottom: 20px;
-  color: navy; 
-  font-size: 1.2rem;
+/* Container for the button to ensure proper alignment */
+.back-button-container {
+  position: absolute; /* Position relative to the page */
+  top: 20px;          /* Adjust vertical position */
+  left: 300px;         /* Adjust horizontal position */
 }
 
-.registration-card h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: navy; 
-  font-size: 1.8rem;
+/* Back button styling */
+.back-button {
+  background-color: #007bff; /* Blue background */
+  color: white;             /* White text */
+  border: none;             /* No border */
+  border-radius: 5px;       /* Slightly rounded corners */
+  padding: 5px 10px;        /* Smaller padding for reduced size */
+  font-size: 0.8rem;        /* Smaller font size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
 }
 
-
-
-.registration-card label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: navy; 
+.back-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);    /* Slight zoom effect */
 }
 
- 
- 
-
-
-.registration-card input:focus {
-  border-color: navy;
-  box-shadow: 0 0 5px rgba(0, 0, 128, 0.5); 
-  outline: none; 
+.back-button:active {
+  background-color: #004080; /* Even darker blue on click */
+  transform: scale(0.95);    /* Subtle shrink effect on click */
 }
 
-
-.registration-card input::placeholder {
-  color: #aaa; 
-  opacity: 1; 
-}
-
-.registration-card button {
-  width: 100%;
-  padding: 12px;
-  background-color: navy;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.registration-card button:hover {
-  background-color: #004080; 
-}
-
-.registration-card {
-  position:absolute;
-  top: 60%; 
-  right: 170px; 
-  transform: translateY(-60%);
-  background-color: rgb(180, 113, 113); 
-  padding: 20px; 
-  border-radius: 12px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); 
-  width: 800px; 
-  margin-right: 25px; 
-  max-height: 100vh; 
-  overflow-y: auto; 
-}
-
-
-
-.registration-card h2 {
-  text-align: center;
-  margin-bottom: 15px; 
-  color: navy; 
-  font-size: 1.5rem; 
-}
-
-
-
-.registration-card input {
-  width: 100%; 
-  padding: 8px; 
-  margin-bottom: 10px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  font-size: 0.9rem; 
-}
-
-
-.registration-card select {
-  width: 100%; 
-  padding: 8px; 
-  margin-bottom: 10px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  font-size: 0.9rem; 
-  background-color: #fff; 
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
-}
-
-
-.registration-card select:focus {
-  border-color: navy;
-  box-shadow: 0 0 5px rgba(0, 0, 128, 0.5); 
-  outline: none; 
-}
-
-
-
-
-
-.registration-card .error {
-  color: red;
-  font-size: 0.8rem;
-  margin-top: 5px;
-}
-
-
-.registration-card label {
-  font-weight: bold;
-  color: navy;
-  margin-bottom: 5px;
-}
- */
