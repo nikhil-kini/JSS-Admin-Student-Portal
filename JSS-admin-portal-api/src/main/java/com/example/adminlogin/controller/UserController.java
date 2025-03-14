@@ -386,6 +386,9 @@ public class UserController {
     //admin login
     @PostMapping("/login1")
     public ResponseEntity<User> login1(@RequestBody User user) {
+
+        System.out.println("I am inside api");
+        System.out.println(user);
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         User dbUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
 

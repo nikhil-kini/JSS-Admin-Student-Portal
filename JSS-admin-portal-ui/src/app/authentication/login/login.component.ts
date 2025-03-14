@@ -1,53 +1,56 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
-// import { AuthService } from '../auth.service';
-import { Base64 } from 'js-base64';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet,FormsModule,CommonModule,RouterModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']  // Corrected from 'styleUrl' to 'styleUrls'
 })
 export class LoginComponent {
+  loginData = {
+    email: '',
+    password: '',
+    role: 'Admin'
+  };
 
+  constructor(private http: HttpClient, private router: Router) {}
 
-loginData = {
-  email: '',
-  password: '',
-  role:'Admin'
-};
+  onLoginSubmit() {
+    console.log('Logging in with:', this.loginData);
 
-constructor(private http: HttpClient, private router: Router) {}
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
+    this.http.post('http://localhost:8080/users/login', this.loginData, { headers })
+      .subscribe(
+        (response: any) => {
+          console.log('Login successful:', response);
 
-onLoginSubmit() {
-  console.log('Logging in with:', this.loginData);
-  this.http.post('http://localhost:8080/users/login1', this.loginData).subscribe(
-    (response: any) => {
-      console.log('Login successful:', response);
+          if (response.id) {  // Ensure response contains userId
+            localStorage.setItem('isAuthenticated', 'true');
+            localStorage.setItem('loginUser', this.loginData.email);
+            localStorage.setItem('userId', response.id.toString());
 
-      // Extract the userId from the response (id is the userId in your User entity)
-      const userId = response.id;  // The userId is the 'id' field in the response
-
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('loginUser', this.loginData.email);
-      localStorage.setItem('userId', userId.toString());  // Store userId in localStorage
-
-      this.router.navigate(['/sidemenu/home']);
-    },
-    (error) => {
-      console.error('Login failed:', error);
-      if (error.status === 401) {
-        alert('Invalid credentials');
-      } else {
-        alert('An error occurred. Please try again later.');
-      }
-    }
-  );
-}
+            this.router.navigate(['/sidemenu/home']);
+          } else {
+            console.error('Login response missing user ID');
+            alert('Login failed. Please try again.');
+          }
+        },
+        (error) => {
+          console.error('Login failed:', error);
+          if (error.status === 401) {
+            alert('Invalid credentials');
+          } else if (error.status === 0) {
+            alert('Cannot connect to server. Please check if the backend is running.');
+          } else {
+            alert('An error occurred. Please try again later.');
+          }
+        }
+      );
+  }
 }

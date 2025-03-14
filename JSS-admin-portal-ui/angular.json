@@ -98,13 +98,17 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+ "styles": [
+  "src/styles.css"
+],
+
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "0157e203-3eb0-44ac-9fa8-be55f8841033"
   }
 }

@@ -6,9 +6,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-
-
-
 @Component({
   selector: 'app-timetable',
   standalone: true,
@@ -17,10 +14,8 @@ import { Observable } from 'rxjs';
   styleUrl: './timetable.component.css'
 })
 export class TimetableComponent {
- 
-
-   
-
+  
+  animationState: string = 'void';
   home(){
     this.router.navigate(['/sidemenu/home']);
 
@@ -186,32 +181,7 @@ export class TimetableComponent {
     this.fileToUpload = event.target.files[0];
   }
 
-  // Upload timetable to backend
-  // uploadTimetable() {
-  //   if (this.fileToUpload) {
-  //     const formData = new FormData();
-  //     formData.append('file', this.fileToUpload);
-  //     formData.append('documentType', this.documentType);
-  //     formData.append('fileName', this.fileName);
-  //     formData.append('fileType', this.fileType);
-  //     formData.append('uploadDate', this.uploadDate.toISOString());
-  //     formData.append('userEmail', this.userEmail);
-  //     formData.append('semester', this.selectedSemester1);
-  //     formData.append('documentCategory', this.documentCategory);
-  //     formData.append('documentPath', this.documentPath);
-
-  //     this.http.post<any>(this.apiUrl, formData).subscribe(response => {
-  //       console.log('File uploaded successfully:', response);
-  //       alert('File uploaded successfully!');
-  //       this.closePopup(); // Close the popup after successful upload
-  //     }, error => {
-  //       console.error('Error uploading file:', error);
-  //       alert('File upload failed');
-  //     });
-  //   } else {
-  //     alert('Please select a file to upload.');
-  //   }
-  // }
+ 
 
   uploadTimetable() {
     if (this.fileToUpload) {
@@ -243,6 +213,8 @@ export class TimetableComponent {
 
   onSemesterChange() {
     this.filteredTimetable = this.semesterTimetable[this.selectedSemester] || {};
+    this.animationState = this.selectedSemester === 'all' ? 'void' : '*';
   }
+
 }
   
