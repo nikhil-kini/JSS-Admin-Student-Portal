@@ -16,7 +16,9 @@
             <div class="container header-container">
               <div class="row align-items-center">
                 <div class="col-md-4 text-start">
-                  <label for="semesterSelect" class="form-label">Select Semester:</label>
+                  <label for="semesterSelect" class="form-label"
+                    >Select Semester:</label
+                  >
                   <select
                     id="semesterSelect"
                     class="form-select small-dropdown"
@@ -24,7 +26,9 @@
                     (change)="onSemesterChange()"
                   >
                     <option [value]="'all'">All Semesters</option>
-                    <option *ngFor="let sem of semesters" [value]="sem">Semester {{ sem }}</option>
+                    <option *ngFor="let sem of semesters" [value]="sem">
+                      Semester {{ sem }}
+                    </option>
                   </select>
                 </div>
 
@@ -33,7 +37,9 @@
                 </div>
 
                 <div class="col-md-4 text-end">
-                  <button class="upload-btn" (click)="openUploadPopup()">Upload Timetable</button>
+                  <button class="upload-btn" (click)="openUploadPopup()">
+                    Upload Timetable
+                  </button>
                 </div>
               </div>
             </div>
@@ -42,7 +48,9 @@
               <div *ngIf="selectedSemester === 'all'">
                 <h4 class="text-secondary text-center">All Timetables</h4>
                 <ng-container *ngFor="let sem of semesters">
-                  <h5 class="text-primary text-center">Timetable for Semester {{ sem }}</h5>
+                  <h5 class="text-primary text-center">
+                    Timetable for Semester {{ sem }}
+                  </h5>
                   <div class="table-responsive timetable-grid">
                     <table class="table table-bordered text-center">
                       <thead class="thead-dark">
@@ -64,8 +72,13 @@
                 </ng-container>
               </div>
 
-              <div *ngIf="selectedSemester !== 'all' && filteredTimetable" [@moveRight]="animationState">
-                <h4 class="text-center">Timetable for Semester {{ selectedSemester }}</h4>
+              <div
+                *ngIf="selectedSemester !== 'all' && filteredTimetable"
+                [@moveRight]="animationState"
+              >
+                <h4 class="text-center">
+                  Timetable for Semester {{ selectedSemester }}
+                </h4>
                 <table class="table table-bordered text-center">
                   <thead>
                     <tr>
@@ -97,7 +110,9 @@
           <label for="semester">Select Semester:</label>
           <select [(ngModel)]="selectedSemester1" id="semester" name="semester">
             <option value="" disabled selected>Select Semester</option>
-            <option *ngFor="let semester of semesters1" [value]="semester">{{ semester }}</option>
+            <option *ngFor="let semester of semesters1" [value]="semester">
+              {{ semester }}
+            </option>
           </select>
 
           <label for="file">Choose File:</label>
@@ -117,62 +132,122 @@
       <div class="position-sticky">
         <ul class="nav flex-column">
           <li class="nav-item mb-3">
-            <a routerLink="/home" routerLinkActive="active" (click)="home()" class="nav-link text-white">
+            <a
+              routerLink="/home"
+              routerLinkActive="active"
+              (click)="home()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-house mr-2"></i> Home
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
+            <a
+              routerLink="/time-table"
+              routerLinkActive="active"
+              (click)="timetable()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-calendar3 mr-2"></i> Time Table
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/staff-management" routerLinkActive="active" (click)="staffmanagement()" class="nav-link text-white">
+            <a
+              routerLink="/staff-management"
+              routerLinkActive="active"
+              (click)="staffmanagement()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-person-fill mr-2"></i> Staff Management
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/students-management" routerLinkActive="active" (click)="studentsmanagement()" class="nav-link text-white">
+            <a
+              routerLink="/students-management"
+              routerLinkActive="active"
+              (click)="studentsmanagement()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-person-workspace mr-2"></i> Students Management
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
+            <a
+              routerLink="/attendance-management"
+              routerLinkActive="active"
+              (click)="attendancemanagement()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-check-square mr-2"></i> Attendance Management
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/question-bank" routerLinkActive="active" (click)="questionbank()" class="nav-link text-white">
+            <a
+              routerLink="/question-bank"
+              routerLinkActive="active"
+              (click)="questionbank()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-book mr-2"></i> Question Bank
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/ia-module" routerLinkActive="active" (click)="iamodule()" class="nav-link text-white">
+            <a
+              routerLink="/ia-module"
+              routerLinkActive="active"
+              (click)="iamodule()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-card-list mr-2"></i> IA Module
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/feedback-system" routerLinkActive="active" (click)="feedbacksystem()" class="nav-link text-white">
+            <a
+              routerLink="/feedback-system"
+              routerLinkActive="active"
+              (click)="feedbacksystem()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-chat-dots mr-2"></i> Feedback System
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/lesson-plan" routerLinkActive="active" (click)="lessonplan()" class="nav-link text-white">
+            <a
+              routerLink="/lesson-plan"
+              routerLinkActive="active"
+              (click)="lessonplan()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/subject-management" routerLinkActive="active" (click)="subjectmanagement()" class="nav-link text-white">
+            <a
+              routerLink="/subject-management"
+              routerLinkActive="active"
+              (click)="subjectmanagement()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-journal mr-2"></i> Subject Management
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
+            <a
+              routerLink="/teaching-aids"
+              routerLinkActive="active"
+              (click)="teachingaids()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-easel mr-2"></i> Teaching Aids
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/personal-documents" routerLinkActive="active" (click)="personaldocuments()" class="nav-link text-white">
+            <a
+              routerLink="/personal-documents"
+              routerLinkActive="active"
+              (click)="personaldocuments()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-folder mr-2"></i> Personal Documents
             </a>
           </li>
@@ -185,18 +260,16 @@
       </div>
     </nav>
 
-    
-   
-
-     <main class="col-md-8 col-lg-10 px-4 pt-4">
+    <main class="col-md-8 col-lg-10 px-4 pt-4">
       <div class="text-center">
         <div class="container bg-light border rounded p-3 mb-3">
           <div class="row align-items-center">
             <div class="container header-container">
               <div class="row align-items-center">
-                
                 <div class="col-md-4 text-start">
-                  <label for="semesterSelect" class="form-label">Select Semester:</label>
+                  <label for="semesterSelect" class="form-label"
+                    >Select Semester:</label
+                  >
                   <select
                     id="semesterSelect"
                     class="form-select small-dropdown"
@@ -204,28 +277,31 @@
                     (change)="onSemesterChange()"
                   >
                     <option [value]="'all'">All Semesters</option>
-                    <option *ngFor="let sem of semesters" [value]="sem">Semester {{ sem }}</option>
+                    <option *ngFor="let sem of semesters" [value]="sem">
+                      Semester {{ sem }}
+                    </option>
                   </select>
                 </div>
-    
-               
+
                 <div class="col-md-4 text-center">
                   <h2 class="header-title">TIME-TABLE</h2>
                 </div>
-    
-               
+
                 <div class="col-md-4 text-end">
-                  <button class="upload-btn" (click)="openUploadPopup()">Upload Timetable</button>
+                  <button class="upload-btn" (click)="openUploadPopup()">
+                    Upload Timetable
+                  </button>
                 </div>
               </div>
             </div>
-    
-           
+
             <div class="timetable-section">
               <div *ngIf="selectedSemester === 'all'">
                 <h4 class="text-secondary text-center">All Timetables</h4>
                 <ng-container *ngFor="let sem of semesters">
-                  <h5 class="text-primary text-center">Timetable for Semester {{ sem }}</h5>
+                  <h5 class="text-primary text-center">
+                    Timetable for Semester {{ sem }}
+                  </h5>
                   <div class="table-responsive timetable-grid">
                     <table class="table table-bordered text-center">
                       <thead class="thead-dark">
@@ -246,9 +322,11 @@
                   </div>
                 </ng-container>
               </div>
-    
+
               <div *ngIf="selectedSemester !== 'all' && filteredTimetable">
-                <h4 class="text-center">Timetable for Semester {{ selectedSemester }}</h4>
+                <h4 class="text-center">
+                  Timetable for Semester {{ selectedSemester }}
+                </h4>
                 <table class="table table-bordered text-center">
                   <thead>
                     <tr>
@@ -270,26 +348,26 @@
           </div>
         </div>
       </div>
-    
-     
+
       <div *ngIf="showPopup" class="popup-overlay">
         <div class="popup-content">
           <button class="close-btn" (click)="closePopup()">X</button>
           <h2>Upload Timetable</h2>
-    
-        
+
           <label for="semester">Select Semester:</label>
           <select [(ngModel)]="selectedSemester1" id="semester" name="semester">
             <option value="" disabled selected>Select Semester</option>
-            <option *ngFor="let semester of semesters1" [value]="semester">{{ semester }}</option>
+            <option *ngFor="let semester of semesters1" [value]="semester">
+              {{ semester }}
+            </option>
           </select>
-    
-          
+
           <label for="file">Choose File:</label>
           <input type="file" id="file" (change)="onFileChange($event)" />
-    
+
           <button (click)="uploadTimetable()">Upload</button>
         </div>
       </div>
-    
     </main>
+  </div>
+</div>
