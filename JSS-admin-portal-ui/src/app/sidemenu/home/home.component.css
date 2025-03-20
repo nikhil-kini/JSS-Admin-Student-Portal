@@ -56,7 +56,7 @@ body {
   font-size: 2.5rem;
   color: #0c0a0a;
   margin-bottom: 20px;
-  background-color: white;
+  background-color:#d1d1e0;
 }
 
 .content h3 {
@@ -80,22 +80,22 @@ body {
 }
 
 .bg-info {
-  background-color: #17a2b8 !important;
+  background-color: #5c5cd6 !important;
   color: white;
 }
 
 .bg-success {
-  background-color: #28a745 !important;
+  background-color: #9999e6 !important;
   color: white;
 }
 
 .bg-primary {
-  background-color: #007bff !important;
+  background-color: #ffbf80 !important;
   color: white;
 }
 
 .bg-warning {
-  background-color: #ffc107 !important;
+  background-color: #d1d1e0 !important;
   color: black;
 }
 
