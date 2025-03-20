@@ -1,83 +1,151 @@
 <div class="container-fluid">
-    <div class="row no-gutters">
-    
-      <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
-        <div class="position-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item mb-3">
-              <a routerLink="/home" routerLinkActive="active" (click)="home()" class="nav-link text-white">
-                <i class="bi bi-house mr-2"></i> Home
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
-                <i class="bi bi-calendar3 mr-2"></i> Time Table
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/staff-management" routerLinkActive="active" (click)="staffmanagement()" class="nav-link text-white">
-                <i class="bi bi-person-fill mr-2"></i> Staff Management
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/students-management" routerLinkActive="active" (click)="studentsmanagement()" class="nav-link text-white">
-                <i class="bi bi-person-workspace mr-2"></i> Students Management
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
-                <i class="bi bi-check-square mr-2"></i> Attendance Management
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/question-bank" routerLinkActive="active" (click)="questionbank()" class="nav-link text-white">
-                <i class="bi bi-book mr-2"></i> Question Bank
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/ia-module" routerLinkActive="active" (click)="iamodule()" class="nav-link text-white">
-                <i class="bi bi-card-list mr-2"></i> IA Module
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/feedback-system" routerLinkActive="active" (click)="feedbacksystem()" class="nav-link text-white">
-                <i class="bi bi-chat-dots mr-2"></i> Feedback System
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/lesson-plan" routerLinkActive="active" (click)="lessonplan()" class="nav-link text-white">
-                <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/subject-management" routerLinkActive="active" (click)="subjectmanagement()" class="nav-link text-white">
-                <i class="bi bi-journal mr-2"></i> Subject Management
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
-                <i class="bi bi-easel mr-2"></i> Teaching Aids
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a routerLink="/personal-documents" routerLinkActive="active" (click)="personaldocuments()" class="nav-link text-white">
-                <i class="bi bi-folder mr-2"></i> Personal Documents
-              </a>
-            </li>
-            <li class="nav-item mb-3">
-              <a (click)="logout()" class="nav-link text-white">
-                <i class="bi bi-box-arrow-right mr-2"></i> Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+  <div class="row no-gutters">
+    <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/home"
+              routerLinkActive="active"
+              (click)="home()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-house mr-2"></i> Home
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/time-table"
+              routerLinkActive="active"
+              (click)="timetable()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-calendar3 mr-2"></i> Time Table
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/staff-management"
+              routerLinkActive="active"
+              (click)="staffmanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-person-fill mr-2"></i> Staff Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/students-management"
+              routerLinkActive="active"
+              (click)="studentsmanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-person-workspace mr-2"></i> Students Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/attendance-management"
+              routerLinkActive="active"
+              (click)="attendancemanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-check-square mr-2"></i> Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/question-bank"
+              routerLinkActive="active"
+              (click)="questionbank()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-book mr-2"></i> Question Bank
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/ia-module"
+              routerLinkActive="active"
+              (click)="iamodule()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-card-list mr-2"></i> IA Module
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/feedback-system"
+              routerLinkActive="active"
+              (click)="feedbacksystem()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-chat-dots mr-2"></i> Feedback System
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/lesson-plan"
+              routerLinkActive="active"
+              (click)="lessonplan()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/subject-management"
+              routerLinkActive="active"
+              (click)="subjectmanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-journal mr-2"></i> Subject Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/teaching-aids"
+              routerLinkActive="active"
+              (click)="teachingaids()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-easel mr-2"></i> Teaching Aids
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/personal-documents"
+              routerLinkActive="active"
+              (click)="personaldocuments()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-folder mr-2"></i> Personal Documents
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a (click)="logout()" class="nav-link text-white">
+              <i class="bi bi-box-arrow-right mr-2"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-      <main class="col-md-9 col-lg-10 px-4 pt-4">
-        <div class="text-center">
-          <h1 style="color: antiquewhite;">Subject Management</h1>
+    <main
+      class="col-md-9 col-lg-10 px-4 pt-4"
+      style="
+        background-image: url(./Subjectmanagement.JPG);
+        background-size: cover;
+        background-position: center;
+      "
+    >
+      <div class="text-center">
+        <h1 style="color: black; background-color: white">
+          Subject Management
+        </h1>
 
-          <!-- <div class="container mt-4">
+        <!-- <div class="container mt-4">
             <div class="card main-card">
               <div class="card-body">
                 <button (click)="openModal()" class="btn btn-primary mb-4 custom-button">
@@ -161,14 +229,6 @@
           <div class="modal-backdrop fade show" *ngIf="isModalOpen"></div>
         </div>
         </div> -->
-
-
-
-
-
-
-
-
 
         <!-- <div class="container mt-4">
           <div class="card">
@@ -265,44 +325,44 @@
         </div>
                 
                  -->
-                
 
+        <div class="container mt-4">
+          <div class="card main-card">
+            <div class="card-body">
+              <!-- <h1 class="text-center mb-4">Subject Management</h1> -->
 
+              <!-- Search Fields -->
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <select
+                    class="form-select"
+                    [(ngModel)]="searchSemester"
+                    (ngModelChange)="currentPage = 1"
+                  >
+                    <option value="">All Semesters</option>
+                    <option *ngFor="let sem of semesters" [value]="sem">
+                      Semester {{ sem }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search by subject name..."
+                    [(ngModel)]="searchSubject"
+                    (ngModelChange)="currentPage = 1"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <button (click)="openModal()" class="btn btn-primary w-100">
+                    Add Subject
+                  </button>
+                </div>
+              </div>
 
-
-                 <div class="container mt-4">
-                  <div class="card main-card">
-                    <div class="card-body">
-                      <!-- <h1 class="text-center mb-4">Subject Management</h1> -->
-                
-                      <!-- Search Fields -->
-                      <div class="row mb-4">
-                        <div class="col-md-4">
-                          <select class="form-select" [(ngModel)]="searchSemester" (ngModelChange)="currentPage = 1">
-                            <option value="">All Semesters</option>
-                            <option *ngFor="let sem of semesters" [value]="sem">
-                              Semester {{sem}}
-                            </option>
-                          </select>
-                        </div>
-                        <div class="col-md-6">
-                          <input 
-                            type="text" 
-                            class="form-control" 
-                            placeholder="Search by subject name..." 
-                            [(ngModel)]="searchSubject"
-                            (ngModelChange)="currentPage = 1"
-                          >
-                        </div>
-                        <div class="col-md-2">
-                          <button (click)="openModal()" class="btn btn-primary w-100">
-                            Add Subject
-                          </button>
-                        </div>
-                      </div>
-                
-                      <!-- Table -->
-                      <!-- <div class="table-responsive">
+              <!-- Table -->
+              <!-- <div class="table-responsive">
                         <table class="table">
                           <thead>
                             <tr>
@@ -333,113 +393,164 @@
                       </div>
                  -->
 
-                 <div class="table-responsive">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th class="text-center" style="width: 80px">Sl No</th>
-                        <th style="width: 150px">Semester</th>
-                        <th style="width: 200px">Subject</th>
-                        <th style="width: 150px">Subject Code</th>
-                        <th class="text-center" style="width: 200px">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let sub of paginatedSubjects; let i = index">
-                        <td class="text-center">{{(currentPage - 1) * itemsPerPage + i + 1}}</td>
-                        <td>Semester {{sub.semester}}</td>
-                        <td>{{sub.subject}}</td>
-                        <td>{{sub.subjectCode}}</td>
-                        <td class="text-center">
-                          <button class="btn btn-sm btn-warning me-2" (click)="editSubject(sub)">
-                            <i class="fas fa-edit me-1"></i>Edit
-                          </button>
-                          <button class="btn btn-sm btn-danger" (click)="deleteSubject(sub.id)">
-                            <i class="fas fa-trash-alt me-1"></i>Delete
-                          </button>
-                        </td>
-                      </tr>
-                      <tr *ngIf="paginatedSubjects.length === 0">
-                        <td colspan="5" class="text-center">No subjects found</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-          
-                      <!-- Pagination -->
-                      <div class="d-flex justify-content-center mt-4">
-                        <nav>
-                          <ul class="pagination">
-                            <li class="page-item" [class.disabled]="currentPage === 1">
-                              <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
-                            </li>
-                            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-                                [class.active]="currentPage === i + 1">
-                              <a class="page-link" (click)="onPageChange(i + 1)">{{i + 1}}</a>
-                            </li>
-                            <li class="page-item" [class.disabled]="currentPage === totalPages">
-                              <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
-                            </li>
-                          </ul>
-                        </nav>
-                      </div>
-                    </div>
-                  </div>
-                
-                  <!-- Modal -->
-                  <div class="modal" [class.show]="isModalOpen" [style.display]="isModalOpen ? 'block' : 'none'">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">{{isEditing ? 'Edit' : 'Add'}} Subject</h5>
-                          <button type="button" class="btn-close" (click)="closeModal()"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form (ngSubmit)="onSubmit()" #subjectForm="ngForm">
-                            <div class="mb-3">
-                              <label class="form-label">Semester</label>
-                              <select class="form-select" [(ngModel)]="subject.semester" name="semester" required>
-                                <option value="">Select Semester</option>
-                                <option *ngFor="let sem of semesters" [value]="sem">
-                                  Semester {{sem}}
-                                </option>
-                              </select>
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Subject Name</label>
-                              <input type="text" class="form-control" [(ngModel)]="subject.subject" 
-                                     name="subject" required>
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Subject Code</label>
-                              <input type="text" class="form-control" [(ngModel)]="subject.subjectCode" 
-                                     name="subjectCode" required>
-                            </div>
-                            <div class="text-center">
-                              <button type="submit" class="btn btn-primary me-2" [disabled]="!subjectForm.valid">
-                                {{isEditing ? 'Update' : 'Add'}}
-                              </button>
-                              <button type="button" class="btn btn-secondary" (click)="closeModal()">
-                                Cancel
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-backdrop fade show" *ngIf="isModalOpen"></div>
-                </div>
-                
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center" style="width: 80px">Sl No</th>
+                      <th style="width: 150px">Semester</th>
+                      <th style="width: 200px">Subject</th>
+                      <th style="width: 150px">Subject Code</th>
+                      <th class="text-center" style="width: 200px">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let sub of paginatedSubjects; let i = index">
+                      <td class="text-center">
+                        {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+                      </td>
+                      <td>Semester {{ sub.semester }}</td>
+                      <td>{{ sub.subject }}</td>
+                      <td>{{ sub.subjectCode }}</td>
+                      <td class="text-center">
+                        <button
+                          class="btn btn-sm btn-warning me-2"
+                          (click)="editSubject(sub)"
+                        >
+                          <i class="fas fa-edit me-1"></i>Edit
+                        </button>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          (click)="deleteSubject(sub.id)"
+                        >
+                          <i class="fas fa-trash-alt me-1"></i>Delete
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="paginatedSubjects.length === 0">
+                      <td colspan="5" class="text-center">No subjects found</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
+              <!-- Pagination -->
+              <div class="d-flex justify-content-center mt-4">
+                <nav>
+                  <ul class="pagination">
+                    <li class="page-item" [class.disabled]="currentPage === 1">
+                      <a
+                        class="page-link"
+                        (click)="onPageChange(currentPage - 1)"
+                        >Previous</a
+                      >
+                    </li>
+                    <li
+                      class="page-item"
+                      *ngFor="
+                        let page of [].constructor(totalPages);
+                        let i = index
+                      "
+                      [class.active]="currentPage === i + 1"
+                    >
+                      <a class="page-link" (click)="onPageChange(i + 1)">{{
+                        i + 1
+                      }}</a>
+                    </li>
+                    <li
+                      class="page-item"
+                      [class.disabled]="currentPage === totalPages"
+                    >
+                      <a
+                        class="page-link"
+                        (click)="onPageChange(currentPage + 1)"
+                        >Next</a
+                      >
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
 
+          <!-- Modal -->
+          <div
+            class="modal"
+            [class.show]="isModalOpen"
+            [style.display]="isModalOpen ? 'block' : 'none'"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    {{ isEditing ? "Edit" : "Add" }} Subject
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    (click)="closeModal()"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form (ngSubmit)="onSubmit()" #subjectForm="ngForm">
+                    <div class="mb-3">
+                      <label class="form-label">Semester</label>
+                      <select
+                        class="form-select"
+                        [(ngModel)]="subject.semester"
+                        name="semester"
+                        required
+                      >
+                        <option value="">Select Semester</option>
+                        <option *ngFor="let sem of semesters" [value]="sem">
+                          Semester {{ sem }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Subject Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="subject.subject"
+                        name="subject"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Subject Code</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="subject.subjectCode"
+                        name="subjectCode"
+                        required
+                      />
+                    </div>
+                    <div class="text-center">
+                      <button
+                        type="submit"
+                        class="btn btn-primary me-2"
+                        [disabled]="!subjectForm.valid"
+                      >
+                        {{ isEditing ? "Update" : "Add" }}
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="closeModal()"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-backdrop fade show" *ngIf="isModalOpen"></div>
         </div>
+      </div>
     </main>
-
-
-
-   
-
-    
-</div>
+  </div>
 </div>
