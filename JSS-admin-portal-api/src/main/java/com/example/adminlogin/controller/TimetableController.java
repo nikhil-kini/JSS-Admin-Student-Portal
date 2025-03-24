@@ -20,7 +20,7 @@ import java.util.*;
 @RequestMapping("/updown")
 
 public class TimetableController {
-    private final Path fileStorageLocation = Paths.get("C:/Users/shuch/OneDrive/Desktop/admin portal/JSS-Admin-Student-Portal/JSS-admin-portal-api").toAbsolutePath().normalize();
+    private final Path fileStorageLocation = Paths.get("C:/Users/admin/Documents/Jupiterking Technologies/Projects/JSS-Admin-Student-Portal/JSS-admin-portal-ui").toAbsolutePath().normalize();
 
     public TimetableController() throws IOException {
         Files.createDirectories(fileStorageLocation); // Ensure the upload directory exists

@@ -56,7 +56,6 @@ body {
   font-size: 2.5rem;
   color: #0c0a0a;
   margin-bottom: 20px;
-  background-color:#d1d1e0;
 }
 
 .content h3 {
@@ -80,7 +79,7 @@ body {
 }
 
 .bg-info {
-  background-color: #5c5cd6 !important;
+  background-color: #ffcc80!important;
   color: white;
 }
 
@@ -90,8 +89,8 @@ body {
 }
 
 .bg-primary {
-  background-color: #ffbf80 !important;
-  color: white;
+  background-color: #e6004c !important;
+  color: white;F
 }
 
 .bg-warning {
