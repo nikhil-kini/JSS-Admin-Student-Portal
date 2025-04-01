@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.adminlogin.model.Attendance;
+import com.example.adminlogin.model.AttendanceStatus;
 import com.example.adminlogin.repository.AttendanceRepo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class AttendenceServiceImpl implements AttendenceService {
 	
 	@Override
 	public List<Attendance> fetchStudentAttendence(String semester, Long subjectId, LocalDate startDate, LocalDate endDate){
-		return attendanceRepo.findAttendanceWithinDateRange(semester, subjectId, startDate, endDate);
+		return attendanceRepo.findAttendanceWithinDateRange(semester, subjectId, startDate, endDate, AttendanceStatus.PRESENT);
 	}
 
 }

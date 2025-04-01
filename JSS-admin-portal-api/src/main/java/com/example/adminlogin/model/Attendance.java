@@ -35,6 +35,4 @@ public class Attendance {
 	private AttendanceStatus attendenceStatus;
 }
 
-enum AttendanceStatus {
-    PRESENT, ABSENT
-}
+
