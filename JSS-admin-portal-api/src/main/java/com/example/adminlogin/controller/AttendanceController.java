@@ -3,6 +3,7 @@ package com.example.adminlogin.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,16 +34,17 @@ public class AttendanceController {
 	AttendenceService attendenceService;
 	
 	@PostMapping()
-	public ResponseEntity<String>  markStudentAttendence(@RequestBody List<Attendance> body){
+	public ResponseEntity<Map<String, String>>  markStudentAttendence(@RequestBody List<Attendance> body){
 		
 //		if (role != "admin") {
 //			return ResponseEntity.status(HttpStatus.FORBIDDEN)
 //                    .body("Student are not allowed to save attendence");
 //		}
 		attendenceService.markAttendence(body);
+		Map<String, String> response = new HashMap<>();
+	    response.put("message", "Attendance saved successfully");
+	    return ResponseEntity.ok(response);
 		
-		return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Attendance saved successfully ");
 	}
 	
 	@GetMapping("/{semester}")

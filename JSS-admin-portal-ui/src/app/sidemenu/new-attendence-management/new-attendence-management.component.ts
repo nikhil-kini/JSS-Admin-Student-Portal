@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from '../subject-management/subject-management.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { format, addDays } from 'date-fns';
 
 @Component({
   selector: 'app-new-attendence-management',
@@ -13,7 +14,37 @@ import { CommonModule } from '@angular/common';
   styleUrl: './new-attendence-management.component.css',
 })
 export class NewAttendenceManagementComponent {
+  getAttendence() {
+    console.log(this.selectedStartDate);
+    console.log(this.selectedEndDate);
+
+    let params1 = new HttpParams();
+    params1 = params1.append('subject', this.selectedSubjectInModal);
+    params1 = params1.append('start', this.selectedStartDate);
+    params1 = params1.append('end', this.selectedEndDate);
+
+    this.http
+      .get(
+        `http://localhost:8080/api/attendence/${this.selectedSemesterInModal}`,
+        { params: params1 }
+      )
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (error) => {
+          alert('error');
+        },
+      });
+
+    this.generateDates();
+    this.initializeAttendance();
+
+    console.log(this.dateHeaders);
+    console.log(this.attendanceMap);
+  }
   updateAttendence() {
+    console.log(this.semStudents);
     let body = this.semStudents.map(({ studentId, attendenceStatus }) => ({
       studentId,
       attendenceStatus,
@@ -21,9 +52,13 @@ export class NewAttendenceManagementComponent {
       subjectId: this.selectedSubject,
       attendenceTime: this.selectedDate,
     }));
+    console.log(body);
     this.http.post('http://localhost:8080/api/attendence', body).subscribe({
-      next: () => {},
+      next: () => {
+        alert('Success');
+      },
       error: (error) => {
+        console.error('Error:', error);
         alert('Error uploading attendence');
       },
     });
@@ -45,7 +80,7 @@ export class NewAttendenceManagementComponent {
     userName: String;
     attendenceStatus: AttendanceStatus;
   }[] = [];
-  semStudentsInModal: { studentId: Number; userName: String }[] = [];
+  semStudentsInModal: { studentId: number; userName: string }[] = [];
   constructor(private router: Router, private http: HttpClient) {}
 
   home() {
@@ -127,153 +162,7 @@ export class NewAttendenceManagementComponent {
     this.showModal = false;
   }
 
-  getDocumentsBySemester() {
-    if (this.selectedSemesterInModal) {
-      this.http
-        .get<any[]>(
-          `http://localhost:8080/api/alldocuments/category/${this.selectedDocumentCategory}/${this.selectedSemesterInModal}`
-        )
-        .subscribe({
-          next: (documents) => {
-            this.onSemesterChangeInModal();
-            this.questionBankDocuments = documents;
-          },
-          error: (error) => {
-            alert('Error fetching documents');
-          },
-        });
-    }
-  }
-
-  viewTextFile(doc: any) {
-    this.http
-      .get(doc.downloadUrl, { responseType: 'text' })
-      .subscribe((content) => {
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        window.open(url, '_blank');
-      });
-  }
-
-  viewPdf(doc: any) {
-    window.open(doc.downloadUrl, '_blank');
-  }
-
-  viewImage(doc: any) {
-    window.open(doc.downloadUrl, '_blank');
-  }
-  statuses = ['Absent', 'Present'];
-  // downloadFile(filename: string) {
-  //   const url = `http://localhost:8080/viewFile/sem1/${filename}`;
-  //   const fileType = filename.split('.').pop()?.toLowerCase(); // Get file type
-  //   const headers = {
-  //     Accept:
-  //       fileType === 'pdf' ? 'application/pdf' : 'application/octet-stream',
-  //   };
-
-  //   this.http.get(url, { responseType: 'blob', headers: headers }).subscribe(
-  //     (response) => {
-  //       const blob = new Blob([response], { type: `application/${fileType}` });
-  //       const link = document.createElement('a');
-  //       link.href = URL.createObjectURL(blob);
-  //       link.download = filename;
-  //       link.click();
-  //     },
-  //     (error) => {
-  //       console.error('Download failed', error);
-  //     }
-  //   );
-  // }
-
-  deleteFile(semester: string, fileName: string): void {
-    const url = `http://localhost:8080/api/alldocuments/download/${semester}/${fileName}`;
-
-    this.http.delete(url).subscribe({
-      next: (response) => {
-        this.getFileQuery();
-        alert('File deleted successfully');
-      },
-      error: (error) => {
-        alert('Error deletings file');
-      },
-    });
-  }
-  getDownloadLink(semester: string, fileName: string): string {
-    return `http://localhost:8080/api/alldocuments/download/${semester}/${fileName}`;
-  }
-
-  getFileQuery() {
-    let params = new HttpParams();
-    if (
-      this.selectedSemesterInModal &&
-      this.selectedMonthInModal &&
-      this.selectedSubjectInModal
-    ) {
-      params = params.append('month', this.selectedMonthInModal);
-      params = params.append('subject', this.selectedSubjectInModal);
-      this.http
-        .get<any[]>(
-          `http://localhost:8080/api/alldocuments/category/${this.selectedDocumentCategory}/${this.selectedSemesterInModal}`,
-          { params: params }
-        )
-        .subscribe({
-          next: (documents) => {
-            this.onSemesterChangeInModal();
-            this.questionBankDocuments = documents;
-          },
-          error: (error) => {
-            alert('Error fetching documents');
-          },
-        });
-    } else if (this.selectedSemesterInModal && this.selectedMonthInModal) {
-      params = params.append('month', this.selectedMonthInModal);
-      this.http
-        .get<any[]>(
-          `http://localhost:8080/api/alldocuments/category/${this.selectedDocumentCategory}/${this.selectedSemesterInModal}`,
-          { params: params }
-        )
-        .subscribe({
-          next: (documents) => {
-            this.onSemesterChangeInModal();
-            this.questionBankDocuments = documents;
-          },
-          error: (error) => {
-            alert('Error fetching documents');
-          },
-        });
-    } else if (this.selectedSemesterInModal && this.selectedSubjectInModal) {
-      params = params.append('subject', this.selectedSubjectInModal);
-
-      this.http
-        .get<any[]>(
-          `http://localhost:8080/api/alldocuments/category/${this.selectedDocumentCategory}/${this.selectedSemesterInModal}`,
-          { params: params }
-        )
-        .subscribe({
-          next: (documents) => {
-            this.onSemesterChangeInModal();
-            this.questionBankDocuments = documents;
-          },
-          error: (error) => {
-            alert('Error fetching documents');
-          },
-        });
-    } else if (this.selectedSemesterInModal) {
-      this.http
-        .get<any[]>(
-          `http://localhost:8080/api/alldocuments/category/${this.selectedDocumentCategory}/${this.selectedSemesterInModal}`
-        )
-        .subscribe({
-          next: (documents) => {
-            this.onSemesterChangeInModal();
-            this.questionBankDocuments = documents;
-          },
-          error: (error) => {
-            alert('Error fetching documents');
-          },
-        });
-    }
-  }
+  statuses = ['ABSENT', 'PRESENT'];
 
   onSemesterChange() {
     if (!this.selectedSemester) {
@@ -305,13 +194,13 @@ export class NewAttendenceManagementComponent {
     this.semStudents = [];
 
     this.http
-      .get<{ studentId: Number; userName: String }[]>(
+      .get<{ id: Number; userName: String }[]>(
         `http://localhost:8080/users/studentnew/${this.selectedSemester}`
       )
       .subscribe({
         next: (data) => {
-          let tmp = data.map(({ studentId, userName }) => ({
-            studentId,
+          let tmp = data.map(({ id, userName }) => ({
+            studentId: id,
             userName,
           }));
           this.semStudents = tmp.map((users) => ({
@@ -336,7 +225,7 @@ export class NewAttendenceManagementComponent {
     this.http
       .get<Subject[]>(
         `http://localhost:8080/api/subjects/semester/${this.selectedSemesterInModal.charAt(
-          this.selectedSemester.length - 1
+          this.selectedSemesterInModal.length - 1
         )}`
       )
       .subscribe({
@@ -352,7 +241,7 @@ export class NewAttendenceManagementComponent {
 
     this.semStudentsInModal = [];
     this.http
-      .get<{ studentId: Number; userName: String }[]>(
+      .get<{ studentId: number; userName: string }[]>(
         `http://localhost:8080/users/studentnew/${this.selectedSemester}`
       )
       .subscribe({
@@ -365,14 +254,34 @@ export class NewAttendenceManagementComponent {
         error: (error) => {},
       });
   }
+
+  dateHeaders: string[] = [];
+  attendanceMap: { [studentId: number]: AttendanceRecord } = {};
+
+  generateDates() {
+    this.dateHeaders = [];
+    let currentDate = new Date(this.selectedStartDate);
+
+    while (currentDate <= this.selectedEndDate) {
+      this.dateHeaders.push(format(currentDate, 'yyyy-MM-dd')); // YYYY-MM-DD
+      currentDate = addDays(currentDate, 1);
+    }
+  }
+
+  initializeAttendance() {
+    this.semStudentsInModal.forEach((student) => {
+      this.attendanceMap[student.studentId] = {};
+      this.dateHeaders.forEach((date) => {
+        this.attendanceMap[student.studentId][date] = AttendanceStatus.ABSENT; // Default Absent
+      });
+    });
+  }
 }
 export enum AttendanceStatus {
   ABSENT = 'ABSENT',
   PRESENT = 'PRESENT',
 }
 
-interface MappedUser {
-  id: number;
-  userName: string;
-  status: AttendanceStatus;
+interface AttendanceRecord {
+  [date: string]: AttendanceStatus;
 }

@@ -203,7 +203,7 @@
                   flex-direction: column;
                 "
               >
-                <select [(value)]="stu.attendenceStatus">
+                <select [(ngModel)]="stu.attendenceStatus">
                   <option value="" disabled>Select Status</option>
                   <option *ngFor="let status of statuses" [value]="status">
                     {{ status }}
@@ -261,8 +261,8 @@
                   class="form-control"
                 >
                   <option value="" disabled>Select Subject</option>
-                  <option *ngFor="let sub of subjectsInModal" [value]="sub">
-                    {{ sub }}
+                  <option *ngFor="let sub of subjectsInModal" [value]="sub.id">
+                    {{ sub.subject }}
                   </option>
                 </select>
               </div>
@@ -278,6 +278,35 @@
                 <input type="date" [(ngModel)]="selectedEndDate" />
                 <p>Selected End Date: {{ selectedEndDate }}</p>
               </div>
+            </div>
+
+            <!-- View Documents Button -->
+            <button (click)="getAttendence()" class="btn btn-primary">
+              View Attendence
+            </button>
+
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th *ngFor="let date of dateHeaders">{{ date }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let student of semStudentsInModal">
+                    <td>{{ student.userName }}</td>
+                    <td *ngFor="let date of dateHeaders">
+                      <select
+                        [(ngModel)]="attendanceMap[student.studentId][date]"
+                      >
+                        <option value="Absent">Absent</option>
+                        <option value="Present">Present</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
