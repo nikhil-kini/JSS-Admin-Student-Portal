@@ -14,28 +14,10 @@ import { format, addDays } from 'date-fns';
   styleUrl: './new-attendence-management.component.css',
 })
 export class NewAttendenceManagementComponent {
+  presentDays: StudentPresent[] = [];
   getAttendence() {
     console.log(this.selectedStartDate);
     console.log(this.selectedEndDate);
-
-    let params1 = new HttpParams();
-    params1 = params1.append('subject', this.selectedSubjectInModal);
-    params1 = params1.append('start', this.selectedStartDate);
-    params1 = params1.append('end', this.selectedEndDate);
-
-    this.http
-      .get(
-        `http://localhost:8080/api/attendence/${this.selectedSemesterInModal}`,
-        { params: params1 }
-      )
-      .subscribe({
-        next: (data) => {
-          console.log(data);
-        },
-        error: (error) => {
-          alert('error');
-        },
-      });
 
     this.generateDates();
     this.initializeAttendance();
@@ -241,14 +223,18 @@ export class NewAttendenceManagementComponent {
 
     this.semStudentsInModal = [];
     this.http
-      .get<{ studentId: number; userName: string }[]>(
-        `http://localhost:8080/users/studentnew/${this.selectedSemester}`
+      .get<{ id: number; userName: string }[]>(
+        `http://localhost:8080/users/studentnew/${this.selectedSemesterInModal}`
       )
       .subscribe({
         next: (data) => {
-          this.semStudentsInModal = data.map(({ studentId, userName }) => ({
-            studentId,
+          let tmp = data.map(({ id, userName }) => ({
+            studentId: id,
             userName,
+          }));
+          this.semStudentsInModal = tmp.map((users) => ({
+            ...users,
+            attendenceStatus: AttendanceStatus.ABSENT,
           }));
         },
         error: (error) => {},
@@ -260,21 +246,71 @@ export class NewAttendenceManagementComponent {
 
   generateDates() {
     this.dateHeaders = [];
-    let currentDate = new Date(this.selectedStartDate);
+    let currentDate = this.selectedStartDate;
 
     while (currentDate <= this.selectedEndDate) {
       this.dateHeaders.push(format(currentDate, 'yyyy-MM-dd')); // YYYY-MM-DD
-      currentDate = addDays(currentDate, 1);
+      currentDate = format(addDays(currentDate, 1), 'yyyy-MM-dd');
     }
   }
 
   initializeAttendance() {
+    console.log('Initializing Attendance Map...');
+    this.attendanceMap = {}; // Reset before re-initializing
+
     this.semStudentsInModal.forEach((student) => {
       this.attendanceMap[student.studentId] = {};
       this.dateHeaders.forEach((date) => {
         this.attendanceMap[student.studentId][date] = AttendanceStatus.ABSENT; // Default Absent
       });
     });
+
+    if (
+      !this.selectedSubjectInModal ||
+      !this.selectedStartDate ||
+      !this.selectedEndDate
+    ) {
+      console.error('Missing required parameters for attendance fetch.');
+      return;
+    }
+
+    let params1 = new HttpParams()
+      .set('subject', this.selectedSubjectInModal)
+      .set('start', this.selectedStartDate.toString()) // Ensure conversion if needed
+      .set('end', this.selectedEndDate.toString());
+
+    console.log('Fetching attendance with params:', params1.toString());
+
+    this.http
+      .get<{ [studentId: number]: string[] }>(
+        `http://localhost:8080/api/attendence/${this.selectedSemesterInModal}`,
+        { params: params1 }
+      )
+      .subscribe({
+        next: (data) => {
+          console.log('Received Attendance Data:', data);
+
+          Object.entries(data).forEach(([studentId, presentDays]) => {
+            const id = Number(studentId); // Convert string key to number
+
+            if (this.attendanceMap[id]) {
+              presentDays.forEach((date) => {
+                if (this.attendanceMap[id][date] !== undefined) {
+                  this.attendanceMap[id][date] = AttendanceStatus.PRESENT;
+                } else {
+                  console.warn(`Date ${date} not found for Student ID: ${id}`);
+                }
+              });
+            } else {
+              console.warn(`Student ID ${id} not found in attendanceMap`);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error fetching attendance data:', error);
+          alert('Error fetching attendance data');
+        },
+      });
   }
 }
 export enum AttendanceStatus {
@@ -284,4 +320,8 @@ export enum AttendanceStatus {
 
 interface AttendanceRecord {
   [date: string]: AttendanceStatus;
+}
+interface StudentPresent {
+  studentId: number;
+  presentDays: string[];
 }

@@ -286,7 +286,7 @@
             </button>
 
             <div>
-              <table>
+              <table class="table">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -297,12 +297,9 @@
                   <tr *ngFor="let student of semStudentsInModal">
                     <td>{{ student.userName }}</td>
                     <td *ngFor="let date of dateHeaders">
-                      <select
-                        [(ngModel)]="attendanceMap[student.studentId][date]"
-                      >
-                        <option value="Absent">Absent</option>
-                        <option value="Present">Present</option>
-                      </select>
+                      <div>
+                        {{ attendanceMap[student.studentId][date] }}
+                      </div>
                     </td>
                   </tr>
                 </tbody>

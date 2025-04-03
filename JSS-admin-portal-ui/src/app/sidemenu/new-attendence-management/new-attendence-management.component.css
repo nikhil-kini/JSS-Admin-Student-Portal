@@ -220,3 +220,10 @@
   .delete {
     color: #e70b0b;
   }
+
+  .scrollable-table {
+    overflow-x: auto;
+    max-width: 100%; /* Ensures it doesn’t exceed the container */
+    display: block;
+    white-space: nowrap; /* Prevents text wrapping */
+}
