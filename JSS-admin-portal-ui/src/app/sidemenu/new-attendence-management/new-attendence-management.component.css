@@ -181,20 +181,33 @@
     border-collapse: collapse; /* Remove gaps between table cells */
     text-align: left; /* Align text to the left for readability */
   }
+
+  .table-new {
+    overflow-x: auto;
+    max-width: 100%; /* Ensures it doesn’t exceed the container */
+    display: block;
+    white-space: nowrap; /* Prevents text wrapping */
+    width: 100%; /* Make the table occupy full width of the modal */
+    margin: 20px 0; /* Add spacing above and below the table */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    text-align: left; /* Align text to the left for readability */
+  }
+
   
-  .table th, .table td {
+  .table th, .table td, .table-new th, .table-new td {
     padding: 8px 12px; /* Add padding inside cells */
     border: 1px solid #060505; /* Add a border to cells */
   }
   
-  .table th {
+  .table th,.table-new th {
     background-color: #f4f4f4; /* Light background for headers */
     font-weight: bold;
     text-align: center; /* Center align table headers */
   }
   
-  .table td {
+  .table td,.table-new td {
     text-align: center; /* Center align table data */
+    background-color: #f4f4f4;
   }
   
   .modal-content {
@@ -221,9 +234,3 @@
     color: #e70b0b;
   }
 
-  .scrollable-table {
-    overflow-x: auto;
-    max-width: 100%; /* Ensures it doesn’t exceed the container */
-    display: block;
-    white-space: nowrap; /* Prevents text wrapping */
-}
