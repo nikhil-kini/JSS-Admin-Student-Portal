@@ -11,18 +11,23 @@ import { QuestionBankComponent } from './question-bank/question-bank.component';
 import { StudentManagementComponent } from './student-management/student-management.component';
 import { TeachingAidsComponent } from './teaching-aids/teaching-aids.component';
 import { TimetableComponent } from './timetable/timetable.component';
+import { NewAttendenceManagementComponent } from './new-attendence-management/new-attendence-management.component';
 
 const routes: Routes = [
-  {path:'home',component: HomeComponent},
+  { path: 'home', component: HomeComponent },
   { path: 'attendance-management', component: AttendanceManagementComponent },
+  {
+    path: 'new-attendance-management',
+    component: NewAttendenceManagementComponent,
+  },
   { path: 'feedback-system', component: FeedbackSystemComponent },
-  {path:'ia-module',component: IAModuleComponent},
-  {path:'lesson-plan',component: LessonPlanComponent},
-  {path:'personal-documents',component: PersonalDocumentsComponent},
-  {path:'question-bank',component: QuestionBankComponent},
-  {path:'students-management',component: StudentManagementComponent},
-  {path:'teaching-aids',component: TeachingAidsComponent},
-  {path:'time-table',component: TimetableComponent},
+  { path: 'ia-module', component: IAModuleComponent },
+  { path: 'lesson-plan', component: LessonPlanComponent },
+  { path: 'personal-documents', component: PersonalDocumentsComponent },
+  { path: 'question-bank', component: QuestionBankComponent },
+  { path: 'students-management', component: StudentManagementComponent },
+  { path: 'teaching-aids', component: TeachingAidsComponent },
+  { path: 'time-table', component: TimetableComponent },
 ];
 
 @NgModule({
@@ -30,12 +35,17 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    AttendanceManagementComponent,FeedbackSystemComponent,
-    HomeComponent,IAModuleComponent,
-    LessonPlanComponent,PersonalDocumentsComponent,
-    QuestionBankComponent,StudentManagementComponent,
-    TeachingAidsComponent,TimetableComponent
+    AttendanceManagementComponent,
+    FeedbackSystemComponent,
+    HomeComponent,
+    IAModuleComponent,
+    LessonPlanComponent,
+    PersonalDocumentsComponent,
+    QuestionBankComponent,
+    StudentManagementComponent,
+    TeachingAidsComponent,
+    TimetableComponent,
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SidemenuModule { }
+export class SidemenuModule {}

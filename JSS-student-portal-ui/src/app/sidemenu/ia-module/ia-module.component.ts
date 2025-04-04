@@ -92,4 +92,7 @@ export class IAModuleComponent {
   getDownloadLink(semester: string, fileName: string): string {
     return `http://localhost:8080/api/alldocuments/download/${semester}/${fileName}`;
   }
+  newAttendancemanagement() {
+    this.router.navigate(['/sidemenu/new-attendance-management']);
+  }
 }

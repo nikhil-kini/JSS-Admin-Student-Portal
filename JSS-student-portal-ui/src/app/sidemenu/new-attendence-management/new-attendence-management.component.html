@@ -1,6 +1,5 @@
 <div class="container-fluid">
   <div class="row no-gutters">
-    <!-- Sidebar -->
     <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" id="sidebarMenu">
       <div class="position-sticky">
         <ul class="nav flex-column">
@@ -26,6 +25,16 @@
           </li>
           <li class="nav-item mb-3">
             <a
+              routerLink="/staff-management"
+              routerLinkActive="active"
+              (click)="staffmanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-person-fill mr-2"></i> Staff Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
               routerLink="/students-management"
               routerLinkActive="active"
               (click)="studentsmanagement()"
@@ -42,6 +51,16 @@
               class="nav-link text-white"
             >
               <i class="bi bi-check-square mr-2"></i> Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/attendance-management"
+              routerLinkActive="active"
+              (click)="newAttendancemanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-check-square mr-2"></i> New Attendance Management
             </a>
           </li>
           <li class="nav-item mb-3">
@@ -96,6 +115,16 @@
           </li>
           <li class="nav-item mb-3">
             <a
+              routerLink="/subject-management"
+              routerLinkActive="active"
+              (click)="subjectmanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-journal mr-2"></i> Subject Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
               routerLink="/teaching-aids"
               routerLinkActive="active"
               (click)="teachingaids()"
@@ -123,11 +152,89 @@
       </div>
     </nav>
 
-    <!-- Content Area -->
-    <main class="col-md-9 col-lg-10 px-4 pt-4">
-      <div class="text-center">
-        <h1>WELCOME TO STUDENT MANAGEMENT</h1>
-      </div>
-    </main>
+    <div class="page-wrapper" style="background-image: url(./attendance.webp)">
+      <main class="col-md-9 col-lg-10 px-4 pt-4 main-content">
+        <h2 class="text-center">New ATTENDANCE MANAGEMENT</h2>
+
+        <!-- View Documents Button -->
+        <button (click)="viewQuestionBank()" class="btn btn-primary">
+          View Documents
+        </button>
+
+        <!-- Modal for Viewing Documents -->
+        <div *ngIf="showModal" class="modal-overlay">
+          <div class="modal-content">
+            <span (click)="closeModal()" class="close">&times;</span>
+            <h3>Attendance</h3>
+
+            <div
+              style="
+                display: flex;
+                justify-content: space-around;
+                flex-direction: column;
+              "
+            >
+              <!-- Semester Dropdown inside Modal -->
+              <div class="form-group">
+                {{ selectedSemesterInModal }}
+              </div>
+
+              <div class="form-group">
+                <label for="subjectModal">Select Subject:</label>
+                <select
+                  [(ngModel)]="selectedSubjectInModal"
+                  name="subjectModal"
+                  id="subjectModal"
+                  class="form-control"
+                >
+                  <option value="" disabled>Select Subject</option>
+                  <option *ngFor="let sub of subjectsInModal" [value]="sub.id">
+                    {{ sub.subject }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="date" class="form-label">Start Date :</label>
+                <input type="date" [(ngModel)]="selectedStartDate" />
+                <p>Selected Start Date: {{ selectedStartDate }}</p>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="date" class="form-label">End Date :</label>
+                <input type="date" [(ngModel)]="selectedEndDate" />
+                <p>Selected End Date: {{ selectedEndDate }}</p>
+              </div>
+            </div>
+
+            <!-- View Documents Button -->
+            <button (click)="getAttendence()" class="btn btn-primary">
+              View Attendence
+            </button>
+
+            <div style="max-width: 500px">
+              <table class="table-new">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th *ngFor="let date of dateHeaders">{{ date }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let student of semStudentsInModal">
+                    <td>{{ student.userName }}</td>
+                    <td *ngFor="let date of dateHeaders">
+                      <div>
+                        {{ attendanceMap[student.studentId][date] }}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 </div>

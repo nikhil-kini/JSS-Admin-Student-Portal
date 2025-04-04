@@ -5,12 +5,22 @@
       <div class="position-sticky">
         <ul class="nav flex-column">
           <li class="nav-item mb-3">
-            <a routerLink="/home" routerLinkActive="active" (click)="home()" class="nav-link text-white">
+            <a
+              routerLink="/home"
+              routerLinkActive="active"
+              (click)="home()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-house mr-2"></i> Home
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/time-table" routerLinkActive="active" (click)="timetable()" class="nav-link text-white">
+            <a
+              routerLink="/time-table"
+              routerLinkActive="active"
+              (click)="timetable()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-calendar3 mr-2"></i> Time Table
             </a>
           </li>
@@ -20,32 +30,72 @@
             </a>
           </li> -->
           <li class="nav-item mb-3">
-            <a routerLink="/attendance-management" routerLinkActive="active" (click)="attendancemanagement()" class="nav-link text-white">
+            <a
+              routerLink="/attendance-management"
+              routerLinkActive="active"
+              (click)="attendancemanagement()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-check-square mr-2"></i> Attendance Management
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/question-bank" routerLinkActive="active" (click)="questionbank()" class="nav-link text-white">
+            <a
+              routerLink="/attendance-management"
+              routerLinkActive="active"
+              (click)="newAttendancemanagement()"
+              class="nav-link text-white"
+            >
+              <i class="bi bi-check-square mr-2"></i> New Attendance Management
+            </a>
+          </li>
+          <li class="nav-item mb-3">
+            <a
+              routerLink="/question-bank"
+              routerLinkActive="active"
+              (click)="questionbank()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-book mr-2"></i> Question Bank
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/ia-module" routerLinkActive="active" (click)="iamodule()" class="nav-link text-white">
+            <a
+              routerLink="/ia-module"
+              routerLinkActive="active"
+              (click)="iamodule()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-card-list mr-2"></i> IA Module
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/feedback-system" routerLinkActive="active" (click)="feedbacksystem()" class="nav-link text-white">
+            <a
+              routerLink="/feedback-system"
+              routerLinkActive="active"
+              (click)="feedbacksystem()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-chat-dots mr-2"></i> Feedback System
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/lesson-plan" routerLinkActive="active" (click)="lessonplan()" class="nav-link text-white">
+            <a
+              routerLink="/lesson-plan"
+              routerLinkActive="active"
+              (click)="lessonplan()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-file-earmark-text mr-2"></i> Lesson Plan
             </a>
           </li>
           <li class="nav-item mb-3">
-            <a routerLink="/teaching-aids" routerLinkActive="active" (click)="teachingaids()" class="nav-link text-white">
+            <a
+              routerLink="/teaching-aids"
+              routerLinkActive="active"
+              (click)="teachingaids()"
+              class="nav-link text-white"
+            >
               <i class="bi bi-easel mr-2"></i> Teaching Aids
             </a>
           </li>
@@ -67,18 +117,26 @@
       <h2 class="text-center">UPLOAD PERSONAL DOCUMENTS</h2>
 
       <!-- File Upload Input -->
-      <input type="file" (change)="onFileChange($event)" class="form-control mb-3" />
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        class="form-control mb-3"
+      />
 
       <!-- Dropdown to select file for download -->
       <div class="form-group">
         <select [(ngModel)]="selectedFileName" class="form-control mb-3">
           <option value="" disabled>Select the file to Download</option>
-          <option *ngFor="let file of fileList" [value]="file">{{ file }}</option>
+          <option *ngFor="let file of fileList" [value]="file">
+            {{ file }}
+          </option>
         </select>
       </div>
 
       <!-- Button to download selected file -->
-      <button (click)="downloadSelectedFile()" class="btn btn-primary mb-3">Download Selected File</button>
+      <button (click)="downloadSelectedFile()" class="btn btn-primary mb-3">
+        Download Selected File
+      </button>
 
       <!-- Display the list of uploaded files as clickable links -->
       <div class="file-list mt-4">
@@ -86,9 +144,12 @@
         <ul>
           <li *ngFor="let file of fileList">
             <!-- Open file in a new tab on click -->
-            <a href="javascript:void(0);" (click)="openFile(file)">{{ file }}</a>
+            <a href="javascript:void(0);" (click)="openFile(file)">{{
+              file
+            }}</a>
           </li>
         </ul>
       </div>
     </main>
-    
+  </div>
+</div>
